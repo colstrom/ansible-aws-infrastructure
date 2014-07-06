@@ -1,0 +1,4 @@
+---
+- include: "environment_tier/{{ environment_tier | mandatory }}.yml"
+- include: "infrastructure/main.yml"
+- include: "region/{{ region | mandatory }}.yml"

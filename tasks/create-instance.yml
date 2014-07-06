@@ -1,0 +1,58 @@
+---
+- name: "Place Spot Request for EC2 Instance | {{ role }}"
+  ec2:
+    region: "{{ region }}"
+    zone: "{{ region }}{{ preferred_availability_zone }}"
+
+    key_name: "{{ bootstrap_key }}"
+
+    group_id: "{{ security_group['managed'] }},{{ security_group[role] }}"
+
+    instance_tags:
+      Project:     "{{ project }}"
+      Environment: "{{ environment_tier }}"
+      Role:        "{{ role }}"
+      Name:        "{{ role }}.{{ project }}-{{ environment_tier }}"
+
+    image: "{{ base_image.ami }}"
+    instance_type: "{{ instance_type }}"
+    exact_count: 1
+    count_tag:
+      Project:     "{{ project }}"
+      Environment: "{{ environment_tier }}"
+      Role:        "{{ role }}"
+      Name:        "{{ role }}.{{ project }}-{{ environment_tier }}"
+
+    spot_price: "{{ instance_bid }}"
+    spot_wait_timeout: 600
+    wait: yes
+
+    vpc_subnet_id: "{{ vpc.subnets | selectattr('resource_tags.Role', 'equalto', role) | selectattr('az', 'equalto', region+preferred_availability_zone) | join(',', attribute='id') }}"
+    assign_public_ip: "{% if environment_tier in ['next', 'development', 'staging' ] %}yes{% else %}no{% endif %}"
+  register: instance
+
+- name: "Capture Instance ID | {{ role }}"
+  set_fact:
+    instances: "{{ instances.update({role: instance.tagged_instances[0].id}) }}{{ instances }}"
+
+- name: "Route53 Record | {{ role }}.{{ project }}-{{ environment_tier }}.teluswebteam.com"
+  route53:
+    command: create
+    overwrite: yes
+    zone: teluswebteam.com
+    record: "{{ role }}{% if dns_points_to_load_balancer %}-direct{% endif %}.{{ project }}-{{ environment_tier }}.teluswebteam.com"
+    type: CNAME
+    value: "{{ item.public_dns_name }}"
+    ttl: 300
+  with_items: instance.tagged_instances
+
+- name: Assign Instance to Load Balancer
+  ec2_elb:
+    state: present
+    region: "{{ region }}"
+    ec2_elbs: "{{ project }}-{{ role }}"
+    instance_id: "{{ instances[role] }}"
+  when: load_balance_prototypes is defined
+
+# - add_host: name={{ item.public_dns_name }} groups=common,{{ role }}
+#   with_items: instance.tagged_instances

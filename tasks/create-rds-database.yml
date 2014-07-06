@@ -1,0 +1,34 @@
+---
+- name: Create Database Subnet Group
+  rds_subnet_group:
+    state: present
+    name: "{{ project }}-{{ role }}"
+    description: "Database for {{ project }}"
+    region: "{{ region }}"
+    subnets: "{{ vpc.subnets | selectattr('resource_tags.Role', 'equalto', role) | map(attribute='id') | list }}"
+
+- name: Create Database Servers
+  rds:
+
+    command: create
+
+    region: "{{ region }}"
+    multi_zone: yes
+
+    instance_name: "{{ project }}-{{ role }}-{{ environment_tier }}"
+    instance_type: "{{ database.instance_type }}"
+
+    vpc_security_groups: "{{ security_group_id[role] }}"
+    subnet: "{{ project }}-{{ role }}"
+
+    db_engine: "{{ db_engine }}"
+    upgrade: yes
+
+    port: "{% if db_engine == 'postgres' %}5432{%elif db_engine == 'mysql' %}3306{% endif %}"
+    db_name: "{{ database.name }}"
+    username: "{{ database.username }}"
+    password: "{{ database.password }}"
+
+    backup_retention: 30
+    size: 100
+    wait: yes

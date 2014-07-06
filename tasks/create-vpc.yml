@@ -1,0 +1,23 @@
+---
+- name: VPC | Networking
+  ec2_vpc:
+    state: present
+    region: "{{ region }}"
+    cidr_block: 10.0.0.0/16
+    resource_tags:
+      'Project':     "{{ project }}"
+      'Environment': "{{ environment_tier }}"
+      'Name':        "{{ project }}-{{ environment_tier }}"
+    subnets: "{{ subnets }}"
+    internet_gateway: True
+
+    route_tables:
+      - subnets: "{{ subnets | map(attribute='cidr') | list }}"
+        routes:
+          - dest: 0.0.0.0/0
+            gw: igw
+        resource_tags: 
+          'Project': "{{ project }}"
+          'Role':    'outbound'
+          'Name':    "{{ project }}-nat"
+  register: vpc

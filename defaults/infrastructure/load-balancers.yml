@@ -1,0 +1,23 @@
+---
+load_balancer:
+  application:
+    security_group: 'inbound'
+    listeners:
+    - protocol: tcp
+      load_balancer_port: 80
+      instance_port: 80
+    - protocol: tcp
+      load_balancer_port: 443
+      instance_port: 443
+  outbound:
+    security_group: 'application'
+    listeners:
+    - protocol: tcp
+      load_balancer_port: 80
+      instance_port: 80
+    - protocol: tcp
+      load_balancer_port: 443
+      instance_port: 443
+    - protocol: tcp
+      load_balancer_port: 8443
+      instance_port: 8443

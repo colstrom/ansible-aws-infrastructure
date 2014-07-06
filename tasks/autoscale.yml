@@ -1,0 +1,32 @@
+---
+- name: "Create AMI | {{ role }}"
+  ec2_ami:
+    state: present
+    region: "{{ region }}"
+    name: "{{ project }}-{{ role }}-{{ timestamp }}"
+    instance_id: "{{ instances[role] }}"
+    wait: yes
+  register: ami
+
+- name: "Launch Configuration | {{ role }}"
+  ec2_lc:
+    state: present
+    region: "{{ region }}"
+    name: "{{ project }}-{{ role }}-{{ timestamp }}"
+    instance_type: "{{ instance_type }}"
+    image_id: "{{ ami.image_id }}"
+    security_groups: "{{ security_group['managed'] }},{{ security_group[role] }}"
+    spot_price: "{{ instance_bid }}"
+
+- name: "AutoScaling Group | {{ role }}"
+  ec2_asg:
+    state: present
+    region: "{{ region }}"
+    availability_zones: "{{ region }}a,{{ region }}b,{{ region }}c"
+    launch_config_name: "{{ project }}-{{ role }}-{{ timestamp }}"
+    load_balancers: "{% if has_load_balancer %}{{ project }}-{{ role }}{% else %}{{ [] }}{% endif %}"
+    name: "{{ project }}-{{ role }}"
+    min_size: 1
+    max_size: 2
+    desired_capacity: 1
+    vpc_zone_identifier: "{{ vpc.subnets | selectattr('resource_tags.Role', 'equalto', role) | join(',', attribute='id') }}"

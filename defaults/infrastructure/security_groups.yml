@@ -1,0 +1,119 @@
+---
+security_group:
+  management:
+    description: "Nodes that Manage Other Nodes"
+    rules:
+    - proto: tcp
+      from_port: 443
+      to_port: 443
+      cidr_ip: 0.0.0.0/0
+  managed:
+    description: "Nodes Managed by Other Nodes"
+    rules:
+    - proto: tcp
+      from_port: 22
+      to_port: 22
+      group_id: "{{ security_group['management'] }}"
+    - proto: tcp
+      from_port: 2812
+      to_port: 2812
+      group_id: "{{ security_group['management'] }}"
+    - proto: tcp
+      from_port: 5099
+      to_port: 5099
+      group_id: "{{ security_group['management'] }}"
+  inbound:
+    description: "Inbound Proxy"
+    rules:
+    - proto: tcp
+      from_port: 80
+      to_port: 80
+      cidr_ip: 0.0.0.0/0
+    - proto: tcp
+      from_port: 443
+      to_port: 443
+      cidr_ip: 0.0.0.0/0
+  application:
+    description: "Application Nodes"
+    rules:
+    - proto: tcp
+      from_port: 80
+      to_port: 80
+      group_id: "{{ security_group['inbound'] }}"
+    - proto: tcp
+      from_port: 443
+      to_port: 443
+      group_id: "{{ security_group['inbound'] }}"
+  cache:
+    description: "Cache Nodes"
+    rules:
+    - proto: tcp
+      from_port: 6379
+      to_port: 6379
+      group_id: "{{ security_group['application'] }}"
+    - proto: tcp
+      from_port: 26379
+      to_port: 26379
+      group_id: "{{ security_group['application'] }}"
+  database:
+    description: "Database Nodes"
+    rules:
+    - proto: tcp
+      from_port: 3306
+      to_port: 3306
+      group_id: "{{ security_group['application'] }}"
+    - proto: tcp
+      from_port: 5432
+      to_port: 5432
+      group_id: "{{ security_group['application'] }}"
+  outbound:
+    description: "Outbound Proxy"
+    rules:
+    - proto: tcp
+      from_port: 80
+      to_port: 80
+      group_id: "{{ security_group_id['application'] }}"
+    - proto: tcp
+      from_port: 443
+      to_port: 443
+      group_id: "{{ security_group_id['application'] }}"
+    - proto: tcp
+      from_port: 8443
+      to_port: 8443
+      group_id: "{{ security_group_id['application'] }}"
+    - proto: tcp
+      from_port: 6081
+      to_port: 6081
+      group_id: "{{ security_group_id['application'] }}"
+    - proto: tcp
+      from_port: 6082
+      to_port: 6082
+      group_id: "{{ security_group_id['management'] }}"
+  aggregator:
+    description: "Log and Metric Aggregation Nodes"
+    rules:
+    - proto: tcp
+      from_port: 80
+      to_port: 80
+      cidr_ip: 10.0.0.0/16
+    - proto: tcp
+      from_port: 6379
+      to_port: 6379
+      cidr_ip: 10.0.0.0/16
+    - proto: tcp
+      from_port: 8000
+      to_port: 8000
+      cidr_ip: 10.0.0.0/16
+  log-storage:
+    description: "Cross-Project Log Storage"
+    rules:
+    - proto: tcp
+      from_port: 9200
+      to_port: 9200
+      cidr_ip: 0.0.0.0/0
+    - proto: tcp
+      from_port: 9300
+      to_port: 9300
+      cidr_ip: 0.0.0.0/0
+  database:
+    rules:

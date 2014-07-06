@@ -1,0 +1,177 @@
+---
+subnets_all:
+  - cidr: 10.0.0.0/27
+    az: "{{ region }}a"
+    resource_tags:
+      'Project': "{{ project }}"
+      'Role':    'management'
+      'Name':    "{{ project }}-management-a"
+  - cidr: 10.0.0.32/27
+    az: "{{ region }}b"
+    resource_tags:
+      'Project': "{{ project }}"
+      'Role':    'management'
+      'Name':    "{{ project }}-management-b"
+  - cidr: 10.0.0.64/27
+    az: "{{ region }}c"
+    resource_tags:
+      'Project': "{{ project }}"
+      'Role':    'management'
+      'Name':    "{{ project }}-management-c"
+  - cidr: 10.0.0.96/27
+    az: "{{ region }}d"
+    resource_tags:
+      'Project': "{{ project }}"
+      'Role':    'management'
+      'Name':    "{{ project }}-management-d"
+
+  - cidr: 10.0.1.0/27
+    az: "{{ region }}a"
+    resource_tags:
+      'Project': "{{ project }}"
+      'Role':    'inbound'
+      'Name':    "{{ project }}-inbound-a"
+  - cidr: 10.0.1.32/27
+    az: "{{ region }}b"
+    resource_tags:
+      'Project': "{{ project }}"
+      'Role':    'inbound'
+      'Name':    "{{ project }}-inbound-b"
+  - cidr: 10.0.1.64/27
+    az: "{{ region }}c"
+    resource_tags:
+      'Project': "{{ project }}"
+      'Role':    'inbound'
+      'Name':    "{{ project }}-inbound-c"
+
+  - cidr: 10.0.1.96/27
+    az: "{{ region }}d"
+    resource_tags:
+      'Project': "{{ project }}"
+      'Role':    'inbound'
+      'Name':    "{{ project }}-inbound-d"
+
+  - cidr: 10.0.2.0/27
+    az: "{{ region }}a"
+    resource_tags:
+      'Project': "{{ project }}"
+      'Role':    'application'
+      'Name':    "{{ project }}-application-a"
+  - cidr: 10.0.2.32/27
+    az: "{{ region }}b"
+    resource_tags:
+      'Project': "{{ project }}"
+      'Role':    'application'
+      'Name':    "{{ project }}-application-b"
+  - cidr: 10.0.2.64/27
+    az: "{{ region }}c"
+    resource_tags:
+      'Project': "{{ project }}"
+      'Role':    'application'
+      'Name':    "{{ project }}-application-c"
+  - cidr: 10.0.2.96/27
+    az: "{{ region }}d"
+    resource_tags:
+      'Project': "{{ project }}"
+      'Role':    'application'
+      'Name':    "{{ project }}-application-d"
+
+  - cidr: 10.0.3.0/27
+    az: "{{ region }}a"
+    resource_tags:
+      'Project': "{{ project }}"
+      'Role':    'cache'
+      'Name':    "{{ project }}-cache-a"
+  - cidr: 10.0.3.32/27
+    az: "{{ region }}b"
+    resource_tags:
+      'Project': "{{ project }}"
+      'Role':    'cache'
+      'Name':    "{{ project }}-cache-b"
+  - cidr: 10.0.3.64/27
+    az: "{{ region }}c"
+    resource_tags:
+      'Project': "{{ project }}"
+      'Role':    'cache'
+      'Name':    "{{ project }}-cache-c"
+  - cidr: 10.0.3.96/27
+    az: "{{ region }}d"
+    resource_tags:
+      'Project': "{{ project }}"
+      'Role':    'database'
+      'Name':    "{{ project }}-database-d"
+
+  - cidr: 10.0.4.0/27
+    az: "{{ region }}a"
+    resource_tags:
+      'Project': "{{ project }}"
+      'Role':    'database'
+      'Name':    "{{ project }}-database-a"
+  - cidr: 10.0.4.32/27
+    az: "{{ region }}b"
+    resource_tags:
+      'Project': "{{ project }}"
+      'Role':    'database'
+      'Name':    "{{ project }}-database-b"
+  - cidr: 10.0.4.64/27
+    az: "{{ region }}c"
+    resource_tags:
+      'Project': "{{ project }}"
+      'Role':    'database'
+      'Name':    "{{ project }}-database-c"
+  - cidr: 10.0.4.96/27
+    az: "{{ region }}d"
+    resource_tags:
+      'Project': "{{ project }}"
+      'Role':    'database'
+      'Name':    "{{ project }}-database-d"
+
+  - cidr: 10.0.5.0/27
+    az: "{{ region }}a"
+    resource_tags:
+      'Project': "{{ project }}"
+      'Role':    'outbound'
+      'Name':    "{{ project }}-outbound-a"
+  - cidr: 10.0.5.32/27
+    az: "{{ region }}b"
+    resource_tags:
+      'Project': "{{ project }}"
+      'Role':    'outbound'
+      'Name':    "{{ project }}-outbound-b"
+  - cidr: 10.0.5.64/27
+    az: "{{ region }}c"
+    resource_tags:
+      'Project': "{{ project }}"
+      'Role':    'outbound'
+      'Name':    "{{ project }}-outbound-c"
+  - cidr: 10.0.5.96/27
+    az: "{{ region }}d"
+    resource_tags:
+      'Project': "{{ project }}"
+      'Role':    'outbound'
+      'Name':    "{{ project }}-outbound-d"
+
+  - cidr: 10.0.9.0/27
+    az: "{{ region }}a"
+    resource_tags:
+      'Project': "{{ project }}"
+      'Role':    'log-collection'
+      'Name':    "{{ project }}-log-collection-a"
+  - cidr: 10.0.9.32/27
+    az: "{{ region }}b"
+    resource_tags:
+      'Project': "{{ project }}"
+      'Role':    'log-collection'
+      'Name':    "{{ project }}-log-collection-b"
+  - cidr: 10.0.9.64/27
+    az: "{{ region }}c"
+    resource_tags:
+      'Project': "{{ project }}"
+      'Role':    'log-collection'
+      'Name':    "{{ project }}-log-collection-c"
+  - cidr: 10.0.9.96/27
+    az: "{{ region }}d"
+    resource_tags:
+      'Project': "{{ project }}"
+      'Role':    'log-collection'
+      'Name':    "{{ project }}-log-collection-d"

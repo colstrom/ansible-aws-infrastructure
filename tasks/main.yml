@@ -1,0 +1,56 @@
+---
+- include: create-vpc.yml
+
+- set_fact:
+    security_group_id: "{{ dict() }}"
+
+- { include: create-security-groups.yml, role: management,     when: 'management' in required_systems }
+- { include: create-security-groups.yml, role: managed }
+- { include: create-security-groups.yml, role: inbound,        when: 'inbound' in required_systems }
+- { include: create-security-groups.yml, role: application,    when: 'application' in required_systems }
+- { include: create-security-groups.yml, role: cache,          when: 'cache' in required_systems }
+- { include: create-security-groups.yml, role: outbound,       when: 'outbound' in required_systems }
+- { include: create-security-groups.yml, role: aggregator,     when: 'aggregator' in required_systems }
+- { include: create-security-groups.yml, role: log-storage,    when: 'log-storage' in required_systems }
+
+- set_fact:
+    load_balancer_name: "{{ dict() }}"
+
+- { include: create-load-balancer.yml, role: application, when: environment_tier in ['staging', 'production'] and 'application' in required_systems }
+- { include: create-load-balancer.yml, role: outbound,    when: environment_tier in ['staging', 'production'] and 'outbound' in required_systems }
+
+- set_fact:
+    instances: "{{ dict() }}"
+
+- name: Identify Base Image for Region
+  ec2_ami_search:
+    region: "{{ region }}"
+    distro: ubuntu
+    release: trusty
+    store: instance-store
+  register: base_image
+
+- { include: create-instance.yml, role: management,  when: 'management' in required_systems }
+- { include: create-instance.yml, role: inbound,     when: 'inbound' in required_systems }
+- { include: create-instance.yml, role: application, when: 'application' in required_systems }
+- { include: create-instance.yml, role: cache,       when: 'cache' in required_systems }
+- { include: create-instance.yml, role: outbound,    when: 'outbound' in required_systems }
+- { include: create-instance.yml, role: aggregator,  when: 'aggregator' in required_systems }
+- { include: create-instance.yml, role: build,       when: 'build' in required_systems }
+
+- name: Request Timestamp
+  command: date +%s
+  register: date
+  when: autoscale is defined
+
+- name: Capture Timestamp
+  set_fact:
+    timestamp: "{{ date.stdout }}"
+  when: autoscale is defined
+
+- { include: autoscale.yml, has_load_balancer: False, role: management,  when: autoscale is defined and 'management' in required_systems }
+- { include: autoscale.yml, has_load_balancer: False, role: inbound,     when: autoscale is defined and 'inbound' in required_systems }
+- { include: autoscale.yml, has_load_balancer: True,  role: application, when: autoscale is defined and 'application' in required_systems }
+- { include: autoscale.yml, has_load_balancer: True,  role: cache,       when: autoscale is defined and 'cache' in required_systems }
+- { include: autoscale.yml, has_load_balancer: True,  role: outbound,    when: autoscale is defined and 'outbound' in required_systems }
+- { include: autoscale.yml, has_load_balancer: False, role: aggregator,  when: autoscale is defined and 'aggregator' in required_systems }
