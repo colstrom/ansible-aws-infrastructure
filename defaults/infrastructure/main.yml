@@ -1,5 +1,0 @@
----
-- include: subnets.yml
-- include: security-groups.yml
-- include: load-balancers.yml
-- include: instances.yml
