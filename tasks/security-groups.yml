@@ -2,6 +2,11 @@
 - set_fact:
     security_group_id: "{{ dict() }}"
 
+- name: "Managed Systems without Management Servers"
+  set_fact:
+    security_group: "{{ security_group.update(no_management) }}{{ security_group }}"
+  when: "'management' not in required_systems"
+
 - { include: create/security-group.yml, role: management,     when: "'management' in required_systems" }
 - { include: create/security-group.yml, role: managed }
 - { include: create/security-group.yml, role: inbound,        when: "'inbound' in required_systems" }
