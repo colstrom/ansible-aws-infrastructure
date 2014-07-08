@@ -1,0 +1,15 @@
+---
+- name: Request Timestamp
+  command: date +%s
+  register: date
+
+- name: Capture Timestamp
+  set_fact:
+    timestamp: "{{ date.stdout }}"
+
+- { include: create/autoscaling.yml, has_load_balancer: False, role: management,  when: "'management' in required_systems" }
+- { include: create/autoscaling.yml, has_load_balancer: False, role: inbound,     when: "'inbound' in required_systems" }
+- { include: create/autoscaling.yml, has_load_balancer: True,  role: application, when: "'application' in required_systems" }
+- { include: create/autoscaling.yml, has_load_balancer: True,  role: cache,       when: "'cache' in required_systems" }
+- { include: create/autoscaling.yml, has_load_balancer: True,  role: outbound,    when: "'outbound' in required_systems" }
+- { include: create/autoscaling.yml, has_load_balancer: False, role: aggregator,  when: "'aggregator' in required_systems" }
