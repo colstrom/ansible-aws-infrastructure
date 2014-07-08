@@ -155,23 +155,23 @@ subnets_all:
     az: "{{ region }}a"
     resource_tags:
       'Project': "{{ project }}"
-      'Role':    'log-collection'
-      'Name':    "{{ project }}-log-collection-a"
+      'Role':    'aggregator'
+      'Name':    "{{ project }}-aggregator-a"
   - cidr: 10.0.9.32/27
     az: "{{ region }}b"
     resource_tags:
       'Project': "{{ project }}"
-      'Role':    'log-collection'
-      'Name':    "{{ project }}-log-collection-b"
+      'Role':    'aggregator'
+      'Name':    "{{ project }}-aggregator-b"
   - cidr: 10.0.9.64/27
     az: "{{ region }}c"
     resource_tags:
       'Project': "{{ project }}"
-      'Role':    'log-collection'
-      'Name':    "{{ project }}-log-collection-c"
+      'Role':    'aggregator'
+      'Name':    "{{ project }}-aggregator-c"
   - cidr: 10.0.9.96/27
     az: "{{ region }}d"
     resource_tags:
       'Project': "{{ project }}"
-      'Role':    'log-collection'
-      'Name':    "{{ project }}-log-collection-d"
+      'Role':    'aggregator'
+      'Name':    "{{ project }}-aggregator-d"
