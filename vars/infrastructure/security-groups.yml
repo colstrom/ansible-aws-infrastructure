@@ -13,15 +13,15 @@ security_group:
     - proto: tcp
       from_port: 22
       to_port: 22
-      group_id: "{{ security_group['management'] }}"
+      group_id: "{{ security_group_id['management'] }}"
     - proto: tcp
       from_port: 2812
       to_port: 2812
-      group_id: "{{ security_group['management'] }}"
+      group_id: "{{ security_group_id['management'] }}"
     - proto: tcp
       from_port: 5099
       to_port: 5099
-      group_id: "{{ security_group['management'] }}"
+      group_id: "{{ security_group_id['management'] }}"
   inbound:
     description: "Inbound Proxy"
     rules:
@@ -39,33 +39,33 @@ security_group:
     - proto: tcp
       from_port: 80
       to_port: 80
-      group_id: "{{ security_group['inbound'] }}"
+      group_id: "{{ security_group_id['inbound'] }}"
     - proto: tcp
       from_port: 443
       to_port: 443
-      group_id: "{{ security_group['inbound'] }}"
+      group_id: "{{ security_group_id['inbound'] }}"
   cache:
     description: "Cache Nodes"
     rules:
     - proto: tcp
       from_port: 6379
       to_port: 6379
-      group_id: "{{ security_group['application'] }}"
+      group_id: "{{ security_group_id['application'] }}"
     - proto: tcp
       from_port: 26379
       to_port: 26379
-      group_id: "{{ security_group['application'] }}"
+      group_id: "{{ security_group_id['application'] }}"
   database:
     description: "Database Nodes"
     rules:
     - proto: tcp
       from_port: 3306
       to_port: 3306
-      group_id: "{{ security_group['application'] }}"
+      group_id: "{{ security_group_id['application'] }}"
     - proto: tcp
       from_port: 5432
       to_port: 5432
-      group_id: "{{ security_group['application'] }}"
+      group_id: "{{ security_group_id['application'] }}"
   outbound:
     description: "Outbound Proxy"
     rules:
