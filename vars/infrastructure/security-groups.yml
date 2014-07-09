@@ -1,6 +1,7 @@
 ---
 no_management:
   managed:
+    description: "Nodes Managed by Other Nodes"
     rules:
     - proto: tcp
       from_port: 22
