@@ -7,10 +7,10 @@
     security_group: "{{ security_group.update(no_management) }}{{ security_group }}"
   when: "'management' not in required_systems"
 
-- { include: create/security-group.yml, role: management,     when: "'management' in required_systems" }
+- { include: create/security-group.yml, role: management }
 - { include: create/security-group.yml, role: managed }
-- { include: create/security-group.yml, role: inbound,        when: "'inbound' in required_systems" }
-- { include: create/security-group.yml, role: application,    when: "'application' in required_systems" }
+- { include: create/security-group.yml, role: inbound }
+- { include: create/security-group.yml, role: application }
 - { include: create/security-group.yml, role: cache,          when: "'cache' in required_systems" }
 - { include: create/security-group.yml, role: outbound,       when: "'outbound' in required_systems" }
 - { include: create/security-group.yml, role: aggregator,     when: "'aggregator' in required_systems" }
