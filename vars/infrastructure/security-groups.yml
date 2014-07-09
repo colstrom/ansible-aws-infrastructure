@@ -124,5 +124,3 @@ security_group:
       from_port: 9300
       to_port: 9300
       cidr_ip: 0.0.0.0/0
-  database:
-    rules:
