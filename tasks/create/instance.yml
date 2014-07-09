@@ -6,7 +6,7 @@
 
     key_name: "{{ bootstrap_key }}"
 
-    group_id: "{{ security_group['managed'] }},{{ security_group[role] }}"
+    group_id: "{{ security_group_id['managed'] }},{{ security_group_id[role] }}"
 
     instance_tags:
       Project:     "{{ project }}"
