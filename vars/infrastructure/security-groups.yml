@@ -21,15 +21,15 @@ security_group:
     - proto: tcp
       from_port: 22
       to_port: 22
-      group_id: "{{ security_group_id['management'] }}"
+      group_id: "{{ security_group_id['management']|default(-1) }}"
     - proto: tcp
       from_port: 2812
       to_port: 2812
-      group_id: "{{ security_group_id['management'] }}"
+      group_id: "{{ security_group_id['management']|default(-1) }}"
     - proto: tcp
       from_port: 5099
       to_port: 5099
-      group_id: "{{ security_group_id['management'] }}"
+      group_id: "{{ security_group_id['management']|default(-1) }}"
   inbound:
     description: "Inbound Proxy"
     rules:
@@ -47,56 +47,56 @@ security_group:
     - proto: tcp
       from_port: 80
       to_port: 80
-      group_id: "{{ security_group_id['inbound'] }}"
+      group_id: "{{ security_group_id['inbound']|default(-1) }}"
     - proto: tcp
       from_port: 443
       to_port: 443
-      group_id: "{{ security_group_id['inbound'] }}"
+      group_id: "{{ security_group_id['inbound']|default(-1) }}"
   cache:
     description: "Cache Nodes"
     rules:
     - proto: tcp
       from_port: 6379
       to_port: 6379
-      group_id: "{{ security_group_id['application'] }}"
+      group_id: "{{ security_group_id['application']|default(-1) }}"
     - proto: tcp
       from_port: 26379
       to_port: 26379
-      group_id: "{{ security_group_id['application'] }}"
+      group_id: "{{ security_group_id['application']|default(-1) }}"
   database:
     description: "Database Nodes"
     rules:
     - proto: tcp
       from_port: 3306
       to_port: 3306
-      group_id: "{{ security_group_id['application'] }}"
+      group_id: "{{ security_group_id['application']|default(-1) }}"
     - proto: tcp
       from_port: 5432
       to_port: 5432
-      group_id: "{{ security_group_id['application'] }}"
+      group_id: "{{ security_group_id['application']|default(-1) }}"
   outbound:
     description: "Outbound Proxy"
     rules:
     - proto: tcp
       from_port: 80
       to_port: 80
-      group_id: "{{ security_group_id['application'] }}"
+      group_id: "{{ security_group_id['application']|default(-1) }}"
     - proto: tcp
       from_port: 443
       to_port: 443
-      group_id: "{{ security_group_id['application'] }}"
+      group_id: "{{ security_group_id['application']|default(-1) }}"
     - proto: tcp
       from_port: 8443
       to_port: 8443
-      group_id: "{{ security_group_id['application'] }}"
+      group_id: "{{ security_group_id['application']|default(-1) }}"
     - proto: tcp
       from_port: 6081
       to_port: 6081
-      group_id: "{{ security_group_id['application'] }}"
+      group_id: "{{ security_group_id['application']|default(-1) }}"
     - proto: tcp
       from_port: 6082
       to_port: 6082
-      group_id: "{{ security_group_id['management'] }}"
+      group_id: "{{ security_group_id['management']|default(-1) }}"
   aggregator:
     description: "Log and Metric Aggregation Nodes"
     rules:
