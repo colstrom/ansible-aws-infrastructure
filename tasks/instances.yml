@@ -14,6 +14,7 @@
 - { include: create/instance.yml, role: inbound,     when: "'inbound' in required_systems" }
 - { include: create/instance.yml, role: application, when: "'application' in required_systems" }
 - { include: create/instance.yml, role: cache,       when: "'cache' in required_systems" }
+- { include: create/instance.yml, role: database,    when: "'database' in required_systems" }
 - { include: create/instance.yml, role: outbound,    when: "'outbound' in required_systems" }
 - { include: create/instance.yml, role: aggregator,  when: "'aggregator' in required_systems" }
 - { include: create/instance.yml, role: build,       when: "'build' in required_systems" }
