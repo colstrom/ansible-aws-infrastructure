@@ -3,4 +3,5 @@
     load_balancer_name: "{{ dict() }}"
 
 - { include: create/load-balancer.yml, role: application, when: "environment_tier in ['staging', 'production'] and 'application' in required_systems" }
+- { include: create/load-balancer.yml, role: database,    when: "environment_tier in ['staging', 'production'] and 'database' in required_systems" }
 - { include: create/load-balancer.yml, role: outbound,    when: "environment_tier in ['staging', 'production'] and 'outbound' in required_systems" }
