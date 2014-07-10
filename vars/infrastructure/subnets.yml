@@ -98,8 +98,8 @@ subnets_all:
     az: "{{ region }}d"
     resource_tags:
       'Project': "{{ project }}"
-      'Role':    'database'
-      'Name':    "{{ project }}-database-d"
+      'Role':    'cache'
+      'Name':    "{{ project }}-cache-d"
 
   - cidr: 10.0.4.0/27
     az: "{{ region }}a"
