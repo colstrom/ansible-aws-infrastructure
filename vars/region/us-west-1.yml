@@ -3,4 +3,4 @@ subnets: "{{ subnets_all | rejectattr('az', 'equalto', region + 'c') | rejectatt
 bootstrap_key: bootstrap
 preferred_availability_zone: b
 instance_type: m1.small
-instance_bid: 0.44
+instance_bid: 0.044
