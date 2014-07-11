@@ -1,7 +1,7 @@
 ---
 load_balancer:
   application:
-    security_group: 'inbound'
+    security_group: ['inbound', 'application']
     listeners:
     - protocol: tcp
       load_balancer_port: 80
@@ -10,7 +10,7 @@ load_balancer:
       load_balancer_port: 443
       instance_port: 443
   database:
-    security_group: 'application'
+    security_group: ['application', 'database']
     listeners:
     - protocol: tcp
       load_balancer_port: 3306
@@ -19,7 +19,7 @@ load_balancer:
       load_balancer_port: 5432
       instance_port: 5432
   outbound:
-    security_group: 'application'
+    security_group: ['application', 'outbound']
     listeners:
     - protocol: tcp
       load_balancer_port: 80
