@@ -10,7 +10,7 @@ load_balancer:
       load_balancer_port: 443
       instance_port: 443
   database:
-    security_group: 'database'
+    security_group: 'application'
     listeners:
     - protocol: tcp
       load_balancer_port: 3306
