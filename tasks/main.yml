@@ -6,8 +6,8 @@
 - include_vars: infrastructure/instances.yml
 - include_vars: "region/{{ region | mandatory }}.yml"
 
-- include: create/vpc.yml
-- include: security-groups.yml
-- include: load-balancers.yml
-- include: instances.yml
-- { include: autoscaling.yml, when: "autoscale is defined" }
+- { include: create/vpc.yml, tags: ['vpc'] }
+- { include: security-groups.yml, tags: ['security-group'] }
+- { include: load-balancers.yml, tags: ['load-balancer'] }
+- { include: instances.yml, tags: ['instances'] }
+- { include: autoscaling.yml, when: "autoscale is defined", tags: ['autoscaling'] }
