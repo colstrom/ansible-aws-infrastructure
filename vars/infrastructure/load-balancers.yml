@@ -2,7 +2,7 @@
 load_balancer:
   application:
     scheme: internet-facing
-    security_group: ['inbound', 'application']
+    security_groups: ['inbound', 'application']
     listeners:
     - protocol: tcp
       load_balancer_port: 80
@@ -12,7 +12,7 @@ load_balancer:
       instance_port: 443
   database:
     scheme: internal
-    security_group: ['application', 'database']
+    security_groups: ['application', 'database']
     listeners:
     - protocol: tcp
       load_balancer_port: 3306
@@ -22,7 +22,7 @@ load_balancer:
       instance_port: 5432
   outbound:
     scheme: internal
-    security_group: ['application', 'outbound']
+    security_groups: ['application', 'outbound']
     listeners:
     - protocol: tcp
       load_balancer_port: 80
