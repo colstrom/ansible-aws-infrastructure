@@ -4,3 +4,4 @@ bootstrap_key: bootstrap
 preferred_availability_zone: b
 instance_type: m1.small
 instance_bid: 0.044
+instance_store_device: /dev/xvda2
