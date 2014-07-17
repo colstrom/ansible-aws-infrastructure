@@ -7,7 +7,7 @@
     region: "{{ region }}"
     distro: ubuntu
     release: trusty
-    store: instance-store
+    store: "{% if environment_tier in ['staging', 'production'] %}ebs{% else %}instance-store{% endif %}"
   register: base_image
 
 - { include: create/instance.yml, role: management,  when: "'management' in required_systems" }
