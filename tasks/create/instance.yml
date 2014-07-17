@@ -28,7 +28,7 @@
     wait: yes
 
     vpc_subnet_id: "{{ vpc.subnets | selectattr('resource_tags.Role', 'equalto', role) | selectattr('az', 'equalto', region+preferred_availability_zone) | join(',', attribute='id') }}"
-    assign_public_ip: "{% if environment_tier in ['next', 'development', 'staging' ] %}yes{% else %}no{% endif %}"
+    assign_public_ip: "{% if environment_tier in ['next', 'development', 'staging', 'production'] %}yes{% else %}no{% endif %}"
   register: instance
 
 - name: "Capture Instance ID | {{ role }}"
