@@ -21,10 +21,10 @@
     vpc_security_groups: "{{ security_group_id[role] }}"
     subnet: "{{ project }}-{{ role }}"
 
-    db_engine: "{{ db_engine | mandatory }}"
+    db_engine: "{{ database.engine | mandatory }}"
     upgrade: yes
 
-    port: "{% if db_engine == 'postgres' %}5432{%elif db_engine == 'mysql' %}3306{% endif %}"
+    port: "{% if database.engine == 'postgres' %}5432{%elif database.engine == 'mysql' %}3306{% endif %}"
     db_name: "{{ database.name | default(project) }}"
     username: "{{ database.username | default(project) }}"
     password: "{{ database.password | mandatory }}"
