@@ -89,6 +89,10 @@ security_group:
       from_port: 5432
       to_port: 5432
       group_id: "{{ security_group_id['application']|default(-1) }}"
+    - proto: tcp
+      from_port: 27017
+      to_port: 27017
+      group_id: "{{ security_group_id['application']|default(-1) }}"
   outbound:
     description: "Outbound Proxy"
     rules:
