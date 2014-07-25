@@ -19,4 +19,4 @@
 - { include: create/instance.yml, role: aggregator,  when: "'aggregator' in required_systems" }
 - { include: create/instance.yml, role: build,       when: "'build' in required_systems" }
 
-- { include: create/rds-database.yml, role: database, when: "'database' in required_systems and database.using_rds is defined" }
+- { include: create/rds-database.yml, role: database, when: "'database' in required_systems and database.using_rds == yes" }
