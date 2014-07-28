@@ -2,3 +2,4 @@
 instance_type: m3.medium
 instance_bid: 0.077
 instance_store_device: /dev/xvdb
+using_rds: no
