@@ -1,7 +1,6 @@
 ---
 subnets: "{{ subnets_all | rejectattr('az', 'equalto', region + 'c') | rejectattr('az', 'equalto', region + 'd') | list }}"
 bootstrap_key: bootstrap
-preferred_availability_zone: b
-instance_type: m1.small
-instance_bid: 0.044
-instance_store_device: /dev/xvda2
+preferred_availability_zone: a
+instance_type: c3.large
+instance_bid: 0.105
