@@ -24,7 +24,7 @@
     db_engine: "{{ database.engine | mandatory }}"
     upgrade: yes
 
-    port: "{% if database.engine == 'postgres' %}5432{%elif database.engine == 'mysql' %}3306{% endif %}"
+    port: "{% if database.engine == 'postgres' %}5432{%elif database.engine == 'MySQL' %}3306{% endif %}"
     db_name: "{{ database.name | default(project) }}"
     username: "{{ database.username | default(project) }}"
     password: "{{ database.password | mandatory }}"
