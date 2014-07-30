@@ -10,4 +10,4 @@
 - { include: security-groups.yml, tags: ['security-group'] }
 - { include: load-balancers.yml, tags: ['load-balancer'] }
 - { include: instances.yml, tags: ['instances'] }
-- { include: autoscaling.yml, when: "autoscale is defined", tags: ['autoscaling'] }
+- { include: autoscaling.yml, tags: ['autoscaling'], when: autoscale }
