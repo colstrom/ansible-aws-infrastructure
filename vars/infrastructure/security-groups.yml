@@ -142,3 +142,14 @@ security_group:
       from_port: 9300
       to_port: 9300
       cidr_ip: 0.0.0.0/0
+  build:
+    description: "Build Nodes"
+    rules:
+    - proto: tcp
+      from_port: 80
+      to_port: 80
+      cidr_ip: 0.0.0.0/0
+    - proto: tcp
+      from_port: 7528
+      to_port: 7528
+      cidr_ip: 0.0.0.0/0

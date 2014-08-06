@@ -11,6 +11,7 @@
 - { include: create/security-group.yml, role: outbound,       when: "'outbound' in required_systems" }
 - { include: create/security-group.yml, role: aggregator,     when: "'aggregator' in required_systems" }
 - { include: create/security-group.yml, role: log-storage,    when: "'log-storage' in required_systems" }
+- { include: create/security-group.yml, role: build,          when: "'build' in required_systems" }
 
 - name: "No Management, Exposing Managed Systems"
   set_fact:

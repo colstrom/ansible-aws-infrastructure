@@ -175,3 +175,28 @@ subnets_all:
       'Project': "{{ project }}"
       'Role':    'aggregator'
       'Name':    "{{ project }}-aggregator-d"
+
+  - cidr: 10.0.10.0/27
+    az: "{{ region }}a"
+    resource_tags:
+      'Project': "{{ project }}"
+      'Role':    'build'
+      'Name':    "{{ project }}-build-a"
+  - cidr: 10.0.10.32/27
+    az: "{{ region }}b"
+    resource_tags:
+      'Project': "{{ project }}"
+      'Role':    'build'
+      'Name':    "{{ project }}-build-b"
+  - cidr: 10.0.10.64/27
+    az: "{{ region }}c"
+    resource_tags:
+      'Project': "{{ project }}"
+      'Role':    'build'
+      'Name':    "{{ project }}-build-c"
+  - cidr: 10.0.10.96/27
+    az: "{{ region }}d"
+    resource_tags:
+      'Project': "{{ project }}"
+      'Role':    'build'
+      'Name':    "{{ project }}-build-d"

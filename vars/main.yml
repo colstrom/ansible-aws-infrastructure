@@ -1,3 +1,4 @@
 ---
 autoscale: no
 load_balance_prototypes: no
+dns_points_to_load_balancer: no
