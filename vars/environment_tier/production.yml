@@ -1,4 +1,4 @@
 --- 
 environment_tier: production
 region: us-east-1
-dns_points_to_load_balancer: True
+dns_points_to_load_balancer: yes
