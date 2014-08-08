@@ -52,7 +52,7 @@
     region: "{{ region }}"
     ec2_elbs: "{{ project }}-{{ role }}"
     instance_id: "{{ instances[role] }}"
-  when: load_balance_prototypes
+  when: load_balance_prototypes and role in load_balancer
 
 # - add_host: name={{ item.public_dns_name }} groups=common,{{ role }}
 #   with_items: instance.tagged_instances
