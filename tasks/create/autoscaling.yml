@@ -29,4 +29,4 @@
     min_size: 1
     max_size: 2
     desired_capacity: 1
-    vpc_zone_identifier: "{{ vpc.subnets | selectattr('resource_tags.Role', 'equalto', role) | selectattr('az', 'equalto', preferred_availability_zone) | join(',', attribute='id') }}"
+    vpc_zone_identifier: "{{ vpc.subnets | selectattr('resource_tags.Role', 'equalto', role) | selectattr('az', 'equalto', region+preferred_availability_zone) | join(',', attribute='id') }}"
