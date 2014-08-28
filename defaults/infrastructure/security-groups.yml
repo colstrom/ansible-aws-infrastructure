@@ -10,7 +10,6 @@ no_management:
 
 no_inbound:
   application:
-  application:
     description: "Application Nodes"
     rules:
     - proto: tcp
@@ -21,6 +20,10 @@ no_inbound:
       from_port: 443
       to_port: 443
       cidr_ip: 0.0.0.0/0
+    - proto: tcp
+      from_port: 81
+      to_port: 81
+      cidr_ip: "{% if webhook_passthrough_enabled %}0.0.0.0{% else %}127.0.0.1/32{% endif %}"
 
 security_group:
   management:
@@ -53,6 +56,10 @@ security_group:
       to_port: 80
       cidr_ip: 0.0.0.0/0
     - proto: tcp
+      from_port: 81
+      to_port: 81
+      cidr_ip: "{% if webhook_passthrough_enabled %}0.0.0.0/0{% else %}127.0.0.1/32{% endif %}"
+    - proto: tcp
       from_port: 443
       to_port: 443
       cidr_ip: 0.0.0.0/0
@@ -67,6 +74,10 @@ security_group:
       from_port: 443
       to_port: 443
       group_id: "{{ security_group_id['inbound']|default(-1) }}"
+    - proto: tcp
+      from_port: 81
+      to_port: 81
+      group_id: "{% if webhook_passthrough_enabled %}{{ security_group_id['inbound']|default(-1) }}{% else %}{{ security_group_id['management']|default(-1) }}{% endif %}"
   cache:
     description: "Cache Nodes"
     rules:
