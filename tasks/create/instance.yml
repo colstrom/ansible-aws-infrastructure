@@ -23,8 +23,7 @@
       Role:        "{{ role }}"
       Name:        "{{ role }}.{{ project }}-{{ environment_tier }}"
 
-    spot_price: "{{ instance_bid }}"
-    spot_wait_timeout: 600
+    spot_price: "{% if environment_tier not in ['production'] %}{{ instance_bid }}{% else %}0{% endif %}"
     wait: yes
 
     vpc_subnet_id: "{{ vpc.subnets | selectattr('resource_tags.Role', 'equalto', role) | selectattr('az', 'equalto', region+preferred_availability_zone) | join(',', attribute='id') }}"
