@@ -4,10 +4,13 @@
 
 - name: Identify Base Image for Region
   ec2_ami_search:
-    region: "{{ region }}"
+    arch: amd64
     distro: ubuntu
+    region: "{{ region }}"
     release: trusty
-    store: "{% if environment_tier in ['staging', 'production'] %}ebs{% else %}instance-store{% endif %}"
+    store: ebs-ssd
+    stream: server
+    virt: hvm
   register: base_image
 
 - { include: create/instance.yml, role: management,  when: "'management' in required_systems" }
