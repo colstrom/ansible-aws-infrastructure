@@ -23,7 +23,7 @@ no_inbound:
     - proto: tcp
       from_port: 81
       to_port: 81
-      cidr_ip: "{% if webhook_passthrough_enabled %}0.0.0.0{% else %}127.0.0.1/32{% endif %}"
+      cidr_ip: "{% if webhook_passthrough_enabled %}0.0.0.0/0{% else %}127.0.0.1/32{% endif %}"
 
 security_group:
   management:
@@ -81,6 +81,10 @@ security_group:
   cache:
     description: "Cache Nodes"
     rules:
+    - proto: tcp
+      from_port: 6081
+      to_port: 6081
+      group_id: "{{ security_group_id['application']|default(-1) }}"
     - proto: tcp
       from_port: 6379
       to_port: 6379
