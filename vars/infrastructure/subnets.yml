@@ -200,3 +200,28 @@ subnets_all:
       'Project': "{{ project }}"
       'Role':    'build'
       'Name':    "{{ project }}-build-d"
+
+  - cidr: 10.0.11.0/27
+    az: "{{ region }}a"
+    resource_tags:
+      'Project': "{{ project }}"
+      'Role':    'preview'
+      'Name':    "{{ project }}-preview-a"
+  - cidr: 10.0.11.32/27
+    az: "{{ region }}b"
+    resource_tags:
+      'Project': "{{ project }}"
+      'Role':    'preview'
+      'Name':    "{{ project }}-preview-b"
+  - cidr: 10.0.11.64/27
+    az: "{{ region }}c"
+    resource_tags:
+      'Project': "{{ project }}"
+      'Role':    'preview'
+      'Name':    "{{ project }}-preview-c"
+  - cidr: 10.0.11.96/27
+    az: "{{ region }}d"
+    resource_tags:
+      'Project': "{{ project }}"
+      'Role':    'preview'
+      'Name':    "{{ project }}-preview-d"

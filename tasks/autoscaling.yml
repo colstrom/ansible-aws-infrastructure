@@ -14,3 +14,4 @@
 - { include: create/autoscaling.yml, has_load_balancer: True,  role: outbound,    when: "'outbound' in required_systems" }
 - { include: create/autoscaling.yml, has_load_balancer: False, role: aggregator,  when: "'aggregator' in required_systems" }
 - { include: create/autoscaling.yml, has_load_balancer: False, role: build,       when: "'build' in required_systems" }
+- { include: create/autoscaling.yml, has_load_balancer: False, role: preview,     when: "'preview' in required_systems" }
