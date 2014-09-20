@@ -34,5 +34,8 @@ load_balancer:
       load_balancer_port: 443
       instance_port: 443
     - protocol: tcp
+      load_balancer_port: 8080
+      instance_port: 8080
+    - protocol: tcp
       load_balancer_port: 8443
       instance_port: 8443
