@@ -8,6 +8,7 @@
     listeners: "{{ load_balancer[role].listeners }}"
     scheme: "{{ load_balancer[role].scheme }}"
     subnets: "{{ vpc.subnets | selectattr('resource_tags.Role', 'equalto', role) | map(attribute='id') | list }}"
+    cross_az_load_balancing: yes
   register: balancer
 
 - name: "Capture Load Balancer Name | {{ role }}"

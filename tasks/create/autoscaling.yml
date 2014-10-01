@@ -12,6 +12,7 @@
   ec2_lc:
     state: present
     region: "{{ region }}"
+    assign_public_ip: "{% if role in roles_needing_public_ip %}yes{% else %}no{% endif %}"
     name: "{{ project }}-{{ role }}-{{ timestamp }}"
     instance_type: "{{ instance_type }}"
     image_id: "{{ ami.image_id }}"
@@ -29,4 +30,4 @@
     min_size: 1
     max_size: 2
     desired_capacity: 1
-    vpc_zone_identifier: "{{ vpc.subnets | selectattr('resource_tags.Role', 'equalto', role) | selectattr('az', 'equalto', region+preferred_availability_zone) | join(',', attribute='id') }}"
+    vpc_zone_identifier: "{{ vpc.subnets | selectattr('resource_tags.Role', 'equalto', role) | join(',', attribute='id') }}"
