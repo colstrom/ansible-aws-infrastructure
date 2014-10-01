@@ -23,7 +23,7 @@ no_inbound:
     - proto: tcp
       from_port: 81
       to_port: 81
-      cidr_ip: "{% if webhook_passthrough_enabled %}0.0.0.0/0{% else %}127.0.0.1/32{% endif %}"
+      cidr_ip: "{% if autodeploy_passthrough_enabled %}0.0.0.0/0{% else %}127.0.0.1/32{% endif %}"
 
 security_group:
   management:
@@ -62,7 +62,7 @@ security_group:
     - proto: tcp
       from_port: 81
       to_port: 81
-      cidr_ip: "{% if webhook_passthrough_enabled %}0.0.0.0/0{% else %}127.0.0.1/32{% endif %}"
+      cidr_ip: "{% if autodeploy_passthrough_enabled %}0.0.0.0/0{% else %}127.0.0.1/32{% endif %}"
     - proto: tcp
       from_port: 443
       to_port: 443
@@ -81,7 +81,7 @@ security_group:
     - proto: tcp
       from_port: 81
       to_port: 81
-      group_id: "{% if webhook_passthrough_enabled %}{{ security_group_id['inbound']|default(-1) }}{% else %}{{ security_group_id['management']|default(-1) }}{% endif %}"
+      group_id: "{% if autodeploy_passthrough_enabled %}{{ security_group_id['inbound']|default(-1) }}{% else %}{{ security_group_id['management']|default(-1) }}{% endif %}"
   cache:
     description: "Cache Nodes"
     rules:

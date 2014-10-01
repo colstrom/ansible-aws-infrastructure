@@ -2,4 +2,4 @@
 autoscale: no
 load_balance_prototypes: no
 dns_points_to_load_balancer: no
-webhook_passthrough_enabled: no
+autodeploy_passthrough_enabled: no
