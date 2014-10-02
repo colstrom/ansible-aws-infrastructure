@@ -31,3 +31,7 @@
     max_size: 2
     desired_capacity: 1
     vpc_zone_identifier: "{{ vpc.subnets | selectattr('resource_tags.Role', 'equalto', role) | join(',', attribute='id') }}"
+    tags:
+      - Environment: "{{ environment_tier }}"
+      - Role:        "{{ role }}-autoscaled"
+      - Name:        "{{ role }}.{{ project }}-{{ environment_tier }}"
