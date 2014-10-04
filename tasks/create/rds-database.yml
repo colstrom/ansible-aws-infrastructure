@@ -16,18 +16,18 @@
     multi_zone: yes
 
     instance_name: "{{ project }}-{{ role }}-{{ environment_tier }}"
-    instance_type: "{{ database.instance_type | mandatory }}"
+    instance_type: "{{ database_rds_instance_type | mandatory }}"
 
     vpc_security_groups: "{{ security_group_id[role] }}"
     subnet: "{{ project }}-{{ role }}"
 
-    db_engine: "{{ database.engine | mandatory }}"
+    db_engine: "{{ database_engine | mandatory }}"
     upgrade: yes
 
-    port: "{% if database.engine == 'postgres' %}5432{%elif database.engine == 'MySQL' %}3306{% endif %}"
-    db_name: "{{ database.name | default(project) }}"
-    username: "{{ database.username | default(project) }}"
-    password: "{{ database.password | mandatory }}"
+    port: "{% if database_engine == 'postgres' %}5432{%elif database_engine == 'MySQL' %}3306{% endif %}"
+    db_name: "{{ database_name | default(project) }}"
+    username: "{{ database_username | default(project) }}"
+    password: "{{ database_password | mandatory }}"
 
     backup_retention: 30
     size: 100
