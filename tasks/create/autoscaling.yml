@@ -27,9 +27,9 @@
     launch_config_name: "{{ project }}-{{ role }}-{{ timestamp }}"
     load_balancers: "{% if has_load_balancer %}{{ project }}-{{ role }}{% else %}{{ [] }}{% endif %}"
     name: "{{ project }}-{{ role }}"
-    min_size: 1
-    max_size: 2
-    desired_capacity: 1
+    min_size: 3
+    max_size: 6
+    desired_capacity: 3
     vpc_zone_identifier: "{{ vpc.subnets | selectattr('resource_tags.Role', 'equalto', role) | join(',', attribute='id') }}"
     tags:
       - Environment: "{{ environment_tier }}"
