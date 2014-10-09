@@ -190,4 +190,4 @@ security_group:
     - proto: tcp
       from_port: 22
       to_port: 22
-      cidr_ip: "{{ security_group_id['build']|default(-1) }}"
+      group_id: "{{ security_group_id['build']|default(-1) }}"
