@@ -3,3 +3,46 @@ instance_type: m3.medium
 instance_bid: 0.077
 instance_store_device: /dev/xvdb
 using_rds: no
+
+standard_instance_for_role:
+  management: t2.micro
+  inbound: c3.large
+  application: m3.medium
+  cache: m3.medium
+  database: m3.medium
+  outbound: m3.medium
+  aggregator: m3.medium
+  build: t2.medium
+  preview: t2.small
+
+instance_bids:
+  t2:
+    micro: 0.013
+    small: 0.026
+    medium: 0.052
+  m3:
+    medium: 0.070
+    large: 0.140
+    xlarge: 0.280
+    2xlarge: 0.560
+  c3:
+    large: 0.105
+    xlarge: 0.210
+    2xlarge: 0.420
+    4xlarge: 0.840
+    8xlarge: 1.680
+  g2:
+    2xlarge: 0.650
+  r3:
+    large: 0.175
+    xlarge: 0.350
+    2xlarge: 0.700
+    4xlarge: 1.400
+    8xlarge: 2.800
+  i2:
+    xlarge: 0.853
+    2xlarge: 1.705
+    4xlarge: 3.410
+    8xlarge: 6.820
+  hs1:
+    8xlarge: 4.600
