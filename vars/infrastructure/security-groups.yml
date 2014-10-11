@@ -8,8 +8,8 @@ no_management:
       to_port: 22
       cidr_ip: 0.0.0.0/0
     - proto: tcp
-      from_port: 22000
-      to_port: 22000
+      from_port: 10443
+      to_port: 10443
       cidr_ip: 0.0.0.0/0
 
 no_inbound:
