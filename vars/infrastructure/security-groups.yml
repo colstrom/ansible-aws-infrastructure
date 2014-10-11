@@ -11,6 +11,10 @@ no_management:
       from_port: 10443
       to_port: 10443
       cidr_ip: 0.0.0.0/0
+    - proto: udp
+      from_port: 60000
+      to_port: 61000
+      cidr_ip: 0.0.0.0/0
 
 no_inbound:
   application:
@@ -55,6 +59,10 @@ security_group:
     - proto: tcp
       from_port: 5099
       to_port: 5099
+      group_id: "{{ security_group_id['management']|default(-1) }}"
+    - proto: udp
+      from_port: 60000
+      to_port: 61000
       group_id: "{{ security_group_id['management']|default(-1) }}"
   inbound:
     description: "Inbound Proxy"
