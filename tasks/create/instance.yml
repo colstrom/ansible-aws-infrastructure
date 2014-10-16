@@ -23,6 +23,12 @@
       Role:        "{{ role }}"
       Name:        "{{ role }}.{{ project }}-{{ environment_tier }}"
 
+    volumes:
+      - device_name: /dev/sda1
+        device_type: gp2
+        delete_on_termination: yes
+        volume_size: "{{ root_volume_size }}"
+
     spot_price: "{% if environment_tier not in ['production'] %}{{ instance_bid }}{% else %}0{% endif %}"
     wait: yes
 
