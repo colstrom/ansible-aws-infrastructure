@@ -4,7 +4,7 @@ load_balancer:
     scheme: internet-facing
     security_groups: ['inbound', 'application']
     listeners:
-    - protocol: tcp
+    - protocol: http
       load_balancer_port: 80
       instance_port: 80
     - protocol: tcp
