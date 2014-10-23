@@ -225,3 +225,54 @@ subnets_all:
       'Project': "{{ project }}"
       'Role':    'preview'
       'Name':    "{{ project }}-preview-d"
+
+  - cidr: 10.0.12.0/27
+    az: "{{ region }}a"
+    resource_tags:
+      'Project': "{{ project }}"
+      'Role':    'logs'
+      'Name':    "{{ project }}-logs-a"
+  - cidr: 10.0.12.32/27
+    az: "{{ region }}b"
+    resource_tags:
+      'Project': "{{ project }}"
+      'Role':    'logs'
+      'Name':    "{{ project }}-logs-b"
+  - cidr: 10.0.12.64/27
+    az: "{{ region }}c"
+    resource_tags:
+      'Project': "{{ project }}"
+      'Role':    'logs'
+      'Name':    "{{ project }}-logs-c"
+  - cidr: 10.0.12.96/27
+    az: "{{ region }}d"
+    resource_tags:
+      'Project': "{{ project }}"
+      'Role':    'logs'
+      'Name':    "{{ project }}-logs-d"
+
+  - cidr: 10.0.13.0/27
+    az: "{{ region }}a"
+    resource_tags:
+      'Project': "{{ project }}"
+      'Role':    'metrics'
+      'Name':    "{{ project }}-metrics-a"
+  - cidr: 10.0.13.32/27
+    az: "{{ region }}b"
+    resource_tags:
+      'Project': "{{ project }}"
+      'Role':    'metrics'
+      'Name':    "{{ project }}-metrics-b"
+  - cidr: 10.0.13.64/27
+    az: "{{ region }}c"
+    resource_tags:
+      'Project': "{{ project }}"
+      'Role':    'metrics'
+      'Name':    "{{ project }}-metrics-c"
+  - cidr: 10.0.13.96/27
+    az: "{{ region }}d"
+    resource_tags:
+      'Project': "{{ project }}"
+      'Role':    'metrics'
+      'Name':    "{{ project }}-metrics-d"
+
