@@ -148,6 +148,10 @@ security_group:
       to_port: 8443
       group_id: "{{ security_group_id['application']|default(-1) }}"
     - proto: tcp
+      from_port: 9443
+      to_port: 9443
+      group_id: "{{ security_group_id['application']|default(-1) }}"
+    - proto: tcp
       from_port: 6081
       to_port: 6081
       group_id: "{{ security_group_id['application']|default(-1) }}"
