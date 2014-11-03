@@ -13,16 +13,16 @@
     virt: hvm
   register: base_image
 
-- { include: create/instance.yml, role: management,  when: "'management' in required_systems" }
-- { include: create/instance.yml, role: inbound,     when: "'inbound' in required_systems" }
-- { include: create/instance.yml, role: application, when: "'application' in required_systems" }
-- { include: create/instance.yml, role: cache,       when: "'cache' in required_systems" }
-- { include: create/instance.yml, role: database,    when: "'database' in required_systems and not using_rds" }
-- { include: create/instance.yml, role: outbound,    when: "'outbound' in required_systems" }
-- { include: create/instance.yml, role: logs,        when: "'logs' in required_systems" }
-- { include: create/instance.yml, role: metrics,     when: "'metrics' in required_systems" }
-- { include: create/instance.yml, role: aggregator,  when: "'aggregator' in required_systems" }
-- { include: create/instance.yml, role: build,       when: "'build' in required_systems" }
-- { include: create/instance.yml, role: preview,     when: "'preview' in required_systems" }
+- { include: create/instance.yml, role_name: management,  when: "'management' in required_systems" }
+- { include: create/instance.yml, role_name: inbound,     when: "'inbound' in required_systems" }
+- { include: create/instance.yml, role_name: application, when: "'application' in required_systems" }
+- { include: create/instance.yml, role_name: cache,       when: "'cache' in required_systems" }
+- { include: create/instance.yml, role_name: database,    when: "'database' in required_systems and not using_rds" }
+- { include: create/instance.yml, role_name: outbound,    when: "'outbound' in required_systems" }
+- { include: create/instance.yml, role_name: logs,        when: "'logs' in required_systems" }
+- { include: create/instance.yml, role_name: metrics,     when: "'metrics' in required_systems" }
+- { include: create/instance.yml, role_name: aggregator,  when: "'aggregator' in required_systems" }
+- { include: create/instance.yml, role_name: build,       when: "'build' in required_systems" }
+- { include: create/instance.yml, role_name: preview,     when: "'preview' in required_systems" }
 
-- { include: create/rds-database.yml, role: database, when: "'database' in required_systems and using_rds" }
+- { include: create/rds-database.yml, role_name: database, when: "'database' in required_systems and using_rds" }
