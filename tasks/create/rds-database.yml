@@ -2,10 +2,10 @@
 - name: Create Database Subnet Group
   rds_subnet_group:
     state: present
-    name: "{{ project }}-{{ role }}"
+    name: "{{ project }}-{{ role_name }}"
     description: "Database for {{ project }}"
     region: "{{ region }}"
-    subnets: "{{ vpc.subnets | selectattr('resource_tags.Role', 'equalto', role) | map(attribute='id') | list }}"
+    subnets: "{{ vpc.subnets | selectattr('resource_tags.Role', 'equalto', role_name) | map(attribute='id') | list }}"
 
 - name: Create Database Servers
   rds:
@@ -15,11 +15,11 @@
     region: "{{ region }}"
     multi_zone: yes
 
-    instance_name: "{{ project }}-{{ role }}-{{ environment_tier }}"
+    instance_name: "{{ project }}-{{ role_name }}-{{ environment_tier }}"
     instance_type: "{{ database_rds_instance_type | mandatory }}"
 
-    vpc_security_groups: "{{ security_group_id[role] }}"
-    subnet: "{{ project }}-{{ role }}"
+    vpc_security_groups: "{{ security_group_id[role_name] }}"
+    subnet: "{{ project }}-{{ role_name }}"
 
     db_engine: "{{ database_engine | mandatory }}"
     upgrade: yes

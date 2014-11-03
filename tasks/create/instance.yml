@@ -1,18 +1,18 @@
 ---
-- name: "Place Spot Request for EC2 Instance | {{ role }}"
+- name: "Place Spot Request for EC2 Instance | {{ role_name }}"
   ec2:
     region: "{{ region }}"
     zone: "{{ region }}{{ preferred_availability_zone }}"
 
     key_name: "{{ bootstrap_key }}"
 
-    group_id: "{{ security_group_id['managed'] }},{{ security_group_id[role] }}"
+    group_id: "{{ security_group_id['managed'] }},{{ security_group_id[role_name] }}"
 
     instance_tags:
       Project:     "{{ project }}"
       Environment: "{{ environment_tier }}"
-      Role:        "{{ role }}"
-      Name:        "{{ role }}.{{ project }}-{{ environment_tier }}"
+      Role:        "{{ role_name }}"
+      Name:        "{{ role_name }}.{{ project }}-{{ environment_tier }}"
 
     image: "{{ base_image.ami }}"
     instance_type: "{{ instance_type }}"
@@ -20,8 +20,8 @@
     count_tag:
       Project:     "{{ project }}"
       Environment: "{{ environment_tier }}"
-      Role:        "{{ role }}"
-      Name:        "{{ role }}.{{ project }}-{{ environment_tier }}"
+      Role:        "{{ role_name }}"
+      Name:        "{{ role_name }}.{{ project }}-{{ environment_tier }}"
 
     volumes:
       - device_name: /dev/sda1
@@ -32,20 +32,20 @@
     spot_price: "{{ instance_bid if environment_tier not in ['production'] else None }}"
     wait: yes
 
-    vpc_subnet_id: "{{ vpc.subnets | selectattr('resource_tags.Role', 'equalto', role) | selectattr('az', 'equalto', region+preferred_availability_zone) | join(',', attribute='id') }}"
+    vpc_subnet_id: "{{ vpc.subnets | selectattr('resource_tags.Role', 'equalto', role_name) | selectattr('az', 'equalto', region+preferred_availability_zone) | join(',', attribute='id') }}"
     assign_public_ip: "{% if environment_tier in ['next', 'development', 'staging', 'production'] %}yes{% else %}no{% endif %}"
   register: instance
 
-- name: "Capture Instance ID | {{ role }}"
+- name: "Capture Instance ID | {{ role_name }}"
   set_fact:
-    instances: "{{ instances.update({role: instance.tagged_instances[0].id}) }}{{ instances }}"
+    instances: "{{ instances.update({role_name: instance.tagged_instances[0].id}) }}{{ instances }}"
 
-- name: "Route53 Record | {{ role }}.{{ project }}-{{ environment_tier }}.teluswebteam.com"
+- name: "Route53 Record | {{ role_name }}.{{ project }}-{{ environment_tier }}.teluswebteam.com"
   route53:
     command: create
     overwrite: yes
     zone: teluswebteam.com
-    record: "{{ role }}{% if dns_points_to_load_balancer and role in load_balancer %}-direct{% endif %}.{{ project }}-{{ environment_tier }}.teluswebteam.com"
+    record: "{{ role_name }}{% if dns_points_to_load_balancer and role_name in load_balancer %}-direct{% endif %}.{{ project }}-{{ environment_tier }}.teluswebteam.com"
     type: CNAME
     value: "{{ item.public_dns_name }}"
     ttl: 300
@@ -55,10 +55,10 @@
   ec2_elb:
     state: present
     region: "{{ region }}"
-    ec2_elbs: "{{ project }}-{{ role }}"
-    instance_id: "{{ instances[role] }}"
+    ec2_elbs: "{{ project }}-{{ role_name }}"
+    instance_id: "{{ instances[role_name] }}"
     wait: no
-  when: load_balancers_enabled and dns_points_to_load_balancer and role in load_balancer
+  when: load_balancers_enabled and dns_points_to_load_balancer and role_name in load_balancer
 
-# - add_host: name={{ item.public_dns_name }} groups=common,{{ role }}
+# - add_host: name={{ item.public_dns_name }} groups=common,{{ role_name }}
 #   with_items: instance.tagged_instances

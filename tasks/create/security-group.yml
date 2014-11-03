@@ -1,14 +1,14 @@
 ---
-- name: "Security Group | {{ role }}"
+- name: "Security Group | {{ role_name }}"
   ec2_group:
     state: present
     region: "{{ region }}"
     vpc_id: "{{ vpc.vpc_id }}"
-    name: "{{ project }}-{{ role }}"
-    description: "{{ security_group[role].description }}"
-    rules: "{{ security_group[role].rules }}"
+    name: "{{ project }}-{{ role_name }}"
+    description: "{{ security_group[role_name].description }}"
+    rules: "{{ security_group[role_name].rules }}"
   register: security
 
-- name: "Capture Security Group ID | {{ role }}"
+- name: "Capture Security Group ID | {{ role_name }}"
   set_fact:
-    security_group_id: "{{ security_group_id.update({role: security.group_id}) }}{{ security_group_id }}"
+    security_group_id: "{{ security_group_id.update({role_name: security.group_id}) }}{{ security_group_id }}"

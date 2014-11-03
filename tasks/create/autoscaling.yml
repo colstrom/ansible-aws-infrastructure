@@ -1,37 +1,37 @@
 ---
-- name: "Create AMI | {{ role }}"
+- name: "Create AMI | {{ role_name }}"
   ec2_ami:
     state: present
     region: "{{ region }}"
-    name: "{{ project }}-{{ role }}-{{ timestamp }}"
-    instance_id: "{{ instances[role] }}"
+    name: "{{ project }}-{{ role_name }}-{{ timestamp }}"
+    instance_id: "{{ instances[role_name] }}"
     wait: yes
   register: ami
 
-- name: "Launch Configuration | {{ role }}"
+- name: "Launch Configuration | {{ role_name }}"
   ec2_lc:
     state: present
     region: "{{ region }}"
-    assign_public_ip: "{% if role in roles_needing_public_ip %}yes{% else %}no{% endif %}"
-    name: "{{ project }}-{{ role }}-{{ timestamp }}"
+    assign_public_ip: "{% if role_name in roles_needing_public_ip %}yes{% else %}no{% endif %}"
+    name: "{{ project }}-{{ role_name }}-{{ timestamp }}"
     instance_type: "{{ instance_type }}"
     image_id: "{{ ami.image_id }}"
-    security_groups: "{{ security_group_id['managed'] }},{{ security_group_id[role] }}"
+    security_groups: "{{ security_group_id['managed'] }},{{ security_group_id[role_name] }}"
     # spot_price: "{{ instance_bid }}"
 
-- name: "AutoScaling Group | {{ role }}"
+- name: "AutoScaling Group | {{ role_name }}"
   ec2_asg:
     state: present
     region: "{{ region }}"
     availability_zones: "{{ region }}a,{{ region }}b,{{ region }}d"
-    launch_config_name: "{{ project }}-{{ role }}-{{ timestamp }}"
-    load_balancers: "{% if has_load_balancer %}{{ project }}-{{ role }}{% else %}{{ [] }}{% endif %}"
-    name: "{{ project }}-{{ role }}"
+    launch_config_name: "{{ project }}-{{ role_name }}-{{ timestamp }}"
+    load_balancers: "{% if has_load_balancer %}{{ project }}-{{ role_name }}{% else %}{{ [] }}{% endif %}"
+    name: "{{ project }}-{{ role_name }}"
     min_size: 3
     max_size: 6
     desired_capacity: 3
-    vpc_zone_identifier: "{{ vpc.subnets | selectattr('resource_tags.Role', 'equalto', role) | join(',', attribute='id') }}"
+    vpc_zone_identifier: "{{ vpc.subnets | selectattr('resource_tags.Role', 'equalto', role_name) | join(',', attribute='id') }}"
     tags:
       - Environment: "{{ environment_tier }}"
-      - Role:        "{{ role }}-autoscaled"
-      - Name:        "{{ role }}.{{ project }}-{{ environment_tier }}"
+      - Role:        "{{ role_name }}-autoscaled"
+      - Name:        "{{ role_name }}.{{ project }}-{{ environment_tier }}"
