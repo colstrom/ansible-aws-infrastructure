@@ -7,11 +7,11 @@
   set_fact:
     timestamp: "{{ date.stdout }}"
 
-- { include: create/autoscaling.yml, has_load_balancer: False, role_name: management,  when: "'management' in required_systems" }
-- { include: create/autoscaling.yml, has_load_balancer: False, role_name: inbound,     when: "'inbound' in required_systems" }
-- { include: create/autoscaling.yml, has_load_balancer: True,  role_name: application, when: "'application' in required_systems" }
-- { include: create/autoscaling.yml, has_load_balancer: False, role_name: cache,       when: "'cache' in required_systems" }
-- { include: create/autoscaling.yml, has_load_balancer: True,  role_name: outbound,    when: "'outbound' in required_systems" }
-- { include: create/autoscaling.yml, has_load_balancer: False, role_name: aggregator,  when: "'aggregator' in required_systems" }
-- { include: create/autoscaling.yml, has_load_balancer: False, role_name: build,       when: "'build' in required_systems" }
-- { include: create/autoscaling.yml, has_load_balancer: False, role_name: preview,     when: "'preview' in required_systems" }
+- { include: create/autoscaling.yml, has_load_balancer: False, system_role: management,  when: "'management' in required_systems" }
+- { include: create/autoscaling.yml, has_load_balancer: False, system_role: inbound,     when: "'inbound' in required_systems" }
+- { include: create/autoscaling.yml, has_load_balancer: True,  system_role: application, when: "'application' in required_systems" }
+- { include: create/autoscaling.yml, has_load_balancer: False, system_role: cache,       when: "'cache' in required_systems" }
+- { include: create/autoscaling.yml, has_load_balancer: True,  system_role: outbound,    when: "'outbound' in required_systems" }
+- { include: create/autoscaling.yml, has_load_balancer: False, system_role: aggregator,  when: "'aggregator' in required_systems" }
+- { include: create/autoscaling.yml, has_load_balancer: False, system_role: build,       when: "'build' in required_systems" }
+- { include: create/autoscaling.yml, has_load_balancer: False, system_role: preview,     when: "'preview' in required_systems" }
