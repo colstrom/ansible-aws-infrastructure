@@ -165,15 +165,15 @@ security_group:
     - proto: tcp
       from_port: 80
       to_port: 80
-      cidr_ip: 10.0.0.0/16
+      cidr_ip: "{{ subnet_prefix }}.0.0/16"
     - proto: tcp
       from_port: 6379
       to_port: 6379
-      cidr_ip: 10.0.0.0/16
+      cidr_ip: "{{ subnet_prefix }}.0.0/16"
     - proto: tcp
       from_port: 8000
       to_port: 8000
-      cidr_ip: 10.0.0.0/16
+      cidr_ip: "{{ subnet_prefix }}.0.0/16"
   metrics:
     description: "Cross-Project Metrics Storage"
     rules:
@@ -188,11 +188,11 @@ security_group:
     - proto: tcp
       from_port: 8090
       to_port: 8090
-      cidr_ip: 10.0.0.0/16  # Raft (Internal Use)
+      cidr_ip: "{{ subnet_prefix }}.0.0/16"  # Raft (Internal Use)
     - proto: tcp
       from_port: 8099
       to_port: 8099
-      cidr_ip: 10.0.0.0/16  # Replication (using protobuf)
+      cidr_ip: "{{ subnet_prefix }}.0.0/16"  # Replication (using protobuf)
   logs:
     description: "Cross-Project Log Storage"
     rules:
