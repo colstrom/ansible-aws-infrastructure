@@ -176,7 +176,7 @@ subnets_all:
       'Role':    'aggregator'
       'Name':    "{{ project }}-aggregator-d"
 
-  - cidr: "{{ subnet_prefix }}.{{ subnet_prefix }}/27"
+  - cidr: "{{ subnet_prefix }}.10.0/27"
     az: "{{ region }}a"
     resource_tags:
       'Project': "{{ project }}"
