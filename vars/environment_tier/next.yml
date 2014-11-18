@@ -1,3 +1,4 @@
 --- 
 environment_tier: next
 region: eu-west-1
+dns_points_to_load_balancer: no
