@@ -1,7 +1,7 @@
 ---
 autodeploy_passthrough_enabled: no
 autoscale: no
-dns_points_to_load_balancer: "{{ load_balancers_enabled }}"
+dns_points_to_load_balancer: "{{ load_balancers_enabled | bool }}"
 load_balance_prototypes: no
 load_balancers_enabled: yes
 root_volume_size: 10
