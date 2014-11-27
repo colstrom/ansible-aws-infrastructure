@@ -10,6 +10,7 @@ load_balancer:
     - protocol: "{{ 'https' if elb_ssl_offload else 'tcp' }}"
       load_balancer_port: 443
       instance_port: "{{ 80 if elb_ssl_offload else 443 }}"
+      instance_protocol: "{{ 'http' if elb_ssl_offload else 'tcp' }}"
       ssl_certificate_id: "{{ ( 'arn:aws:iam::461957644563:server-certificate/self-signed' + elb_ssl_certificate_name ) if elb_ssl_offload else omit }}"
   database:
     scheme: internal
