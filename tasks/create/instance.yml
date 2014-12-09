@@ -40,7 +40,7 @@
   set_fact:
     instances: "{{ instances.update({system_role: instance.tagged_instances[0].id}) }}{{ instances }}"
 
-- name: "Route53 Record | {{ system_role }}.{{ project }}-{{ environment_tier }}.teluswebteam.com"
+- name: "Route53 Record | Public Interface"
   route53:
     command: create
     overwrite: yes
@@ -48,6 +48,17 @@
     record: "{{ system_role }}{% if load_balancers_enabled and dns_points_to_load_balancer and system_role in load_balancer %}-direct{% endif %}.{{ project }}-{{ environment_tier }}.teluswebteam.com"
     type: CNAME
     value: "{{ item.public_dns_name }}"
+    ttl: 300
+  with_items: instance.tagged_instances
+
+- name: "Route53 Record | Private Interface"
+  route53:
+    command: create
+    overwrite: yes
+    zone: teluswebteam.com
+    record: "{{ system_role }}-internal.{{ project }}-{{ environment_tier }}.teluswebteam.com"
+    type: CNAME
+    value: "{{ item.private_dns_name }}"
     ttl: 300
   with_items: instance.tagged_instances
 
