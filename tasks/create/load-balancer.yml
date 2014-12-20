@@ -15,12 +15,12 @@
   set_fact:
     load_balancer_name: "{{ load_balancer_name.update({system_role: balancer.elb.name}) }}{{ load_balancer_name }}"
 
-- name: "Route53 Record | {{ system_role }}.{{ project }}-{{ environment_tier }}.teluswebteam.com"
+- name: "Route53 Record | {{ system_role }}.{{ project }}-{{ environment_tier }}.{{ domain }}"
   route53:
     command: create
     overwrite: yes
-    zone: teluswebteam.com
-    record: "{{ system_role }}.{{ project }}-{{ environment_tier }}.teluswebteam.com"
+    zone: "{{ domain }}"
+    record: "{{ system_role }}.{{ project }}-{{ environment_tier }}.{{ domain }}"
     type: CNAME
     value: "{{ balancer.elb.dns_name }}"
     ttl: 300
