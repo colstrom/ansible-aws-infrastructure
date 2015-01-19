@@ -125,6 +125,14 @@ security_group:
       to_port: 6379
       group_id: "{{ security_group_id['application']|default(-1) }}"
     - proto: tcp
+      from_port: 8083
+      to_port: 8083
+      group_id: "{{ security_group_id['application']|default(-1) }}"
+    - proto: tcp
+      from_port: 8086
+      to_port: 8086
+      group_id: "{{ security_group_id['application']|default(-1) }}"
+    - proto: tcp
       from_port: 26379
       to_port: 26379
       group_id: "{{ security_group_id['application']|default(-1) }}"
