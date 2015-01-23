@@ -1,4 +1,9 @@
 ---
+- name: Check ELB name length
+  debug:
+    msg: "ELB name '{{ project }}-{{ system_role }}' is greater then 32 characters"
+  failed_when: "{{ ((project + '-' + system_role) | length) > 32 }}"
+
 - name: "Load Balancer | {{ system_role }}"
   ec2_elb_lb:
     state: present
