@@ -275,4 +275,3 @@ subnets_all:
       'Project': "{{ project }}"
       'Role':    'metrics'
       'Name':    "{{ project }}-metrics-d"
-
