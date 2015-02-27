@@ -1,0 +1,4 @@
+---
+- name: Pause 60 seconds for DNS propigation
+  pause:
+    minutes: 1
