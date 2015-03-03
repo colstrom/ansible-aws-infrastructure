@@ -19,7 +19,8 @@ default_instance_type:
   aggregator: m3.medium
   build: t2.medium
   preview: t2.small
-  log: hi1.4xlarge
+  logs: hi1.4xlarge
+  metrics: hi1.4xlarge
 
 default_instance_bid:
   t2.micro: 0.013
