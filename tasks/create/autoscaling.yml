@@ -14,7 +14,7 @@
     region: "{{ region }}"
     assign_public_ip: "{% if system_role in roles_needing_public_ip %}yes{% else %}no{% endif %}"
     name: "{{ project }}-{{ system_role }}-{{ timestamp }}"
-    instance_type: "{{ instance_type[role] }}"
+    instance_type: "{{ instance_type[system_role] }}"
     image_id: "{{ ami.image_id }}"
     security_groups: "{{ security_group_id['managed'] }},{{ security_group_id[system_role] }}"
     # spot_price: "{{ instance_bid }}"
