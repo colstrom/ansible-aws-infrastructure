@@ -7,6 +7,7 @@
     instance_id: "{{ instances[system_role] }}"
     wait: yes
   register: ami
+  when: system_role in autoscale_roles
 
 - name: "Launch Configuration | {{ system_role }}"
   ec2_lc:
@@ -18,6 +19,7 @@
     image_id: "{{ ami.image_id }}"
     security_groups: "{{ security_group_id['managed'] }},{{ security_group_id[system_role] }}"
     # spot_price: "{{ instance_bid }}"
+  when: system_role in autoscale_roles
 
 - name: "AutoScaling Group | {{ system_role }}"
   ec2_asg:
@@ -35,3 +37,4 @@
       - Environment: "{{ environment_tier }}"
       - Role:        "{{ system_role }}-autoscaled"
       - Name:        "{{ system_role }}.{{ project }}-{{ environment_tier }}"
+  when: system_role in autoscale_roles

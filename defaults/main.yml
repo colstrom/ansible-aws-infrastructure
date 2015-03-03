@@ -16,6 +16,19 @@ always_use_spot_instance_for_roles:
   - build
   - preview
 
+autoscale_roles:
+  - management
+  - inbound
+  - application
+  - database
+  - cache
+  - outbound
+  - aggregator
+  - build
+  - preview
+  - logs
+  - metrics
+
 default_instance_type:
   management: t2.micro
   inbound: c3.large
