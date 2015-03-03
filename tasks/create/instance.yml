@@ -29,7 +29,7 @@
         delete_on_termination: yes
         volume_size: "{{ override_root_volume_size[role] if role in override_root_volume_size else root_volume_size }}"
 
-    spot_price: "{{ instance_bid[instance_type[role]] if environment_tier not in ['production'] else None }}"
+    spot_price: "{{ instance_bid[instance_type[item]] if environment_tier not in ['production'] or item in always_use_spot_instance_for_roles else None }}"
     wait: yes
 
     vpc_subnet_id: "{{ vpc.subnets | selectattr('resource_tags.Role', 'equalto', system_role) | selectattr('az', 'equalto', region+preferred_availability_zone) | join(',', attribute='id') }}"

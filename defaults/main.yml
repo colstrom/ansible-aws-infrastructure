@@ -9,6 +9,13 @@ load_balancers_enabled: yes
 root_volume_size: 10
 subnet_prefix: '10.0'
 
+always_use_spot_instance_for_roles:
+  - aggregator
+  - logs
+  - metrics
+  - build
+  - preview
+
 default_instance_type:
   management: t2.micro
   inbound: c3.large
