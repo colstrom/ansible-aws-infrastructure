@@ -27,7 +27,7 @@
       - device_name: /dev/sda1
         device_type: gp2
         delete_on_termination: yes
-        volume_size: "{{ root_volume_size }}"
+        volume_size: "{{ override_root_volume_size[role] if role in override_root_volume_size else root_volume_size }}"
 
     spot_price: "{{ instance_bid[instance_type[role]] if environment_tier not in ['production'] else None }}"
     wait: yes
