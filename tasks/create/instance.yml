@@ -15,7 +15,7 @@
       Name:        "{{ system_role }}.{{ project }}-{{ environment_tier }}"
 
     image: "{{ base_image.ami }}"
-    instance_type: "{{ instance_type }}"
+    instance_type: "{{ instance_type[role] }}"
     exact_count: 1
     count_tag:
       Project:     "{{ project }}"
@@ -29,7 +29,7 @@
         delete_on_termination: yes
         volume_size: "{{ root_volume_size }}"
 
-    spot_price: "{{ instance_bid if environment_tier not in ['production'] else None }}"
+    spot_price: "{{ instance_bid[instance_type[role]] if environment_tier not in ['production'] else None }}"
     wait: yes
 
     vpc_subnet_id: "{{ vpc.subnets | selectattr('resource_tags.Role', 'equalto', system_role) | selectattr('az', 'equalto', region+preferred_availability_zone) | join(',', attribute='id') }}"
