@@ -25,7 +25,7 @@
   ec2_asg:
     state: present
     region: "{{ region }}"
-    availability_zones: "{{ region }}a,{{ region }}b,{{ region }}d"
+    availability_zones: "{{ availability_zones | join(',') }}"
     launch_config_name: "{{ project }}-{{ system_role }}-{{ timestamp }}"
     load_balancers: "{% if has_load_balancer %}{{ project }}-{{ system_role }}{% else %}{{ [] }}{% endif %}"
     name: "{{ project }}-{{ system_role }}"
