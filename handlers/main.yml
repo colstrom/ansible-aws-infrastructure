@@ -1,4 +1,4 @@
 ---
-- name: Pause 60 seconds for DNS propigation
+- name: Pause 60 seconds for DNS propagation
   pause:
     minutes: 1
