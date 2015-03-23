@@ -14,6 +14,13 @@
     scheme: "{{ load_balancer[system_role].scheme }}"
     subnets: "{{ vpc.subnets | selectattr('resource_tags.Role', 'equalto', system_role) | map(attribute='id') | list }}"
     cross_az_load_balancing: yes
+#    health_check:
+#      ping_protocol: tcp
+#      ping_port: "{{ load_balancer[system_role].listeners[0].load_balancer_port }}"
+#      response_timeout: 5
+#      interval: 30
+#      unhealthy_threshold: 2
+#      healthy_threshold: 10
   register: balancer
 
 - name: "Capture Load Balancer Name | {{ system_role }}"

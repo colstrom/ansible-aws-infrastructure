@@ -19,12 +19,15 @@ load_balancer:
     - protocol: tcp
       load_balancer_port: 3306
       instance_port: 3306
+      application: mysql
     - protocol: tcp
       load_balancer_port: 5432
       instance_port: 5432
+      application: postgresql
     - protocol: tcp
       load_balancer_port: 27017
       instance_port: 27017
+      application: mongodb
   outbound:
     scheme: internal
     security_groups: ['application', 'outbound']
