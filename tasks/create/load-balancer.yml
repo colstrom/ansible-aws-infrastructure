@@ -14,13 +14,13 @@
     scheme: "{{ load_balancer[system_role].scheme }}"
     subnets: "{{ vpc.subnets | selectattr('resource_tags.Role', 'equalto', system_role) | map(attribute='id') | list }}"
     cross_az_load_balancing: yes
-#    health_check:
-#      ping_protocol: tcp
-#      ping_port: "{% for listener in load_balancer[system_role].listeners %}{% if system_role in ['application'] %}{% if loop.index == 1 %}80{% endif %}{% elif system_role in ['database'] %}{% if listener.application == database_type %}{{ load_balancer[system_role].listeners[loop.index - 1].load_balancer_port }}{% endif %}{% elif system_role in ['cache'] %}{% if listener.application == cache_type %}{{ load_balancer[system_role].listeners[loop.index - 1].load_balancer_port }}{% endif %}{% elif system_role in ['outbound'] %}{% if listener.application == outbound_type %}{{ load_balancer[system_role].listeners[loop.index - 1].load_balancer_port }}{% endif %}{% endif %}{% endfor %}"
-#      response_timeout: 5
-#      interval: 30
-#      unhealthy_threshold: 2
-#      healthy_threshold: 10
+    health_check:
+      ping_protocol: tcp
+      ping_port: "{% for listener in load_balancer[system_role].listeners %}{% if system_role in ['application'] %}{% if loop.index == 1 %}80{% endif %}{% elif system_role in ['database'] %}{% if listener.application == database_type %}{{ load_balancer[system_role].listeners[loop.index - 1].load_balancer_port }}{% endif %}{% elif system_role in ['cache'] %}{% if listener.application == cache_type %}{{ load_balancer[system_role].listeners[loop.index - 1].load_balancer_port }}{% endif %}{% elif system_role in ['outbound'] %}{% if listener.application == outbound_type %}{{ load_balancer[system_role].listeners[loop.index - 1].load_balancer_port }}{% endif %}{% endif %}{% endfor %}"
+      response_timeout: 5
+      interval: 30
+      unhealthy_threshold: 2
+      healthy_threshold: 10
   register: balancer
 
 - name: "Capture Load Balancer Name | {{ system_role }}"
