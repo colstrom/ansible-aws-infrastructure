@@ -35,15 +35,20 @@ load_balancer:
     - protocol: tcp
       load_balancer_port: 80
       instance_port: 80
+      application: webserver
     - protocol: tcp
       load_balancer_port: 443
       instance_port: 443
+      application: securewebserver
     - protocol: tcp
       load_balancer_port: 3128
       instance_port: 3128
+      application: squid
     - protocol: tcp
       load_balancer_port: 8080
       instance_port: 8080
+      application: alternativewebserver
     - protocol: tcp
       load_balancer_port: 8443
       instance_port: 8443
+      application: alternativesecurewebserver
