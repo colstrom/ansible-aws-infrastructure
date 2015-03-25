@@ -71,3 +71,6 @@ default_instance_bid:
 override_instance_type: {}
 override_instance_bid: {}
 override_root_volume_size: {}
+
+database_type: mysql
+outbound_type: webserver
