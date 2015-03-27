@@ -31,7 +31,7 @@ autoscale_roles:
   - metrics
 
 default_instance_type:
-  management: t2.micro
+  management: m3.medium
   inbound: c3.large
   application: m3.medium
   cache: m3.medium
