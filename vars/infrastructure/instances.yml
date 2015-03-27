@@ -2,5 +2,3 @@
 instance_type: "{{ default_instance_type.update(override_instance_type) }}{{ default_instance_type }}"
 instance_bid: "{{ default_instance_bid.update(override_instance_bid) }}{{ default_instance_bid }}"
 instance_store_device: /dev/xvdb
-using_rds: no
-

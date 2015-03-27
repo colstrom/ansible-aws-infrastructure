@@ -8,6 +8,7 @@ load_balance_prototypes: no
 load_balancers_enabled: yes
 root_volume_size: 10
 subnet_prefix: '10.0'
+using_rds: no
 
 always_use_spot_instance_for_roles:
   - aggregator
