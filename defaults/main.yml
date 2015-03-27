@@ -56,6 +56,11 @@ default_instance_bid:
   c3.2xlarge: 0.420
   c3.4xlarge: 0.840
   c3.8xlarge: 1.680
+  c4.large: 0.116
+  c4.xlarge: 0.232
+  c4.2xlarge: 0.464
+  c4.4xlarge: 0.928
+  c4.8xlarge: 1.856
   g2.2xlarge: 0.650
   r3.large: 0.175
   r3.xlarge: 0.350
