@@ -7,11 +7,13 @@ load_balancer:
     - protocol: http
       load_balancer_port: 80
       instance_port: 80
+      application: webserver
     - protocol: "{{ 'https' if elb_ssl_offload else 'tcp' }}"
       load_balancer_port: 443
       instance_port: "{{ 80 if elb_ssl_offload else 443 }}"
       instance_protocol: "{{ 'http' if elb_ssl_offload else 'tcp' }}"
       ssl_certificate_id: "{{ ( 'arn:aws:iam::461957644563:server-certificate/' + elb_ssl_certificate_name ) if elb_ssl_offload else omit }}"
+      application: securewebserver
   database:
     scheme: internal
     security_groups: ['application', 'database']

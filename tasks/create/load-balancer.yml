@@ -16,7 +16,7 @@
     cross_az_load_balancing: yes
     health_check:
       ping_protocol: tcp
-      ping_port: "{% for listener in load_balancer[system_role].listeners %}{% if system_role in ['application'] %}{% if loop.first %}80{% endif %}{% elif system_role in ['database'] %}{% if listener.application == database_type %}{{ load_balancer[system_role].listeners[loop.index - 1].load_balancer_port }}{% endif %}{% elif system_role in ['outbound'] %}{% if listener.application == outbound_type %}{{ load_balancer[system_role].listeners[loop.index - 1].load_balancer_port }}{% endif %}{% endif %}{% endfor %}"
+      ping_port: "{% for server_type in server_types %}{% if server_type == system_role %}{{ load_balancer[system_role].listeners | selectattr('application', 'equalto', server_types[server_type]) | map(attribute='instance_port') | join () }}{% endif %}{% endfor %}"
       response_timeout: 5
       interval: 30
       unhealthy_threshold: 2
