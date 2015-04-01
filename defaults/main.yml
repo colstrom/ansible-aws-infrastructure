@@ -81,6 +81,6 @@ override_root_volume_size: {}
 default_server_types:             # Values in roles/meta/infrastructure/vars/infrastrucutre/load-balancers.yml
   application: webserver
   database: mysql
-  outbound: webserver
+  outbound: squid
 override_server_types: {}
 server_types: "{{ default_server_types.update(override_server_types) }}{{ default_server_types }}"
