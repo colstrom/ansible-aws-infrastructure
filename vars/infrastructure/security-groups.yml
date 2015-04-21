@@ -15,6 +15,36 @@ no_management:
       from_port: 60000
       to_port: 61000
       cidr_ip: 0.0.0.0/0
+  build:
+    description: "Build Nodes"
+    rules:
+    - proto: tcp
+      from_port: 22
+      to_port: 22
+      cidr_ip: 0.0.0.0/0
+    - proto: tcp
+      from_port: 80
+      to_port: 80
+      cidr_ip: 0.0.0.0/0
+    - proto: tcp
+      from_port: 8080
+      to_port: 8080
+      cidr_ip: 0.0.0.0/0
+  preview:
+    description: "Preview Nodes"
+    rules:
+    - proto: tcp
+      from_port: 22
+      to_port: 22
+      cidr_ip: 0.0.0.0/0
+    - proto: tcp
+      from_port: 10443
+      to_port: 10443
+      cidr_ip: 0.0.0.0/0
+    - proto: udp
+      from_port: 60000
+      to_port: 61000
+      cidr_ip: 0.0.0.0/0
 
 no_inbound:
   application:
