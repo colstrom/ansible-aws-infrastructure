@@ -38,8 +38,8 @@ default_instance_type:
   database: m3.medium
   outbound: m3.medium
   aggregator: m3.medium
-  build: t2.medium
-  preview: t2.small
+  build: m3.medium
+  preview: m3.medium
   logs: hi1.4xlarge
   metrics: hi1.4xlarge
 
