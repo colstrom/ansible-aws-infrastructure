@@ -34,6 +34,9 @@
 
     vpc_subnet_id: "{{ vpc.subnets | selectattr('resource_tags.Role', 'equalto', system_role) | selectattr('az', 'equalto', region+preferred_availability_zone) | join(',', attribute='id') }}"
     assign_public_ip: "{% if environment_tier in ['next', 'development', 'staging', 'production'] %}yes{% else %}no{% endif %}"
+
+    instance_profile_name: autonomous
+    user_data: I2Nsb3VkLWNvbmZpZwpyZXBvX3VwZGF0ZTogdHJ1ZQpyZXBvX3VwZ3JhZGU6IGFsbAoKcGFja2FnZXM6CiAtIHB5dGhvbi1kZXYKIC0gcHl0aG9uLXBpcApydW5jbWQ6CiAtIGN1cmwgaHR0cHM6Ly90ZWx1c2RpZ2l0YWwtZm9yZ2UuczMuYW1hem9uYXdzLmNvbS9ib290c3RyYXAucHkgfCBweXRob24K
   register: instance
 
 - name: "Capture Instance ID | {{ system_role }}"
