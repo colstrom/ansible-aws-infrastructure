@@ -5,7 +5,7 @@ dns_points_to_load_balancer: "{{ load_balancers_enabled | bool }}"
 elb_ssl_certificate_name: 'self-signed'
 elb_ssl_offload: no
 load_balance_prototypes: no
-load_balancers_enabled: yes
+load_balancers_enabled: no
 root_volume_size: 10
 subnet_prefix: '10.0'
 using_rds: no
