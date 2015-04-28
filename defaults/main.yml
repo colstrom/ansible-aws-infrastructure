@@ -73,7 +73,7 @@ default_instance_bid:
   i2.8xlarge: 6.820
   i2.xlarge: 0.853
   m1.large: 0.175
-  m1.medum: 0.087
+  m1.medium: 0.087
   m1.small: 0.044
   m1.xlarge: 0.350
   m2.2xlarge: 0.490
@@ -92,6 +92,18 @@ default_instance_bid:
   t2.medium: 0.052
   t2.micro: 0.013
   t2.small: 0.026
+
+instance_type_requires_paravirtualization:
+  - c1.medium
+  - c1.xlarge
+  - m1.large
+  - m1.medium
+  - m1.small
+  - m1.xlarge
+  - m2.2xlarge
+  - m2.4xlarge
+  - m2.xlarge
+  - t1.micro
 
 override_instance_type: {}
 override_instance_bid: {}

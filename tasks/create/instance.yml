@@ -1,4 +1,15 @@
 ---
+- name: Identify Base Image
+  ec2_ami_search:
+    arch: amd64
+    distro: ubuntu
+    region: "{{ region }}"
+    release: trusty
+    store: ebs-ssd
+    stream: server
+    virt: "{{ 'paravirtual' if instance_type[system_role] in instance_type_requires_paravirtualization else virtualization_type }}"
+  register: base_image
+
 - name: "Place Spot Request for EC2 Instance | {{ system_role }}"
   ec2:
     region: "{{ region }}"
@@ -38,7 +49,7 @@
     assign_public_ip: "{% if environment_tier in ['next', 'development', 'staging', 'production'] %}yes{% else %}no{% endif %}"
 
     instance_profile_name: autonomous
-    user_data: "{{ forge_userdata }}"
+    user_data: "{{ forge_userdata | b64decode }}"
   register: instance
 
 - name: "Capture Instance ID | {{ system_role }}"

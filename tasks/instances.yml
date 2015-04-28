@@ -2,17 +2,6 @@
 - set_fact:
     instances: "{{ dict() }}"
 
-- name: Identify Base Image for Region
-  ec2_ami_search:
-    arch: amd64
-    distro: ubuntu
-    region: "{{ region }}"
-    release: trusty
-    store: ebs-ssd
-    stream: server
-    virt: "{{ virtualization_type }}"
-  register: base_image
-
 - { include: create/instance.yml, system_role: management,  when: "'management' in required_systems" }
 - { include: create/instance.yml, system_role: inbound,     when: "'inbound' in required_systems" }
 - { include: create/instance.yml, system_role: application, when: "'application' in required_systems" }
