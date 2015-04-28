@@ -10,7 +10,7 @@
     release: trusty
     store: ebs-ssd
     stream: server
-    virt: hvm
+    virt: "{{ virtualization_type }}"
   register: base_image
 
 - { include: create/instance.yml, system_role: management,  when: "'management' in required_systems" }
