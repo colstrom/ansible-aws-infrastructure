@@ -10,6 +10,10 @@ root_volume_size: 10
 subnet_prefix: '10.0'
 using_rds: no
 
+forge_region: eu-central-1
+forge_bucket: telusdigital-forge
+forge_userdata: I2Nsb3VkLWNvbmZpZwpyZXBvX3VwZGF0ZTogdHJ1ZQpyZXBvX3VwZ3JhZGU6IGFsbAoKcGFja2FnZXM6CiAtIHB5dGhvbi1kZXYKIC0gcHl0aG9uLXBpcApydW5jbWQ6CiAtIGN1cmwgaHR0cHM6Ly90ZWx1c2RpZ2l0YWwtZm9yZ2UuczMuYW1hem9uYXdzLmNvbS9ib290c3RyYXAucHkgfCBweXRob24K
+
 always_use_spot_instance_for_roles:
   - aggregator
   - logs

@@ -13,6 +13,8 @@
       Environment: "{{ environment_tier }}"
       Role:        "{{ system_role }}"
       Name:        "{{ system_role }}.{{ project }}-{{ environment_tier }}"
+      ForgeRegion: "{{ forge_region }}"
+      ForgeBucket: "{{ forge_bucket }}"
 
     image: "{{ base_image.ami }}"
     instance_type: "{{ instance_type[system_role] }}"
@@ -36,7 +38,7 @@
     assign_public_ip: "{% if environment_tier in ['next', 'development', 'staging', 'production'] %}yes{% else %}no{% endif %}"
 
     instance_profile_name: autonomous
-    user_data: I2Nsb3VkLWNvbmZpZwpyZXBvX3VwZGF0ZTogdHJ1ZQpyZXBvX3VwZ3JhZGU6IGFsbAoKcGFja2FnZXM6CiAtIHB5dGhvbi1kZXYKIC0gcHl0aG9uLXBpcApydW5jbWQ6CiAtIGN1cmwgaHR0cHM6Ly90ZWx1c2RpZ2l0YWwtZm9yZ2UuczMuYW1hem9uYXdzLmNvbS9ib290c3RyYXAucHkgfCBweXRob24K
+    user_data: "{{ forge_userdata }}"
   register: instance
 
 - name: "Capture Instance ID | {{ system_role }}"
