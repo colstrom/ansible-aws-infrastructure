@@ -62,6 +62,10 @@ no_inbound:
       from_port: 30080
       to_port: 30080
       cidr_ip: "{{ '0.0.0.0/0' if autodeploy_passthrough_enabled else '127.0.0.1/32' }}"
+    - proto: tcp
+      from_port: 81
+      to_port: 81
+      cidr_ip: "{{ '0.0.0.0/0' if autodeploy_passthrough_enabled else '127.0.0.1/32' }}"
 
 security_group:
   management:
@@ -102,6 +106,10 @@ security_group:
       to_port: 80
       cidr_ip: 0.0.0.0/0
     - proto: tcp
+      from_port: 81
+      to_port: 81
+      cidr_ip: "{{ '0.0.0.0/0' if autodeploy_passthrough_enabled else '127.0.0.1/32' }}"
+    - proto: tcp
       from_port: 30080
       to_port: 30080
       cidr_ip: "{{ '0.0.0.0/0' if autodeploy_passthrough_enabled else '127.0.0.1/32' }}"
@@ -116,6 +124,10 @@ security_group:
       from_port: 80
       to_port: 80
       group_id: "{{ security_group_id['inbound']|default(-1) }}"
+    - proto: tcp
+      from_port: 81
+      to_port: 81
+      group_id: "{{ security_group_id['inbound']|default(-1) if autodeploy_passthrough_enabled else security_group_id['management']|default(-1) }}"
     - proto: tcp
       from_port: 443
       to_port: 443
