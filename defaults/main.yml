@@ -16,6 +16,11 @@ forge_userdata: I2Nsb3VkLWNvbmZpZwpyZXBvX3VwZGF0ZTogdHJ1ZQpyZXBvX3VwZ3JhZGU6IGFs
 
 virtualization_type: hvm
 
+health_check_response_timeout: 5
+health_check_interval: 30
+health_check_unhealthy_threshold: 2
+health_check_healthy_threshold: 10
+
 always_use_spot_instance_for_roles:
   - aggregator
   - logs
