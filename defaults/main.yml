@@ -16,8 +16,8 @@ forge_userdata: I2Nsb3VkLWNvbmZpZwpyZXBvX3VwZGF0ZTogdHJ1ZQpyZXBvX3VwZ3JhZGU6IGFs
 
 virtualization_type: hvm
 
-health_check_response_timeout: 5
-health_check_interval: 30
+health_check_response_timeout: "{% if autoscale %}2{% else %}5{% endif %}"
+health_check_interval: "{% if autoscale %}5{% else %}30{% endif %}"
 health_check_unhealthy_threshold: 2
 health_check_healthy_threshold: 10
 
