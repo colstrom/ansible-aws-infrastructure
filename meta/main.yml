@@ -1,0 +1,8 @@
+---
+galaxy_info:
+  author: "Chris Olstrom"
+  company: "TELUS digital"
+  description: "aws-infrastructure builds out things according to seemingly arbitrary conventions. They probably make sense, in the appropriate context."
+  license: MIT
+  categories:
+    - cloud
