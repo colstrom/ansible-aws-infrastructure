@@ -17,6 +17,13 @@ Example Playbook
     - hosts: servers
       roles:
          - role: telusdigital.aws-infrastructure
+           required_systems:
+             - application
+             - database
+           autodeploy_passthrough_enabled: yes
+           using_load_balancers: yes
+           elb_ssl_offload: yes
+           elb_ssl_certificate_name: application.foo-production
 
 License
 -------
