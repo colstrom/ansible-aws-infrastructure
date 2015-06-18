@@ -66,7 +66,6 @@
     value: "{{ item.public_dns_name }}"
     ttl: 300
   with_items: instance.tagged_instances
-  notify: Pause 60 seconds for DNS propagation
   tags:
     - dns
 
