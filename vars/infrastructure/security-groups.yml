@@ -4,6 +4,15 @@ no_management:
     description: "Nodes Managed by Other Nodes"
     rules:
     - { proto: tcp, from_port: 22,    to_port: 22,    cidr_ip: 0.0.0.0/0 }
+    - { proto: tcp, from_port: 8300,  to_port: 8300,  cidr_ip: 0.0.0.0/0 }   # Consul / Server RPC - This is used by servers to handle incoming requests from other agents.
+    - { proto: tcp, from_port: 8301,  to_port: 8301,  cidr_ip: 10.0.0.0/8 }  # Consul / Serf LAN - This is used to handle gossip in the LAN. Required by all agents.
+    - { proto: udp, from_port: 8301,  to_port: 8301,  cidr_ip: 10.0.0.0/8 }  # Consul / Serf LAN - This is used to handle gossip in the LAN. Required by all agents.
+    - { proto: tcp, from_port: 8302,  to_port: 8302,  cidr_ip: 0.0.0.0/0 }   # Consul / Serf WAN - This is used by servers to gossip over the WAN to other servers.
+    - { proto: udp, from_port: 8302,  to_port: 8302,  cidr_ip: 0.0.0.0/0 }   # Consul / Serf WAN - This is used by servers to gossip over the WAN to other servers.
+    - { proto: tcp, from_port: 8400,  to_port: 8400,  cidr_ip: 0.0.0.0/0 }   # Consul / CLI RPC - This is used by all agents to handle RPC from the CLI.
+    - { proto: tcp, from_port: 8500,  to_port: 8500,  cidr_ip: 0.0.0.0/0 }   # Consul / HTTP API - This is used by clients to talk to the HTTP API.
+    - { proto: tcp, from_port: 8600,  to_port: 8600,  cidr_ip: 0.0.0.0/0 }   # Consul / DNS Interface - Used to resolve DNS queries.
+    - { proto: udp, from_port: 8600,  to_port: 8600,  cidr_ip: 0.0.0.0/0 }   # Consul / DNS Interface - Used to resolve DNS queries.
     - { proto: tcp, from_port: 10443, to_port: 10443, cidr_ip: 0.0.0.0/0 }
     - { proto: udp, from_port: 60000, to_port: 61000, cidr_ip: 0.0.0.0/0 }
   build:
