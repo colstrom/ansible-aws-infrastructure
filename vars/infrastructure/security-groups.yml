@@ -3,288 +3,120 @@ no_management:
   managed:
     description: "Nodes Managed by Other Nodes"
     rules:
-    - proto: tcp
-      from_port: 22
-      to_port: 22
-      cidr_ip: 0.0.0.0/0
-    - proto: tcp
-      from_port: 10443
-      to_port: 10443
-      cidr_ip: 0.0.0.0/0
-    - proto: udp
-      from_port: 60000
-      to_port: 61000
-      cidr_ip: 0.0.0.0/0
+    - { proto: tcp, from_port: 22,    to_port: 22,    cidr_ip: 0.0.0.0/0 }
+    - { proto: tcp, from_port: 8300,  to_port: 8300,  cidr_ip: 0.0.0.0/0 }   # Consul / Server RPC - This is used by servers to handle incoming requests from other agents.
+    - { proto: tcp, from_port: 8301,  to_port: 8301,  cidr_ip: 10.0.0.0/8 }  # Consul / Serf LAN - This is used to handle gossip in the LAN. Required by all agents.
+    - { proto: udp, from_port: 8301,  to_port: 8301,  cidr_ip: 10.0.0.0/8 }  # Consul / Serf LAN - This is used to handle gossip in the LAN. Required by all agents.
+    - { proto: tcp, from_port: 8302,  to_port: 8302,  cidr_ip: 0.0.0.0/0 }   # Consul / Serf WAN - This is used by servers to gossip over the WAN to other servers.
+    - { proto: udp, from_port: 8302,  to_port: 8302,  cidr_ip: 0.0.0.0/0 }   # Consul / Serf WAN - This is used by servers to gossip over the WAN to other servers.
+    - { proto: tcp, from_port: 8400,  to_port: 8400,  cidr_ip: 0.0.0.0/0 }   # Consul / CLI RPC - This is used by all agents to handle RPC from the CLI.
+    - { proto: tcp, from_port: 8500,  to_port: 8500,  cidr_ip: 0.0.0.0/0 }   # Consul / HTTP API - This is used by clients to talk to the HTTP API.
+    - { proto: tcp, from_port: 8600,  to_port: 8600,  cidr_ip: 0.0.0.0/0 }   # Consul / DNS Interface - Used to resolve DNS queries.
+    - { proto: udp, from_port: 8600,  to_port: 8600,  cidr_ip: 0.0.0.0/0 }   # Consul / DNS Interface - Used to resolve DNS queries.
+    - { proto: tcp, from_port: 10443, to_port: 10443, cidr_ip: 0.0.0.0/0 }
+    - { proto: udp, from_port: 60000, to_port: 61000, cidr_ip: 0.0.0.0/0 }
   build:
     description: "Build Nodes"
     rules:
-    - proto: tcp
-      from_port: 22
-      to_port: 22
-      cidr_ip: 0.0.0.0/0
-    - proto: tcp
-      from_port: 80
-      to_port: 80
-      cidr_ip: 0.0.0.0/0
-    - proto: tcp
-      from_port: 8080
-      to_port: 8080
-      cidr_ip: 0.0.0.0/0
+    - { proto: tcp, from_port: 22,   to_port: 22,   cidr_ip: 0.0.0.0/0 }
+    - { proto: tcp, from_port: 80,   to_port: 80,   cidr_ip: 0.0.0.0/0 }
+    - { proto: tcp, from_port: 8080, to_port: 8080, cidr_ip: 0.0.0.0/0 }
   preview:
     description: "Preview Nodes"
     rules:
-    - proto: tcp
-      from_port: 22
-      to_port: 22
-      cidr_ip: 0.0.0.0/0
-    - proto: tcp
-      from_port: 10443
-      to_port: 10443
-      cidr_ip: 0.0.0.0/0
-    - proto: udp
-      from_port: 60000
-      to_port: 61000
-      cidr_ip: 0.0.0.0/0
+    - { proto: tcp, from_port: 22,    to_port: 22,    cidr_ip: 0.0.0.0/0 }
+    - { proto: tcp, from_port: 10443, to_port: 10443, cidr_ip: 0.0.0.0/0 }
+    - { proto: udp, from_port: 60000, to_port: 61000, cidr_ip: 0.0.0.0/0 }
 
 no_inbound:
   application:
     description: "Application Nodes"
     rules:
-    - proto: tcp
-      from_port: 80
-      to_port: 80
-      cidr_ip: 0.0.0.0/0
-    - proto: tcp
-      from_port: 443
-      to_port: 443
-      cidr_ip: 0.0.0.0/0
-    - proto: tcp
-      from_port: 30080
-      to_port: 30080
-      cidr_ip: "{{ '0.0.0.0/0' if autodeploy_passthrough_enabled else '127.0.0.1/32' }}"
-    - proto: tcp
-      from_port: 81
-      to_port: 81
-      cidr_ip: "{{ '0.0.0.0/0' if autodeploy_passthrough_enabled else '127.0.0.1/32' }}"
+    - { proto: tcp, from_port: 80,    to_port: 80,    cidr_ip: 0.0.0.0/0 }
+    - { proto: tcp, from_port: 443,   to_port: 443,   cidr_ip: 0.0.0.0/0 }
+    - { proto: tcp, from_port: 30080, to_port: 30080, cidr_ip: "{{ '0.0.0.0/0' if autodeploy_passthrough_enabled else '127.0.0.1/32' }}" }
+    - { proto: tcp, from_port: 81,    to_port: 81,    cidr_ip: "{{ '0.0.0.0/0' if autodeploy_passthrough_enabled else '127.0.0.1/32' }}" }
 
 security_group:
   management:
     description: "Nodes that Manage Other Nodes"
     rules:
-    - proto: tcp
-      from_port: 22
-      to_port: 22
-      cidr_ip: 0.0.0.0/0
-    - proto: tcp
-      from_port: 443
-      to_port: 443
-      cidr_ip: 0.0.0.0/0
+    - { proto: tcp, from_port: 22,  to_port: 22,  cidr_ip: 0.0.0.0/0 }
+    - { proto: tcp, from_port: 443, to_port: 443, cidr_ip: 0.0.0.0/0 }
   managed:
     description: "Nodes Managed by Other Nodes"
     rules:
-    - proto: tcp
-      from_port: 22
-      to_port: 22
-      group_id: "{{ security_group_id['management']|default(-1) }}"
-    - proto: tcp
-      from_port: 2812
-      to_port: 2812
-      group_id: "{{ security_group_id['management']|default(-1) }}"
-    - proto: tcp
-      from_port: 5099
-      to_port: 5099
-      group_id: "{{ security_group_id['management']|default(-1) }}"
-    - proto: udp
-      from_port: 60000
-      to_port: 61000
-      group_id: "{{ security_group_id['management']|default(-1) }}"
+    - { proto: tcp, from_port: 22,    to_port: 22,    group_id: "{{ security_group_id['management']|default(-1) }}" }
+    - { proto: tcp, from_port: 2812,  to_port: 2812,  group_id: "{{ security_group_id['management']|default(-1) }}" }
+    - { proto: tcp, from_port: 5099,  to_port: 5099,  group_id: "{{ security_group_id['management']|default(-1) }}" }
+    - { proto: udp, from_port: 60000, to_port: 61000, group_id: "{{ security_group_id['management']|default(-1) }}" }
   inbound:
     description: "Inbound Proxy"
     rules:
-    - proto: tcp
-      from_port: 80
-      to_port: 80
-      cidr_ip: 0.0.0.0/0
-    - proto: tcp
-      from_port: 81
-      to_port: 81
-      cidr_ip: "{{ '0.0.0.0/0' if autodeploy_passthrough_enabled else '127.0.0.1/32' }}"
-    - proto: tcp
-      from_port: 30080
-      to_port: 30080
-      cidr_ip: "{{ '0.0.0.0/0' if autodeploy_passthrough_enabled else '127.0.0.1/32' }}"
-    - proto: tcp
-      from_port: 443
-      to_port: 443
-      cidr_ip: 0.0.0.0/0
+    - { proto: tcp, from_port: 80,    to_port: 80,    cidr_ip: 0.0.0.0/0 }
+    - { proto: tcp, from_port: 81,    to_port: 81,    cidr_ip: "{{ '0.0.0.0/0' if autodeploy_passthrough_enabled else '127.0.0.1/32' }}" }
+    - { proto: tcp, from_port: 443,   to_port: 443,   cidr_ip: 0.0.0.0/0 }
+    - { proto: tcp, from_port: 30080, to_port: 30080, cidr_ip: "{{ '0.0.0.0/0' if autodeploy_passthrough_enabled else '127.0.0.1/32' }}" }
   application:
     description: "Application Nodes"
     rules:
-    - proto: tcp
-      from_port: 80
-      to_port: 80
-      group_id: "{{ security_group_id['inbound']|default(-1) }}"
-    - proto: tcp
-      from_port: 81
-      to_port: 81
-      group_id: "{{ security_group_id['inbound']|default(-1) if autodeploy_passthrough_enabled else security_group_id['management']|default(-1) }}"
-    - proto: tcp
-      from_port: 443
-      to_port: 443
-      group_id: "{{ security_group_id['inbound']|default(-1) }}"
-    - proto: tcp
-      from_port: 30080
-      to_port: 30080
-      group_id: "{{ security_group_id['inbound']|default(-1) if autodeploy_passthrough_enabled else security_group_id['management']|default(-1) }}"
+    - { proto: tcp, from_port: 80,    to_port: 80,    group_id: "{{ security_group_id['inbound']|default(-1) }}" }
+    - { proto: tcp, from_port: 81,    to_port: 81,    group_id: "{{ security_group_id['inbound']|default(-1) if autodeploy_passthrough_enabled else security_group_id['management']|default(-1) }}" }
+    - { proto: tcp, from_port: 443,   to_port: 443,   group_id: "{{ security_group_id['inbound']|default(-1) }}" }
+    - { proto: tcp, from_port: 30080, to_port: 30080, group_id: "{{ security_group_id['inbound']|default(-1) if autodeploy_passthrough_enabled else security_group_id['management']|default(-1) }}" }
   cache:
     description: "Cache Nodes"
     rules:
-    - proto: tcp
-      from_port: 6081
-      to_port: 6081
-      group_id: "{{ security_group_id['application']|default(-1) }}"
-    - proto: tcp
-      from_port: 6379
-      to_port: 6379
-      group_id: "{{ security_group_id['application']|default(-1) }}"
-    - proto: tcp
-      from_port: 26379
-      to_port: 26379
-      group_id: "{{ security_group_id['application']|default(-1) }}"
+    - { proto: tcp, from_port: 6081,  to_port: 6081,  group_id: "{{ security_group_id['application']|default(-1) }}" }
+    - { proto: tcp, from_port: 6379,  to_port: 6379,  group_id: "{{ security_group_id['application']|default(-1) }}" }
+    - { proto: tcp, from_port: 26379, to_port: 26379, group_id: "{{ security_group_id['application']|default(-1) }}" }
   database:
     description: "Database Nodes"
     rules:
-    - proto: tcp
-      from_port: 3306
-      to_port: 3306
-      group_id: "{{ security_group_id['application']|default(-1) }}"
-    - proto: tcp
-      from_port: 5432
-      to_port: 5432
-      group_id: "{{ security_group_id['application']|default(-1) }}"
-    - proto: tcp
-      from_port: 6379
-      to_port: 6379
-      group_id: "{{ security_group_id['application']|default(-1) }}"
-    - proto: tcp
-      from_port: 8083
-      to_port: 8083
-      group_id: "{{ security_group_id['application']|default(-1) }}"
-    - proto: tcp
-      from_port: 8086
-      to_port: 8086
-      group_id: "{{ security_group_id['application']|default(-1) }}"
-    - proto: tcp
-      from_port: 26379
-      to_port: 26379
-      group_id: "{{ security_group_id['application']|default(-1) }}"
-    - proto: tcp
-      from_port: 27017
-      to_port: 27017
-      group_id: "{{ security_group_id['application']|default(-1) }}"
+    - { proto: tcp, from_port: 3306,  to_port: 3306,  group_id: "{{ security_group_id['application']|default(-1) }}" }
+    - { proto: tcp, from_port: 5432,  to_port: 5432,  group_id: "{{ security_group_id['application']|default(-1) }}" }
+    - { proto: tcp, from_port: 6379,  to_port: 6379,  group_id: "{{ security_group_id['application']|default(-1) }}" }
+    - { proto: tcp, from_port: 8083,  to_port: 8083,  group_id: "{{ security_group_id['application']|default(-1) }}" }
+    - { proto: tcp, from_port: 8086,  to_port: 8086,  group_id: "{{ security_group_id['application']|default(-1) }}" }
+    - { proto: tcp, from_port: 26379, to_port: 26379, group_id: "{{ security_group_id['application']|default(-1) }}" }
+    - { proto: tcp, from_port: 27017, to_port: 27017, group_id: "{{ security_group_id['application']|default(-1) }}" }
   outbound:
     description: "Outbound Proxy"
     rules:
-    - proto: tcp
-      from_port: 80
-      to_port: 80
-      group_id: "{{ security_group_id['application']|default(-1) }}"
-    - proto: tcp
-      from_port: 443
-      to_port: 443
-      group_id: "{{ security_group_id['application']|default(-1) }}"
-    - proto: tcp
-      from_port: 3128
-      to_port: 3128
-      group_id: "{{ security_group_id['application']|default(-1) }}"
-    - proto: tcp
-      from_port: 8080
-      to_port: 8080
-      group_id: "{{ security_group_id['application']|default(-1) }}"
-    - proto: tcp
-      from_port: 8443
-      to_port: 8443
-      group_id: "{{ security_group_id['application']|default(-1) }}"
-    - proto: tcp
-      from_port: 9443
-      to_port: 9443
-      group_id: "{{ security_group_id['application']|default(-1) }}"
-    - proto: tcp
-      from_port: 6081
-      to_port: 6081
-      group_id: "{{ security_group_id['application']|default(-1) }}"
-    - proto: tcp
-      from_port: 6082
-      to_port: 6082
-      group_id: "{{ security_group_id['management']|default(-1) }}"
+    - { proto: tcp, from_port: 80,   to_port: 80,   group_id: "{{ security_group_id['application']|default(-1) }}" }
+    - { proto: tcp, from_port: 443,  to_port: 443,  group_id: "{{ security_group_id['application']|default(-1) }}" }
+    - { proto: tcp, from_port: 3128, to_port: 3128, group_id: "{{ security_group_id['application']|default(-1) }}" }
+    - { proto: tcp, from_port: 8080, to_port: 8080, group_id: "{{ security_group_id['application']|default(-1) }}" }
+    - { proto: tcp, from_port: 8443, to_port: 8443, group_id: "{{ security_group_id['application']|default(-1) }}" }
+    - { proto: tcp, from_port: 9443, to_port: 9443, group_id: "{{ security_group_id['application']|default(-1) }}" }
+    - { proto: tcp, from_port: 6081, to_port: 6081, group_id: "{{ security_group_id['application']|default(-1) }}" }
+    - { proto: tcp, from_port: 6082, to_port: 6082, group_id: "{{ security_group_id['management']|default(-1) }}" }
   aggregator:
     description: "Log and Metric Aggregation Nodes"
     rules:
-    - proto: tcp
-      from_port: 80
-      to_port: 80
-      cidr_ip: "{{ subnet_prefix }}.0.0/16"
-    - proto: tcp
-      from_port: 6379
-      to_port: 6379
-      cidr_ip: "{{ subnet_prefix }}.0.0/16"
-    - proto: tcp
-      from_port: 8000
-      to_port: 8000
-      cidr_ip: "{{ subnet_prefix }}.0.0/16"
+    - { proto: tcp, from_port: 80,   to_port: 80,   cidr_ip: "{{ subnet_prefix }}.0.0/16" }
+    - { proto: tcp, from_port: 6379, to_port: 6379, cidr_ip: "{{ subnet_prefix }}.0.0/16" }
+    - { proto: tcp, from_port: 8000, to_port: 8000, cidr_ip: "{{ subnet_prefix }}.0.0/16" }
   metrics:
     description: "Cross-Project Metrics Storage"
     rules:
-    - proto: tcp
-      from_port: 8083
-      to_port: 8083
-      cidr_ip: 0.0.0.0/0  # Admin UI
-    - proto: tcp
-      from_port: 8086
-      to_port: 8086
-      cidr_ip: 0.0.0.0/0  # HTTP API
-    - proto: tcp
-      from_port: 8090
-      to_port: 8090
-      cidr_ip: "{{ subnet_prefix }}.0.0/16"  # Raft (Internal Use)
-    - proto: tcp
-      from_port: 8099
-      to_port: 8099
-      cidr_ip: "{{ subnet_prefix }}.0.0/16"  # Replication (using protobuf)
+    - { proto: tcp, from_port: 8083, to_port: 8083, cidr_ip: 0.0.0.0/0 }  # Admin UI
+    - { proto: tcp, from_port: 8086, to_port: 8086, cidr_ip: 0.0.0.0/0 }  # HTTP API
+    - { proto: tcp, from_port: 8090, to_port: 8090, cidr_ip: "{{ subnet_prefix }}.0.0/16" }  # Raft (Internal Use)
+    - { proto: tcp, from_port: 8099, to_port: 8099, cidr_ip: "{{ subnet_prefix }}.0.0/16" }  # Replication (using protobuf)
   logs:
     description: "Cross-Project Log Storage"
     rules:
-    - proto: tcp
-      from_port: 9200
-      to_port: 9200
-      cidr_ip: 0.0.0.0/0
-    - proto: tcp
-      from_port: 9300
-      to_port: 9300
-      cidr_ip: 0.0.0.0/0
+    - { proto: tcp, from_port: 9200, to_port: 9200, cidr_ip: 0.0.0.0/0 }
+    - { proto: tcp, from_port: 9300, to_port: 9300, cidr_ip: 0.0.0.0/0 }
   build:
     description: "Build Nodes"
     rules:
-    - proto: tcp
-      from_port: 80
-      to_port: 80
-      cidr_ip: 0.0.0.0/0
-    - proto: tcp
-      from_port: 8080
-      to_port: 8080
-      cidr_ip: 0.0.0.0/0
+    - { proto: tcp, from_port: 80,   to_port: 80,   cidr_ip: 0.0.0.0/0 }
+    - { proto: tcp, from_port: 8080, to_port: 8080, cidr_ip: 0.0.0.0/0 }
   preview:
     description: "Preview Nodes"
     rules:
-    - proto: tcp
-      from_port: 80
-      to_port: 80
-      cidr_ip: 0.0.0.0/0
-    - proto: tcp
-      from_port: 443
-      to_port: 443
-      cidr_ip: 0.0.0.0/0
-    - proto: tcp
-      from_port: 22
-      to_port: 22
-      group_id: "{{ security_group_id['build']|default(-1) }}"
+    - { proto: tcp, from_port: 22,  to_port: 22,  group_id: "{{ security_group_id['build']|default(-1) }}" }
+    - { proto: tcp, from_port: 80,  to_port: 80,  cidr_ip: 0.0.0.0/0 }
+    - { proto: tcp, from_port: 443, to_port: 443, cidr_ip: 0.0.0.0/0 }
