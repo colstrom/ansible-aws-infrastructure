@@ -100,10 +100,10 @@ security_group:
   metrics:
     description: "Cross-Project Metrics Storage"
     rules:
-    - { proto: tcp, from_port: 8083, to_port: 8083, cidr_ip: 0.0.0.0/0  # Admin UI }
-    - { proto: tcp, from_port: 8086, to_port: 8086, cidr_ip: 0.0.0.0/0  # HTTP API }
-    - { proto: tcp, from_port: 8090, to_port: 8090, cidr_ip: "{{ subnet_prefix }}.0.0/16"  # Raft (Internal Use) }
-    - { proto: tcp, from_port: 8099, to_port: 8099, cidr_ip: "{{ subnet_prefix }}.0.0/16"  # Replication (using protobuf) }
+    - { proto: tcp, from_port: 8083, to_port: 8083, cidr_ip: 0.0.0.0/0 }  # Admin UI
+    - { proto: tcp, from_port: 8086, to_port: 8086, cidr_ip: 0.0.0.0/0 }  # HTTP API
+    - { proto: tcp, from_port: 8090, to_port: 8090, cidr_ip: "{{ subnet_prefix }}.0.0/16" }  # Raft (Internal Use)
+    - { proto: tcp, from_port: 8099, to_port: 8099, cidr_ip: "{{ subnet_prefix }}.0.0/16" }  # Replication (using protobuf)
   logs:
     description: "Cross-Project Log Storage"
     rules:
