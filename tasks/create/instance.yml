@@ -15,7 +15,7 @@
     region: "{{ region }}"
     zone: "{{ region }}{{ preferred_availability_zone }}"
 
-    key_name: "{{ bootstrap_key }}"
+    key_name: "{{ bootstrap_key | default(omit) }}"
 
     group_id: "{{ security_group_id['managed'] }},{{ security_group_id[system_role] }}"
 
