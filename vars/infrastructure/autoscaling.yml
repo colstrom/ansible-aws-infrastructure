@@ -1,4 +1,2 @@
 ---
-roles_needing_public_ip:
-  - outbound
-  - inbound
+
