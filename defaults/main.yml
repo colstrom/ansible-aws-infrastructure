@@ -120,3 +120,6 @@ default_server_types:             # Values in roles/meta/infrastructure/vars/inf
   outbound: squid
 override_server_types: {}
 server_types: "{{ default_server_types.update(override_server_types) }}{{ default_server_types }}"
+roles_needing_public_ip:
+  - outbound
+  - inbound
