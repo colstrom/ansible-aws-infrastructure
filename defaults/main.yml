@@ -54,6 +54,24 @@ default_instance_type:
   logs: hi1.4xlarge
   metrics: hi1.4xlarge
 
+fallback_instance_type:
+  management: t1.micro
+  inbound: m1.small
+  application: c1.medium
+  cache: m1.small
+  database: m1.medium
+  outbound: m1.small
+  aggregator: m1.small
+  build: m1.small
+  preview: m1.small
+  logs: hi1.4xlarge
+  metrics: hi1.4xlarge
+
+use_spot_instances_in_environments:
+  - next
+  - development
+  - staging
+
 default_instance_bid:
   c1.medium: 0.130
   c1.xlarge: 0.520
@@ -119,7 +137,7 @@ default_server_types:             # Values in roles/meta/infrastructure/vars/inf
   database: mysql
   outbound: squid
 override_server_types: {}
-server_types: "{{ default_server_types.update(override_server_types) }}{{ default_server_types }}"
+server_types: "{{ default_server_types.update(override_server_types) }}{% if fallback_mode %}{{ default_server_types.update(fallback_instance_types) }}{% endif %}{{ default_server_types }}"
 roles_needing_public_ip:
   - outbound
   - inbound
