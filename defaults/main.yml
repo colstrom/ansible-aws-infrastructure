@@ -9,6 +9,7 @@ load_balancers_enabled: no
 root_volume_size: 10
 subnet_prefix: '10.0'
 using_rds: no
+fallback_server_type: no
 
 forge_region: eu-central-1
 forge_bucket: telusdigital-forge
