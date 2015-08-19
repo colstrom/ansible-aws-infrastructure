@@ -137,7 +137,7 @@ default_server_types:             # Values in roles/meta/infrastructure/vars/inf
   database: mysql
   outbound: squid
 override_server_types: {}
-server_types: "{{ default_server_types.update(override_server_types) }}{% if fallback_mode %}{{ default_server_types.update(fallback_instance_types) }}{% endif %}{{ default_server_types }}"
+server_types: "{{ default_server_types.update(override_server_types) }}{% if fallback_server_type %}{{ default_server_types.update(fallback_instance_types) }}{% endif %}{{ default_server_types }}"
 roles_needing_public_ip:
   - outbound
   - inbound
