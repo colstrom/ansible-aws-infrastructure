@@ -1,6 +1,5 @@
 --- 
 environment_tier: next
-default_regions:
-  - eu-west-1
-regions: "{{ default_regions.update(override_regions) }}{{ default_regions }}"
+default_region: eu-west-1
+region: "{{ default_region.update(override_region) }}{{ default_region }}"
 dns_points_to_load_balancer: no

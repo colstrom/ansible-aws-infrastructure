@@ -1,5 +1,4 @@
 ---
-{% for region in regions %}
 - include_vars: "environment_tier/{{ environment_tier | mandatory }}.yml"
 - include_vars: infrastructure/subnets.yml
 - include_vars: infrastructure/security-groups.yml
@@ -12,4 +11,3 @@
 - { include: load-balancers.yml, tags: ['load-balancer'] }
 - { include: instances.yml, tags: ['instances'] }
 - { include: autoscaling.yml, tags: ['autoscaling'], when: autoscale }
-{% endfor %}

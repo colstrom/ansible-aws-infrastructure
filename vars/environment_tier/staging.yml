@@ -1,6 +1,5 @@
 --- 
 environment_tier: staging
-default_regions:
-  - us-west-2
-regions: "{{ default_regions.update(override_regions) }}{{ default_regions }}"
+default_region: us-west-2
+region: "{{ default_region.update(override_region) }}{{ default_region }}"
 dns_points_to_load_balancer: "{{ load_balancers_enabled | bool }}"
