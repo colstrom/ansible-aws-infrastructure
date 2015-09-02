@@ -76,6 +76,56 @@ subnets_all:
       'Role':    'application'
       'Name':    "{{ project }}-application-d"
 
+  - cidr: "{{ subnet_prefix }}.2.0/27"
+    az: "{{ region }}a"
+    resource_tags:
+      'Project': "{{ project }}"
+      'Role':    'applicationapi'
+      'Name':    "{{ project }}-applicationapi-a"
+  - cidr: "{{ subnet_prefix }}.2.32/27"
+    az: "{{ region }}b"
+    resource_tags:
+      'Project': "{{ project }}"
+      'Role':    'applicationapi'
+      'Name':    "{{ project }}-applicationapi-b"
+  - cidr: "{{ subnet_prefix }}.2.64/27"
+    az: "{{ region }}c"
+    resource_tags:
+      'Project': "{{ project }}"
+      'Role':    'applicationapi'
+      'Name':    "{{ project }}-applicationapi-c"
+  - cidr: "{{ subnet_prefix }}.2.96/27"
+    az: "{{ region }}d"
+    resource_tags:
+      'Project': "{{ project }}"
+      'Role':    'applicationapi'
+      'Name':    "{{ project }}-applicationapi-d"
+
+  - cidr: "{{ subnet_prefix }}.2.0/27"
+    az: "{{ region }}a"
+    resource_tags:
+      'Project': "{{ project }}"
+      'Role':    'applicationq'
+      'Name':    "{{ project }}-applicationq-a"
+  - cidr: "{{ subnet_prefix }}.2.32/27"
+    az: "{{ region }}b"
+    resource_tags:
+      'Project': "{{ project }}"
+      'Role':    'applicationq'
+      'Name':    "{{ project }}-applicationq-b"
+  - cidr: "{{ subnet_prefix }}.2.64/27"
+    az: "{{ region }}c"
+    resource_tags:
+      'Project': "{{ project }}"
+      'Role':    'applicationq'
+      'Name':    "{{ project }}-applicationq-c"
+  - cidr: "{{ subnet_prefix }}.2.96/27"
+    az: "{{ region }}d"
+    resource_tags:
+      'Project': "{{ project }}"
+      'Role':    'applicationq'
+      'Name':    "{{ project }}-applicationq-d"
+
   - cidr: "{{ subnet_prefix }}.3.0/27"
     az: "{{ region }}a"
     resource_tags:
