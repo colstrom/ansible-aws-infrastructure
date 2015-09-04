@@ -1,11 +1,19 @@
 ---
+project: ''
+
 autodeploy_passthrough_enabled: no
 autoscale: no
-dns_points_to_load_balancer: "{{ load_balancers_enabled | bool }}"
-elb_ssl_certificate_name: 'self-signed'
+
 elb_ssl_offload: no
+elb_ssl_certificate_name: 'self-signed'
+
 load_balance_prototypes: no
 load_balancers_enabled: no
+dns_points_to_load_balancer: "{{ load_balancers_enabled | bool }}"
+
+dns_load_balancing_enabled: no
+dns_load_balancing_cnames: []
+
 root_volume_size: 10
 subnet_prefix: '10.0'
 using_rds: no
