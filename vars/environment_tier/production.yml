@@ -3,3 +3,4 @@ environment_tier: production
 # default_region: us-east-1
 region: "{{ override_region }}"
 dns_points_to_load_balancer: "{{ load_balancers_enabled | bool }}"
+bootstrap_key: adminkey
