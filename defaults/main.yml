@@ -35,6 +35,8 @@ autoscale_roles:
   - management
   - inbound
   - application
+  - applicationapi
+  - applicationq
   - database
   - cache
   - outbound
@@ -48,6 +50,8 @@ default_instance_type:
   management: m3.medium
   inbound: c3.large
   application: m3.medium
+  applicationapi: m3.medium
+  applicationq: m3.medium
   cache: m3.medium
   database: m3.medium
   outbound: m3.medium
@@ -134,9 +138,12 @@ instance_type_requires_paravirtualization:
 override_instance_type: {}
 override_instance_bid: {}
 override_root_volume_size: {}
+override_region: ''
 
 default_server_types:             # Values in roles/meta/infrastructure/vars/infrastrucutre/load-balancers.yml
   application: webserver
+  applicationapi: webserver
+  applicationq: webserver
   database: mysql
   outbound: squid
 override_server_types: {}
