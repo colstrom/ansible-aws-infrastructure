@@ -19,6 +19,7 @@
     image_id: "{{ ami.image_id }}"
     security_groups: "{{ security_group_id['managed'] }},{{ security_group_id[system_role] }}"
     # spot_price: "{{ instance_bid }}"
+    user_data: "{{ forge_userdata | b64decode }}"
   when: system_role in autoscale_roles
 
 - name: "AutoScaling Group | {{ system_role }}"
@@ -37,4 +38,7 @@
       - Environment: "{{ environment_tier }}"
       - Role:        "{{ system_role }}-autoscaled"
       - Name:        "{{ system_role }}.{{ project }}-{{ environment_tier }}"
+      - ForgeRegion: "{{ forge_region }}"
+      - ForgeBucket: "{{ forge_bucket }}"
+
   when: system_role in autoscale_roles
