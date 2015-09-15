@@ -1,6 +1,4 @@
 ---
-project: ''
-
 autodeploy_passthrough_enabled: no
 autoscale: no
 
