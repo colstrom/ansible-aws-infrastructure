@@ -90,7 +90,7 @@
     device_id: "{{ instances[system_role] }}"
     release_on_disassociation: yes
   register: eip
-  when: system_role in dns_load_balanced_instances and dns_load_balancing_enabled and instance.public_ip is not defined
+  when: system_role in dns_load_balanced_roles and dns_load_balancing_enabled and instance.public_ip is not defined
   tags:
     - elastic-ip
 
@@ -105,7 +105,7 @@
     identifier: "{{ project }}"
     value: "{{ eip.public_ip }}"
     ttl: 300
-  when: system_role in dns_load_balanced_instances and dns_load_balancing_enabled and region == 'us-west-1' or region == 'us-west-2'
+  when: system_role in dns_load_balanced_roles and dns_load_balancing_enabled and region == 'us-west-1' or region == 'us-west-2'
   tags:
     - dns
 
@@ -120,7 +120,7 @@
     identifier: "{{ project }}"
     value: "{{ eip.public_ip }}"
     ttl: 300
-  when: system_role in dns_load_balanced_instances and dns_load_balancing_enabled and region == 'us-east-1'
+  when: system_role in dns_load_balanced_roles and dns_load_balancing_enabled and region == 'us-east-1'
   tags:
     - dns
 
