@@ -12,7 +12,7 @@ load_balancers_enabled: no
 dns_points_to_load_balancer: "{{ load_balancers_enabled | bool }}"
 
 dns_load_balancing_enabled: no
-dns_load_balanced_instances:
+dns_load_balanced_roles:
   - application
 
 root_volume_size: 10
