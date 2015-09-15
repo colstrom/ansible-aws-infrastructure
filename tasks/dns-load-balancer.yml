@@ -1,2 +1,0 @@
----
-- { include: create/dns-load-balancer.yml, when: "dns_load_balancing_enabled" }
