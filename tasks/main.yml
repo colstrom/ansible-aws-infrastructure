@@ -9,6 +9,5 @@
 - { include: create/vpc.yml, tags: ['vpc'] }
 - { include: security-groups.yml, tags: ['security-group'] }
 - { include: load-balancers.yml, tags: ['load-balancer'] }
-- { include: dns-load-balancer.yml, tags: ['dns-load-balancer'] }
 - { include: instances.yml, tags: ['instances'] }
-- { include: autoscaling.yml, tags: ['autoscaling'], when: autoscale }
+- { include: autoscaling.yml, tags: ['autoscaling'], when: autoscale } 

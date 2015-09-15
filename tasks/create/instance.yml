@@ -56,7 +56,7 @@
   set_fact:
     instances: "{{ instances.update({system_role: instance.tagged_instances[0].id}) }}{{ instances }}"
 
-- name: "Route53 Record | Public Interface"
+- name: "Route53 Record | Public Interface | {{ system_role }}"
   route53:
     command: create
     overwrite: yes
@@ -69,7 +69,7 @@
   tags:
     - dns
 
-- name: "Route53 Record | Private Interface"
+- name: "Route53 Record | Private Interface | {{ system_role }}"
   route53:
     command: create
     overwrite: yes
@@ -79,6 +79,48 @@
     value: "{{ item.private_dns_name }}"
     ttl: 300
   with_items: instance.tagged_instances
+  tags:
+    - dns
+
+- name: "Assign Elastic IP | DNS Load Balancing | {{ system_role }}"
+  ec2_eip: 
+    state: present
+    in_vpc: yes
+    region: "{{ region }}"
+    device_id: "{{ instances[system_role] }}"
+    release_on_disassociation: yes
+  register: eip
+  when: system_role in dns_load_balanced_instances and dns_load_balancing_enabled and instance.public_ip is not defined
+  tags:
+    - elastic-ip
+
+- name: Route53 Record | DNS Load Balancing | Assign Alias Record (West)
+  route53:
+    command: create
+    overwrite: yes
+    zone: "{{ domain }}"
+    record: "{{ system_role }}.{{ project | replace('-west', '') }}-{{ environment_tier }}.{{ domain }}"
+    type: A
+    region: "{{ region }}"
+    identifier: "{{ project }}"
+    value: "{{ eip.public_ip }}"
+    ttl: 300
+  when: system_role in dns_load_balanced_instances and dns_load_balancing_enabled and region == 'us-west-1' or region == 'us-west-2'
+  tags:
+    - dns
+
+- name: Route53 Record | DNS Load Balancing | Assign Alias Record (East)
+  route53:
+    command: create
+    overwrite: yes
+    zone: "{{ domain }}"
+    record: "{{ system_role }}.{{ project | replace('-east', '') }}-{{ environment_tier }}.{{ domain }}"
+    type: A
+    region: "{{ region }}"
+    identifier: "{{ project }}"
+    value: "{{ eip.public_ip }}"
+    ttl: 300
+  when: system_role in dns_load_balanced_instances and dns_load_balancing_enabled and region == 'us-east-1'
   tags:
     - dns
 
