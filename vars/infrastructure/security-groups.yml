@@ -135,7 +135,7 @@ security_group:
   build:
     description: "Build Nodes"
     rules:
-    - { proto: tcp, from_port: 80,    to_port: 80,   cidr_ip: 0.0.0.0/0 }
+    - { proto: tcp, from_port: 80,    to_port: 80,    cidr_ip: 0.0.0.0/0 }
     - { proto: tcp, from_port: 10555, to_port: 10555, cidr_ip: 0.0.0.0/0 }  # Robot Sweatshop / HTTP API - Used to run jobs
   preview:
     description: "Preview Nodes"
