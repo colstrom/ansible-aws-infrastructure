@@ -51,6 +51,31 @@ subnets_all:
       'Role':    'inbound'
       'Name':    "{{ project }}-inbound-d"
 
+  - cidr: "{{ subnet_prefix }}.16.0/27"
+    az: "{{ region }}a"
+    resource_tags:
+      'Project': "{{ project }}"
+      'Role':    'inbound1'
+      'Name':    "{{ project }}-inbound1-a"
+  - cidr: "{{ subnet_prefix }}.16.32/27"
+    az: "{{ region }}b"
+    resource_tags:
+      'Project': "{{ project }}"
+      'Role':    'inbound1'
+      'Name':    "{{ project }}-inbound1-b"
+  - cidr: "{{ subnet_prefix }}.16.64/27"
+    az: "{{ region }}c"
+    resource_tags:
+      'Project': "{{ project }}"
+      'Role':    'inbound1'
+      'Name':    "{{ project }}-inbound1-c"
+  - cidr: "{{ subnet_prefix }}.16.96/27"
+    az: "{{ region }}d"
+    resource_tags:
+      'Project': "{{ project }}"
+      'Role':    'inbound1'
+      'Name':    "{{ project }}-inbound1-d"
+
   - cidr: "{{ subnet_prefix }}.2.0/27"
     az: "{{ region }}a"
     resource_tags:
