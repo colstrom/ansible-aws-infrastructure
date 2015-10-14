@@ -105,7 +105,7 @@
     identifier: "{{ project }}"
     value: "{{ eip.public_ip }}"
     ttl: 300
-  when: system_role in dns_load_balanced_roles and dns_load_balancing_enabled and region == 'us-west-1' or region == 'us-west-2'
+  when: system_role in dns_load_balanced_roles and dns_load_balancing_enabled and (region == 'us-west-1' or region == 'us-west-2’)
   tags:
     - dns
 
