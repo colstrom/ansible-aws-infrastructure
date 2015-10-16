@@ -21,3 +21,7 @@
           'Role':    'outbound'
           'Name':    "{{ project }}-nat"
   register: vpc
+
+- name: VPC | Peering
+  shell: "superluminal peering --from {{ peering_from }} --to {{ peering_too }} --region {{ region }}"
+  when: peering_enabled
