@@ -23,5 +23,5 @@
   register: vpc
 
 - name: VPC | Peering
-  shell: "superluminal peering --from {{ peering_from | mandatory }} --to {{ peering_to }} --region {{ region }}"
+  shell: "superluminal peering --from {{ peering_from }} --to {{ peering_to | mandatory }} --region {{ region }}"
   when: peering_enabled
