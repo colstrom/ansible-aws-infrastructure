@@ -23,5 +23,6 @@
   register: vpc
 
 - name: VPC | Peering
-  shell: "superluminal peering --from {{ peering_from }} --to {{ peering_to | mandatory }} --region {{ region }}"
-  when: peering_enabled
+  shell: "superluminal peering --from {{ peering_from }} --to {{ item }} --region {{ region }}"
+  with_items: peering_to
+  when: peering_enabled and peering_to is iterable

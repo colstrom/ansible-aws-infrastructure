@@ -163,4 +163,4 @@ roles_needing_public_ip:
 
 peering_enabled: no
 peering_from: "{{ project }}"
-#peering_to: | mandatory (but not defined here)
+peering_to: []
