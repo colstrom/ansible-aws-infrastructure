@@ -161,6 +161,6 @@ roles_needing_public_ip:
   - inbound
   - inbound1
 
-peering_enabled: no
-peering_from: "{{ project }}"
-peering_to: []
+vpc_peering_enabled: no
+vpc_peering_from: "{{ project }}"
+vpc_peering_to: []
