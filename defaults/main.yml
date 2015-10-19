@@ -160,3 +160,7 @@ roles_needing_public_ip:
   - outbound
   - inbound
   - inbound1
+
+vpc_peering_enabled: no
+vpc_peering_from: "{{ project }}"
+vpc_peering_to: []
