@@ -156,3 +156,7 @@ server_types: "{{ default_server_types.update(override_server_types) }}{% if fal
 roles_needing_public_ip:
   - outbound
   - inbound
+
+vpc_peering_enabled: no
+vpc_peering_from: "{{ project }}"
+vpc_peering_to: []
