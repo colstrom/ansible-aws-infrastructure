@@ -5,7 +5,6 @@
 - { include: create/security-group.yml, system_role: management }
 - { include: create/security-group.yml, system_role: managed }
 - { include: create/security-group.yml, system_role: inbound }
-- { include: create/security-group.yml, system_role: inbound1 }
 - { include: create/security-group.yml, system_role: application }
 - { include: create/security-group.yml, system_role: applicationapi }
 - { include: create/security-group.yml, system_role: applicationq }

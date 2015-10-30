@@ -66,13 +66,6 @@ security_group:
     - { proto: tcp, from_port: 81,    to_port: 81,    cidr_ip: "{{ '0.0.0.0/0' if autodeploy_passthrough_enabled else '127.0.0.1/32' }}" }
     - { proto: tcp, from_port: 443,   to_port: 443,   cidr_ip: 0.0.0.0/0 }
     - { proto: tcp, from_port: 10555, to_port: 10555, cidr_ip: "{{ '0.0.0.0/0' if autodeploy_passthrough_enabled else '127.0.0.1/32' }}" }  # Robot Sweatshop / HTTP API - Used to run jobs
-  inbound1:
-    description: "Second Inbound Proxy"
-    rules:
-    - { proto: tcp, from_port: 80,    to_port: 80,    cidr_ip: 0.0.0.0/0 }
-    - { proto: tcp, from_port: 81,    to_port: 81,    cidr_ip: "{{ '0.0.0.0/0' if autodeploy_passthrough_enabled else '127.0.0.1/32' }}" }
-    - { proto: tcp, from_port: 443,   to_port: 443,   cidr_ip: 0.0.0.0/0 }
-    - { proto: tcp, from_port: 10555, to_port: 10555, cidr_ip: "{{ '0.0.0.0/0' if autodeploy_passthrough_enabled else '127.0.0.1/32' }}" }
   application:
     description: "Application Nodes"
     rules:

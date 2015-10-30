@@ -39,7 +39,6 @@ always_use_spot_instance_for_roles:
 autoscale_roles:
   - management
   - inbound
-  - inbound1
   - application
   - applicationapi
   - applicationq
@@ -55,7 +54,6 @@ autoscale_roles:
 default_instance_type:
   management: m3.medium
   inbound: c3.large
-  inbound1: c3.large
   application: m3.medium
   applicationapi: m3.medium
   applicationq: m3.medium
@@ -71,7 +69,6 @@ default_instance_type:
 fallback_instance_type:
   management: t1.micro
   inbound: m1.small
-  inbound1: m1.small
   application: c1.medium
   cache: m1.small
   database: m1.medium
@@ -159,7 +156,6 @@ server_types: "{{ default_server_types.update(override_server_types) }}{% if fal
 roles_needing_public_ip:
   - outbound
   - inbound
-  - inbound1
 
 vpc_peering_enabled: no
 vpc_peering_from: "{{ project }}"
