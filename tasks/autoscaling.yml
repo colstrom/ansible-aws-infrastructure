@@ -9,7 +9,6 @@
 
 - { include: create/autoscaling.yml, has_load_balancer: False, system_role: management,     when: "'management' in required_systems" }
 - { include: create/autoscaling.yml, has_load_balancer: False, system_role: inbound,        when: "'inbound' in required_systems" }
-- { include: create/autoscaling.yml, has_load_balancer: False, system_role: inbound1,       when: "'inbound1' in required_systems" }
 - { include: create/autoscaling.yml, has_load_balancer: True,  system_role: application,    when: "'application' in required_systems" }
 - { include: create/autoscaling.yml, has_load_balancer: True,  system_role: applicationapi, when: "'applicationapi' in required_systems" }
 - { include: create/autoscaling.yml, has_load_balancer: True,  system_role: applicationq,   when: "'applicationq' in required_systems" }
