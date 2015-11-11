@@ -37,6 +37,7 @@
     vpc_zone_identifier: "{{ vpc.subnets | selectattr('resource_tags.Role', 'equalto', system_role) | join(',', attribute='id') }}"
     tags:
       - Environment: "{{ environment_tier }}"
+      - Project:     "{{ project }}"
       - Role:        "{{ system_role }}-autoscaled"
       - Name:        "{{ system_role }}.{{ project }}-{{ environment_tier }}"
       - ForgeRegion: "{{ forge_region }}"
