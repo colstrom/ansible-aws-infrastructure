@@ -32,3 +32,4 @@
     backup_retention: 30
     size: 100
     wait: yes
+    wait_timeout: 600
