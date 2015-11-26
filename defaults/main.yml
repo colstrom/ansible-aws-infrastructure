@@ -81,8 +81,8 @@ fallback_instance_type:
   build: m1.small
   preview: m1.small
   logs: hi1.4xlarge
-  client: m3.medium
-  master: m1.small
+  client: c1.medium
+  master: t1.micro
   metrics: hi1.4xlarge
 
 use_spot_instances_in_environments:
