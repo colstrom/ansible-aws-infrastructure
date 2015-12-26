@@ -1,0 +1,24 @@
+---
+- name: Create Elasticache Subnet Group
+  elasticache_subnet_group:
+    state: present
+    name: "{{ project }}-{{ system_role }}"
+    description: "Elasticache for {{ project }}"
+    region: "{{ region }}"
+    subnets: "{{ vpc.subnets | selectattr('resource_tags.Role', 'equalto', system_role) | map(attribute='id') | list }}"
+
+- name: Create Elasticache Nodes
+  elasticache:
+    state: present
+
+    name: "{{ project }}-{{ environment_tier }}"
+    engine: "{{ cache_engine }}"
+    node_type: cache.m1.small
+    num_nodes: 1
+
+    cache_port: "{% if cache_engine == 'redis' %}6379{% elif cache_engine == 'memcached' %}11211{% endif %}"
+    cache_subnet_group: "{{ project }}-{{ system_role }}"
+    zone: "{{ region }}{{ preferred_availability_zone }}"
+    region: "{{ region }}"
+
+    wait: yes
