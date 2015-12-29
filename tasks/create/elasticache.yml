@@ -12,11 +12,11 @@
     state: present
 
     name: "{{ project }}-{{ environment_tier }}"
-    engine: "{{ cache_engine }}"
+    engine: "{{ elasticache_engine }}"
     node_type: cache.m1.small
     num_nodes: 1
 
-    cache_port: "{% if cache_engine == 'redis' %}6379{% elif cache_engine == 'memcached' %}11211{% endif %}"
+    cache_port: "{% if elasticache_engine == 'redis' %}6379{% elif elasticache_engine == 'memcached' %}11211{% endif %}"
     cache_subnet_group: "{{ project }}-{{ system_role }}"
     zone: "{{ region }}{{ preferred_availability_zone }}"
     region: "{{ region }}"

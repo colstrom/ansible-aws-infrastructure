@@ -18,7 +18,7 @@ subnet_prefix: '10.0'
 using_rds: no
 using_elasticache: no
 # [memcached, redis]
-cache_engine: redis
+elasticache_engine: redis
 fallback_server_type: no
 
 forge_region: eu-central-1
