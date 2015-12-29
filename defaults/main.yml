@@ -16,7 +16,7 @@ dns_load_balanced_roles:
 root_volume_size: 10
 subnet_prefix: '10.0'
 using_rds: no
-using_elasticache: yes
+using_elasticache: no
 # [memcached, redis]
 cache_engine: redis
 fallback_server_type: no
