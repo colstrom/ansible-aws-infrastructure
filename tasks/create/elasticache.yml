@@ -1,11 +1,11 @@
 ---
-- name: Create Elasticache Subnet Group
-  elasticache_subnet_group:
-    state: present
-    name: "{{ project }}-{{ system_role }}"
-    description: "Elasticache for {{ project }}"
-    region: "{{ region }}"
-    subnets: "{{ vpc.subnets | selectattr('resource_tags.Role', 'equalto', system_role) | map(attribute='id') | list }}"
+# - name: Create Elasticache Subnet Group
+#   elasticache_subnet_group:
+#     state: present
+#     name: "{{ project }}-{{ system_role }}"
+#     description: "Elasticache for {{ project }}"
+#     region: "{{ region }}"
+#     subnets: "{{ vpc.subnets | selectattr('resource_tags.Role', 'equalto', system_role) | map(attribute='id') | list }}"
 
 - name: Create Elasticache Nodes
   elasticache:
