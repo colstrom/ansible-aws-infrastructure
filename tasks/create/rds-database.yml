@@ -17,7 +17,7 @@
     multi_zone: yes
 
     instance_name: "{{ project }}-{{ system_role }}-{{ environment_tier }}"
-    instance_type: "{{ instance_type['rds']  }}"
+    instance_type: "{{ instance_type['rds'] }}"
 
     vpc_security_groups: "{{ security_group_id[system_role] }}"
     subnet: "{{ project }}-{{ system_role }}"
@@ -31,9 +31,9 @@
     password: "{{ rds_database_password }}"
 
     backup_retention: 30
-    size: 100
+    size: 10
     wait: yes
-    wait_timeout: 600
+    wait_timeout: 666
 
 
 - name: Create Database Servers | Read-Replica

@@ -18,7 +18,8 @@ subnet_prefix: '10.0'
 
 using_rds: no
 # [postgres, mysql]
-rds_engine: postgres
+rds_engine: mysql
+
 rds_database_name: "{{ mandatory }}"
 rds_database_username: "{{ mandatory }}"
 rds_database_password: "{{ mandatory }}"
