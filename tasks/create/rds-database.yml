@@ -33,3 +33,16 @@
     size: 100
     wait: yes
     wait_timeout: 600
+
+- name: Create Database Servers | Read-Replica
+  rds:
+
+    command: replicate
+
+    region: "{{ region }}"
+
+    instance_name: "{{ project }}-{{ system_role }}-{{ environment_tier }}-replica"
+    source_instance: "{{ project }}-{{ system_role }}-{{ environment_tier }}"
+
+    wait: yes
+    wait_timeout: 600
