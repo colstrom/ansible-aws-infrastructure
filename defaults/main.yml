@@ -19,6 +19,9 @@ subnet_prefix: '10.0'
 using_rds: no
 # [postgres, mysql]
 rds_engine: postgres
+rds_database_name: "{{ mandatory }}"
+rds_database_username: "{{ mandatory }}"
+rds_database_password: "{{ mandatory }}"
 
 using_elasticache: no
 # [memcached, redis]
@@ -76,6 +79,8 @@ default_instance_type:
   client: m3.medium
   master: m1.small
   metrics: r3.large
+  rds: db.m3.medium
+  elasticache: cache.m3.medium
 
 fallback_instance_type:
   management: t1.micro

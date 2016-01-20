@@ -7,6 +7,7 @@
     region: "{{ region }}"
     subnets: "{{ vpc.subnets | selectattr('resource_tags.Role', 'equalto', system_role) | map(attribute='id') | list }}"
 
+
 - name: Create Database Servers
   rds:
 
@@ -16,7 +17,7 @@
     multi_zone: yes
 
     instance_name: "{{ project }}-{{ system_role }}-{{ environment_tier }}"
-    instance_type: "{{ database_rds_instance_type | mandatory }}"
+    instance_type: "{{ instance_type['rds']  }}"
 
     vpc_security_groups: "{{ security_group_id[system_role] }}"
     subnet: "{{ project }}-{{ system_role }}"
@@ -25,14 +26,15 @@
     upgrade: yes
 
     port: "{% if rds_engine == 'postgres' %}5432{%elif rds_engine == 'mysql' %}3306{% endif %}"
-    db_name: "{{ database_name | default(project) }}"
-    username: "{{ database_username | default(project) }}"
-    password: "{{ database_password | mandatory }}"
+    db_name: "{{ rds_database_name }}"
+    username: "{{ rds_database_username }}"
+    password: "{{ rds_database_password }}"
 
     backup_retention: 30
     size: 100
     wait: yes
     wait_timeout: 600
+
 
 - name: Create Database Servers | Read-Replica
   rds:
