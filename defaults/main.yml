@@ -17,8 +17,8 @@ root_volume_size: 10
 subnet_prefix: '10.0'
 
 using_rds: no
-# [postgres, mysql]
-rds_engine: mysql
+# [postgres, MySQL]
+rds_engine: MySQL
 
 rds_database_name: "{{ mandatory }}"
 rds_database_username: "{{ mandatory }}"

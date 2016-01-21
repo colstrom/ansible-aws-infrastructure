@@ -25,7 +25,7 @@
     db_engine: "{{ rds_engine }}"
     upgrade: yes
 
-    port: "{% if rds_engine == 'postgres' %}5432{%elif rds_engine == 'mysql' %}3306{% endif %}"
+    port: "{% if rds_engine == 'postgres' %}5432{%elif rds_engine == 'MySQL' %}3306{% endif %}"
     db_name: "{{ rds_database_name }}"
     username: "{{ rds_database_username }}"
     password: "{{ rds_database_password }}"
@@ -33,7 +33,7 @@
     backup_retention: 30
     size: 10
     wait: yes
-    wait_timeout: 666
+    wait_timeout: 900
 
 
 - name: Create Database Servers | Read-Replica
@@ -47,4 +47,4 @@
     source_instance: "{{ project }}-{{ system_role }}-{{ environment_tier }}"
 
     wait: yes
-    wait_timeout: 600
+    wait_timeout: 900
