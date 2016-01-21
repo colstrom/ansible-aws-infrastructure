@@ -33,7 +33,7 @@
     backup_retention: 30
     size: 10
     wait: yes
-    wait_timeout: 900
+    wait_timeout: 1500
 
 
 - name: Create Database Servers | Read-Replica
