@@ -17,8 +17,13 @@ root_volume_size: 10
 subnet_prefix: '10.0'
 
 using_rds: no
-# [postgres, mysql]
-rds_engine: postgres
+# [postgres, MySQL]
+rds_engine: MySQL
+rds_database_name: "{{ mandatory }}"
+rds_database_username: "{{ mandatory }}"
+rds_database_password: "{{ mandatory }}"
+rds_database_size: 10 # GB
+rds_database_backup_retention: 30
 
 using_elasticache: no
 # [memcached, redis]

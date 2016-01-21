@@ -1,5 +1,6 @@
 # ansible-aws-infrastructure
 
+
 aws-infrastructure builds out things according to seemingly arbitrary conventions. They probably make sense, in the appropriate context.
 
 [![Platforms](http://img.shields.io/badge/platforms-ubuntu-lightgrey.svg?style=flat)](#)
@@ -10,7 +11,7 @@ Tunables
 
 Dependencies
 ------------
-* None
+- Ansible >2.0
 
 Example Playbook
 ----------------
