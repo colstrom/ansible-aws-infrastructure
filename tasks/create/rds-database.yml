@@ -17,7 +17,7 @@
     multi_zone: yes
 
     instance_name: "{{ project }}-{{ system_role }}-{{ environment_tier }}"
-    instance_type: "{{ instance_type['rds'] }}"
+    instance_type: "db.{{ instance_type[system_role] }}"
 
     vpc_security_groups: "{{ security_group_id[system_role] }}"
     subnet: "{{ project }}-{{ system_role }}"

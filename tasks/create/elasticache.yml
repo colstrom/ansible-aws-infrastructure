@@ -13,7 +13,7 @@
 
     name: "{{ project }}-{{ environment_tier }}"
     engine: "{{ elasticache_engine }}"
-    node_type: "{{ instance_type['elasticache']}}"
+    node_type: "cache.{{ instance_type[system_role] }}"
     num_nodes: 2
 
     cache_port: "{% if elasticache_engine == 'redis' %}6379{% elif elasticache_engine == 'memcached' %}11211{% endif %}"
