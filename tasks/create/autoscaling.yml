@@ -1,3 +1,4 @@
+
 ---
 - name: "Create AMI | {{ system_role }}"
   ec2_ami:
@@ -33,9 +34,9 @@
     launch_config_name: "{{ project }}-{{ system_role }}-{{ timestamp }}"
     load_balancers: "{% if has_load_balancer %}{{ project }}-{{ system_role }}{% else %}{{ [] }}{% endif %}"
     name: "{{ project }}-{{ system_role }}"
-    min_size: 2
-    max_size: 8
-    desired_capacity: 2
+    min_size: 3
+    max_size: 9
+    desired_capacity: 3
     vpc_zone_identifier: "{{ vpc.subnets | selectattr('resource_tags.Role', 'equalto', system_role) | join(',', attribute='id') }}"
     tags:
       - Environment: "{{ environment_tier }}"
@@ -62,13 +63,14 @@
       adjustment_type: "ChangeInCapacity"
       scaling_adjustment: +1
       min_adjustment_step: 1
-      cooldown: 180
+      cooldown: 60
     - name: "Decrease Group Size"
       adjustment_type: "ChangeInCapacity"
       scaling_adjustment: -1
       min_adjustment_step: 1
-      cooldown: 300
+      cooldown: 180
   register: autoscale_policy
+
 
 - name: "Autoscaling Alarm | High CPU | {{ system_role }}"
   ec2_metric_alarm:
