@@ -1,3 +1,4 @@
+
 ---
 - name: "Create AMI | {{ system_role }}"
   ec2_ami:
@@ -8,6 +9,7 @@
     wait: yes
   register: ami
   when: system_role in autoscale_roles
+
 
 - name: "Launch Configuration | {{ system_role }}"
   ec2_lc:
@@ -23,6 +25,7 @@
     user_data: "{{ forge_userdata | b64decode }}"
   when: system_role in autoscale_roles
 
+
 - name: "AutoScaling Group | {{ system_role }}"
   ec2_asg:
     state: present
@@ -32,7 +35,7 @@
     load_balancers: "{% if has_load_balancer %}{{ project }}-{{ system_role }}{% else %}{{ [] }}{% endif %}"
     name: "{{ project }}-{{ system_role }}"
     min_size: 3
-    max_size: 6
+    max_size: 9
     desired_capacity: 3
     vpc_zone_identifier: "{{ vpc.subnets | selectattr('resource_tags.Role', 'equalto', system_role) | join(',', attribute='id') }}"
     tags:
@@ -42,5 +45,61 @@
       - Name:        "{{ system_role }}.{{ project }}-{{ environment_tier }}"
       - ForgeRegion: "{{ forge_region }}"
       - ForgeBucket: "{{ forge_bucket }}"
-
   when: system_role in autoscale_roles
+
+
+- name: "Autoscaling Policies | {{ system_role }}"
+  ec2_scaling_policy:
+    state: present
+    region: "{{ region }}"
+    name: "{{ item.name }}"
+    asg_name: "{{ project }}-{{ system_role }}"
+    adjustment_type: "{{ item.adjustment_type }}"
+    min_adjustment_step: "{{ item.min_adjustment_step }}"
+    scaling_adjustment: "{{ item.scaling_adjustment }}"
+    cooldown: "{{ item.cooldown }}"
+  with_items:
+    - name: "Increase Group Size"
+      adjustment_type: "ChangeInCapacity"
+      scaling_adjustment: +1
+      min_adjustment_step: 1
+      cooldown: 60
+    - name: "Decrease Group Size"
+      adjustment_type: "ChangeInCapacity"
+      scaling_adjustment: -1
+      min_adjustment_step: 1
+      cooldown: 180
+  register: autoscale_policy
+
+
+- name: "Autoscaling Alarm | High CPU | {{ system_role }}"
+  ec2_metric_alarm:
+    state: present
+    region: "{{ region }}"
+    name: "{{ project }}-{{ system_role }}-scale-up"
+    metric: CPUUtilization
+    statistic: Average
+    unit: Percent
+    comparison: ">="
+    threshold: 50.0
+    evaluation_periods: 5
+    period: 60
+    namespace: AWS/EC2
+    alarm_actions: "{{ autoscale_policy.results[0].arn }}"
+
+
+- name: "Autoscaling Alarm | Low CPU | {{ system_role }}"
+  ec2_metric_alarm:
+    state: present
+    region: "{{ region }}"
+    name: "{{ project }}-{{ system_role }}-scale-down"
+    metric: CPUUtilization
+    statistic: Average
+    unit: Percent
+    comparison: ">="
+    threshold: 20.0
+    evaluation_periods: 5
+    period: 60
+    namespace: AWS/EC2
+    alarm_actions: "{{ autoscale_policy.results[1].arn }}"
+
