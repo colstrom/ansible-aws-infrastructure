@@ -30,7 +30,7 @@
     username: "{{ rds_database_username | mandatory }}"
     password: "{{ rds_database_password  | mandatory }}"
 
-    backup_retention: "{{ rds_backup_retention }}"
+    backup_retention: "{{ rds_database_backup_retention }}"
     size: "{{ rds_database_size }}"
     wait: yes
     wait_timeout: 1500
