@@ -25,7 +25,7 @@
     db_engine: "{{ rds_engine }}"
     upgrade: yes
 
-    port: "{% if rds_engine == 'postgres' %}5432{%elif rds_engine == 'MySQL' %}3306{% endif %}"
+    port: "{% if rds_engine == 'postgres' %}5432{% elif rds_engine == 'MySQL' %}3306{% endif %}"
     db_name: "{{ project | replace('-', '') }}"
     username: "{{ project | replace('-', '') }}"
     password: "{{ rds_database_password  | mandatory }}"
