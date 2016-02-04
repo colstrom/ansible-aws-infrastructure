@@ -34,7 +34,19 @@
     size: "{{ rds_database_size }}"
     wait: yes
     wait_timeout: 1500
+  register: rds_instance_data
 
+- name: "Route53 Record | Public Interface | {{ system_role }}"
+  route53:
+    command: create
+    overwrite: yes
+    zone: "{{ domain }}"
+    record: "{{ system_role }}.{{ project }}-{{ environment_tier }}.{{ domain }}"
+    type: CNAME
+    value: "{{ rds_instance_data.instance.endpoint }}"
+    ttl: 300
+  tags:
+    - dns
 
 - name: Create Database Servers | Read-Replica
   rds:
@@ -48,3 +60,16 @@
 
     wait: yes
     wait_timeout: 900
+  register: rds_replica_instance_data
+
+- name: "Route53 Record | Public Interface | {{ system_role }}-replica"
+  route53:
+    command: create
+    overwrite: yes
+    zone: "{{ domain }}"
+    record: "{{ system_role }}-replica.{{ project }}-{{ environment_tier }}.{{ domain }}"
+    type: CNAME
+    value: "{{ rds_replica_instance_data.instance.endpoint }}"
+    ttl: 300
+  tags:
+    - dns
