@@ -26,15 +26,27 @@
     upgrade: yes
 
     port: "{% if rds_engine == 'postgres' %}5432{%elif rds_engine == 'MySQL' %}3306{% endif %}"
-    db_name: "{{ rds_database_name | mandatory }}"
-    username: "{{ rds_database_username | mandatory }}"
+    db_name: "{{ rds_database_name }}"
+    username: "{{ rds_database_username }}"
     password: "{{ rds_database_password  | mandatory }}"
 
     backup_retention: "{{ rds_database_backup_retention }}"
     size: "{{ rds_database_size }}"
     wait: yes
     wait_timeout: 1500
+  register: rds_instance_data
 
+- name: "Route53 Record | Public Interface | {{ system_role }}"
+  route53:
+    command: create
+    overwrite: yes
+    zone: "{{ domain }}"
+    record: "{{ system_role }}.{{ project }}-{{ environment_tier }}.{{ domain }}"
+    type: CNAME
+    value: "{{ rds_instance_data.instance.endpoint }}"
+    ttl: 300
+  tags:
+    - dns
 
 - name: Create Database Servers | Read-Replica
   rds:
@@ -48,3 +60,16 @@
 
     wait: yes
     wait_timeout: 900
+  register: rds_replica_instance_data
+
+- name: "Route53 Record | Public Interface | {{ system_role }}-replica"
+  route53:
+    command: create
+    overwrite: yes
+    zone: "{{ domain }}"
+    record: "{{ system_role }}-replica.{{ project }}-{{ environment_tier }}.{{ domain }}"
+    type: CNAME
+    value: "{{ rds_replica_instance_data.instance.endpoint }}"
+    ttl: 300
+  tags:
+    - dns
