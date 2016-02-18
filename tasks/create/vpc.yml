@@ -16,7 +16,7 @@
         routes:
           - dest: 0.0.0.0/0
             gw: igw
-        resource_tags: 
+        resource_tags:
           'Project': "{{ project }}"
           'Role':    'outbound'
           'Name':    "{{ project }}-nat"
@@ -26,3 +26,5 @@
   shell: "superluminal peering --from {{ vpc_peering_from }} --to {{ item }} --region {{ region }}"
   with_items: vpc_peering_to
   when: vpc_peering_enabled and vpc_peering_to is iterable
+  tags:
+    - vpc-peering
