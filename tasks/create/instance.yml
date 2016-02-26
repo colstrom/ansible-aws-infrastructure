@@ -1,6 +1,6 @@
 ---
 - name: Identify Base Image
-  ec2_ami_find:
+  ec2_ami_search:
     arch: amd64
     distro: ubuntu
     region: "{{ region }}"
