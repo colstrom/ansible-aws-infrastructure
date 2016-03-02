@@ -51,7 +51,6 @@ always_use_spot_instance_for_roles:
   - preview
 
 autoscale_roles:
-  - management
   - inbound
   - application
   - applicationapi
