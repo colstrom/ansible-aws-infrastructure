@@ -14,7 +14,7 @@
     command: create
 
     region: "{{ region }}"
-    multi_zone: yes
+    multi_zone: "{% if region == 'us-west-2' or region == 'us-east-1' %}yes{% else %}no{% endif %}"
 
     instance_name: "{{ project }}-{{ system_role }}-{{ environment_tier }}"
     instance_type: "db.{{ instance_type[system_role] }}"
@@ -48,28 +48,3 @@
   tags:
     - dns
 
-- name: Create Database Servers | Read-Replica
-  rds:
-
-    command: replicate
-
-    region: "{{ region }}"
-
-    instance_name: "{{ project }}-{{ system_role }}-{{ environment_tier }}-replica"
-    source_instance: "{{ project }}-{{ system_role }}-{{ environment_tier }}"
-
-    wait: yes
-    wait_timeout: 900
-  register: rds_replica_instance_data
-
-- name: "Route53 Record | Public Interface | {{ system_role }}-replica"
-  route53:
-    command: create
-    overwrite: yes
-    zone: "{{ domain }}"
-    record: "{{ system_role }}-replica.{{ project }}-{{ environment_tier }}.{{ domain }}"
-    type: CNAME
-    value: "{{ rds_replica_instance_data.instance.endpoint }}"
-    ttl: 300
-  tags:
-    - dns
