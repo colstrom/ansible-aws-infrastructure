@@ -65,7 +65,7 @@
     type: CNAME
     value: "{{ item.public_dns_name }}"
     ttl: 300
-  with_items: instance.tagged_instances
+  with_items: '{{instance.tagged_instances}}'
   tags:
     - dns
 
@@ -78,7 +78,7 @@
     type: CNAME
     value: "{{ item.private_dns_name }}"
     ttl: 300
-  with_items: instance.tagged_instances
+  with_items: '{{instance.tagged_instances}}'
   tags:
     - dns
 
@@ -134,4 +134,4 @@
   when: load_balancers_enabled and dns_points_to_load_balancer and system_role in load_balancer
 
 # - add_host: name={{ item.public_dns_name }} groups=common,{{ system_role }}
-#   with_items: instance.tagged_instances
+#   with_items: '{{instance.tagged_instances}}'

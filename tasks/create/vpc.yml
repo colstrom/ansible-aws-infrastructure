@@ -24,7 +24,7 @@
 
 - name: VPC | Peering
   shell: "superluminal peering --from {{ vpc_peering_from }} --to {{ item }} --region {{ region }}"
-  with_items: vpc_peering_to
+  with_items: '{{ vpc_peering_to }}'
   when: vpc_peering_enabled and vpc_peering_to is iterable
   tags:
     - vpc-peering
