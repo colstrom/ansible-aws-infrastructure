@@ -150,7 +150,6 @@ subnets_all:
       'Project': "{{ project }}"
       'Role':    'cache'
       'Name':    "{{ project }}-cache-d"
-
   - cidr: "{{ subnet_prefix }}.4.0/27"
     az: "{{ region }}a"
     resource_tags:
@@ -175,6 +174,78 @@ subnets_all:
       'Project': "{{ project }}"
       'Role':    'database'
       'Name':    "{{ project }}-database-d"
+  - cidr: "{{ subnet_prefix }}.16.0/27"
+    az: "{{ region }}a"
+    resource_tags:
+      'Project': "{{ project }}"
+      'Role':    'database1'
+      'Name':    "{{ project }}-database1-a"
+  - cidr: "{{ subnet_prefix }}.16.32/27"
+    az: "{{ region }}b"
+    resource_tags:
+      'Project': "{{ project }}"
+      'Role':    'database1'
+      'Name':    "{{ project }}-database1-b"
+  - cidr: "{{ subnet_prefix }}.16.64/27"
+    az: "{{ region }}c"
+    resource_tags:
+      'Project': "{{ project }}"
+      'Role':    'database1'
+      'Name':    "{{ project }}-database1-c"
+  - cidr: "{{ subnet_prefix }}.16.96/27"
+    az: "{{ region }}d"
+    resource_tags:
+      'Project': "{{ project }}"
+      'Role':    'database1'
+      'Name':    "{{ project }}-database1-d"
+  - cidr: "{{ subnet_prefix }}.17.0/27"
+    az: "{{ region }}a"
+    resource_tags:
+      'Project': "{{ project }}"
+      'Role':    'database2'
+      'Name':    "{{ project }}-database2-a"
+  - cidr: "{{ subnet_prefix }}.17.32/27"
+    az: "{{ region }}b"
+    resource_tags:
+      'Project': "{{ project }}"
+      'Role':    'database2'
+      'Name':    "{{ project }}-database2-b"
+  - cidr: "{{ subnet_prefix }}.17.64/27"
+    az: "{{ region }}c"
+    resource_tags:
+      'Project': "{{ project }}"
+      'Role':    'database2'
+      'Name':    "{{ project }}-database2-c"
+  - cidr: "{{ subnet_prefix }}.17.96/27"
+    az: "{{ region }}d"
+    resource_tags:
+      'Project': "{{ project }}"
+      'Role':    'database2'
+      'Name':    "{{ project }}-database2-d"
+  - cidr: "{{ subnet_prefix }}.18.0/27"
+    az: "{{ region }}a"
+    resource_tags:
+      'Project': "{{ project }}"
+      'Role':    'database3'
+      'Name':    "{{ project }}-database3-a"
+  - cidr: "{{ subnet_prefix }}.18.32/27"
+    az: "{{ region }}b"
+    resource_tags:
+      'Project': "{{ project }}"
+      'Role':    'database3'
+      'Name':    "{{ project }}-database3-b"
+  - cidr: "{{ subnet_prefix }}.18.64/27"
+    az: "{{ region }}c"
+    resource_tags:
+      'Project': "{{ project }}"
+      'Role':    'database3'
+      'Name':    "{{ project }}-database3-c"
+  - cidr: "{{ subnet_prefix }}.18.96/27"
+    az: "{{ region }}d"
+    resource_tags:
+      'Project': "{{ project }}"
+      'Role':    'database3'
+      'Name':    "{{ project }}-database3-d"
 
   - cidr: "{{ subnet_prefix }}.5.0/27"
     az: "{{ region }}a"
