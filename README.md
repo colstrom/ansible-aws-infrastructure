@@ -3,6 +3,7 @@
 
 aws-infrastructure builds out things according to seemingly arbitrary conventions. They probably make sense, in the appropriate context.
 
+[![Licence](https://img.shields.io/badge/Licence-MIT-blue.svg)](https://tldrlegal.com/license/mit-license)
 [![Platforms](http://img.shields.io/badge/platforms-ubuntu-lightgrey.svg?style=flat)](#)
 
 Tunables
@@ -25,10 +26,6 @@ Example Playbook
            using_load_balancers: yes
            elb_ssl_offload: yes
            elb_ssl_certificate_name: application.foo-production
-
-License
--------
-[MIT](https://tldrlegal.com/license/mit-license)
 
 Contributors
 ------------
