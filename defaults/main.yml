@@ -56,7 +56,7 @@ autoscale_roles:
   - applicationapi
   - applicationq
   - database
-  - database1
+  - databasea
   - database2
   - database3
   - cache
@@ -75,7 +75,7 @@ default_instance_type:
   applicationq: m3.medium
   cache: m3.medium
   database: m3.medium
-  database1: m3.medium
+  databasea: m3.medium
   database2: m3.medium
   database3: m3.medium
   outbound: m3.medium
@@ -173,7 +173,7 @@ default_server_types:             # Values in roles/meta/infrastructure/vars/inf
   applicationapi: webserver
   applicationq: webserver
   database: mysql
-  database1: mysql
+  databasea: mysql
   database2: mysql
   database3: mysql
   outbound: squid

@@ -178,26 +178,26 @@ subnets_all:
     az: "{{ region }}a"
     resource_tags:
       'Project': "{{ project }}"
-      'Role':    'database1'
-      'Name':    "{{ project }}-database1-a"
+      'Role':    'databasea'
+      'Name':    "{{ project }}-databasea-a"
   - cidr: "{{ subnet_prefix }}.16.32/27"
     az: "{{ region }}b"
     resource_tags:
       'Project': "{{ project }}"
-      'Role':    'database1'
-      'Name':    "{{ project }}-database1-b"
+      'Role':    'databasea'
+      'Name':    "{{ project }}-databasea-b"
   - cidr: "{{ subnet_prefix }}.16.64/27"
     az: "{{ region }}c"
     resource_tags:
       'Project': "{{ project }}"
-      'Role':    'database1'
-      'Name':    "{{ project }}-database1-c"
+      'Role':    'databasea'
+      'Name':    "{{ project }}-databasea-c"
   - cidr: "{{ subnet_prefix }}.16.96/27"
     az: "{{ region }}d"
     resource_tags:
       'Project': "{{ project }}"
-      'Role':    'database1'
-      'Name':    "{{ project }}-database1-d"
+      'Role':    'databasea'
+      'Name':    "{{ project }}-databasea-d"
   - cidr: "{{ subnet_prefix }}.17.0/27"
     az: "{{ region }}a"
     resource_tags:
