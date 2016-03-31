@@ -21,3 +21,7 @@
 - { include: create/autoscaling.yml, has_load_balancer: False, system_role: metrics,        when: "'metrics' in required_systems" }
 - { include: create/autoscaling.yml, has_load_balancer: False, system_role: client,         when: "'client' in required_systems" }
 - { include: create/autoscaling.yml, has_load_balancer: False, system_role: master,         when: "'master' in required_systems" }
+- { include: create/autoscaling.yml, has_load_balancer: False, system_role: database,         when: "'database' in required_systems" }
+- { include: create/autoscaling.yml, has_load_balancer: False, system_role: database1,         when: "'database1' in required_systems" }
+- { include: create/autoscaling.yml, has_load_balancer: False, system_role: database2,         when: "'database2' in required_systems" }
+- { include: create/autoscaling.yml, has_load_balancer: False, system_role: database3,         when: "'database3' in required_systems" }
