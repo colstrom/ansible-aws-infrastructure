@@ -82,115 +82,19 @@ security_group:
     - { proto: tcp, from_port: 443,   to_port: 443,   group_id: "{{ security_group_id['inbound']|default(-1) }}" }
   cache:
     description: "Cache Nodes"
-    rules:
-    - { proto: tcp, from_port: 6081,  to_port: 6081,  group_id: "{{ security_group_id['application']|default(-1) }}" }
-    - { proto: tcp, from_port: 6379,  to_port: 6379,  group_id: "{{ security_group_id['application']|default(-1) }}" } # redis
-    - { proto: tcp, from_port: 11211,  to_port: 11211,  group_id: "{{ security_group_id['application']|default(-1) }}" } # memcached
-    - { proto: tcp, from_port: 26379, to_port: 26379, group_id: "{{ security_group_id['application']|default(-1) }}" } # redis sentinel
+    rules: "{{ cache_rules | make_rules('cache', open_to_internal_traffic_roles, 6379, 6379, '10.0.0.0/8', '', 'tcp') }}"
   database:
     description: "Database Nodes"
-    rules:
-    - { proto: tcp, from_port: 3306,  to_port: 3306,  group_id: "{{ security_group_id['application']|default(-1) }}" } # mysql
-    - { proto: tcp, from_port: 5432,  to_port: 5432,  group_id: "{{ security_group_id['application']|default(-1) }}" } # postgres
-    - { proto: tcp, from_port: 6379,  to_port: 6379,  group_id: "{{ security_group_id['application']|default(-1) }}" } # redis
-    - { proto: tcp, from_port: 8083,  to_port: 8083,  group_id: "{{ security_group_id['application']|default(-1) }}" }
-    - { proto: tcp, from_port: 8086,  to_port: 8086,  group_id: "{{ security_group_id['application']|default(-1) }}" }
-    - { proto: tcp, from_port: 26379, to_port: 26379, group_id: "{{ security_group_id['application']|default(-1) }}" } # redis sentinel
-    - { proto: tcp, from_port: 27017, to_port: 27017, group_id: "{{ security_group_id['application']|default(-1) }}" } # mongodb
-    - { proto: tcp, from_port: 27017, to_port: 27017, cidr_ip: "{{ subnet_prefix }}.4.0/27" } # mongodb
-    - { proto: tcp, from_port: 27017, to_port: 27017, cidr_ip: "{{ subnet_prefix }}.4.32/27" } # mongodb
-    - { proto: tcp, from_port: 27017, to_port: 27017, cidr_ip: "{{ subnet_prefix }}.4.64/27" } # mongodb
-    - { proto: tcp, from_port: 27017, to_port: 27017, cidr_ip: "{{ subnet_prefix }}.4.96/27" } # mongodb
-    - { proto: tcp, from_port: 27017, to_port: 27017, cidr_ip: "{{ subnet_prefix }}.18.0/27" } # mongodb
-    - { proto: tcp, from_port: 27017, to_port: 27017, cidr_ip: "{{ subnet_prefix }}.18.32/27" } # mongodb
-    - { proto: tcp, from_port: 27017, to_port: 27017, cidr_ip: "{{ subnet_prefix }}.18.64/27" } # mongodb
-    - { proto: tcp, from_port: 27017, to_port: 27017, cidr_ip: "{{ subnet_prefix }}.18.96/27" } # mongodb
-    - { proto: tcp, from_port: 27017, to_port: 27017, cidr_ip: "{{ subnet_prefix }}.19.0/27" } # mongodb
-    - { proto: tcp, from_port: 27017, to_port: 27017, cidr_ip: "{{ subnet_prefix }}.19.32/27" } # mongodb
-    - { proto: tcp, from_port: 27017, to_port: 27017, cidr_ip: "{{ subnet_prefix }}.19.64/27" } # mongodb
-    - { proto: tcp, from_port: 27017, to_port: 27017, cidr_ip: "{{ subnet_prefix }}.19.96/27" } # mongodb
-    - { proto: tcp, from_port: 27017, to_port: 27017, cidr_ip: "{{ subnet_prefix }}.20.0/27" } # mongodb
-    - { proto: tcp, from_port: 27017, to_port: 27017, cidr_ip: "{{ subnet_prefix }}.20.32/27" } # mongodb
-    - { proto: tcp, from_port: 27017, to_port: 27017, cidr_ip: "{{ subnet_prefix }}.20.64/27" } # mongodb
-    - { proto: tcp, from_port: 27017, to_port: 27017, cidr_ip: "{{ subnet_prefix }}.20.96/27" } # mongodb
+    rules: "{{ database_rules | make_rules('database', open_to_internal_traffic_roles, 27017, 27017, '10.0.0.0/8', '', 'tcp') }}"
   database1:
     description: "Database1 Nodes"
-    rules:
-    - { proto: tcp, from_port: 3306,  to_port: 3306,  group_id: "{{ security_group_id['application']|default(-1) }}" } # mysql
-    - { proto: tcp, from_port: 5432,  to_port: 5432,  group_id: "{{ security_group_id['application']|default(-1) }}" } # postgres
-    - { proto: tcp, from_port: 6379,  to_port: 6379,  group_id: "{{ security_group_id['application']|default(-1) }}" } # redis
-    - { proto: tcp, from_port: 8083,  to_port: 8083,  group_id: "{{ security_group_id['application']|default(-1) }}" }
-    - { proto: tcp, from_port: 8086,  to_port: 8086,  group_id: "{{ security_group_id['application']|default(-1) }}" }
-    - { proto: tcp, from_port: 26379, to_port: 26379, group_id: "{{ security_group_id['application']|default(-1) }}" } # redis sentinel
-    - { proto: tcp, from_port: 27017, to_port: 27017, group_id: "{{ security_group_id['application']|default(-1) }}" } # mongodb
-    - { proto: tcp, from_port: 27017, to_port: 27017, cidr_ip: "{{ subnet_prefix }}.4.0/27" } # mongodb
-    - { proto: tcp, from_port: 27017, to_port: 27017, cidr_ip: "{{ subnet_prefix }}.4.32/27" } # mongodb
-    - { proto: tcp, from_port: 27017, to_port: 27017, cidr_ip: "{{ subnet_prefix }}.4.64/27" } # mongodb
-    - { proto: tcp, from_port: 27017, to_port: 27017, cidr_ip: "{{ subnet_prefix }}.4.96/27" } # mongodb
-    - { proto: tcp, from_port: 27017, to_port: 27017, cidr_ip: "{{ subnet_prefix }}.18.0/27" } # mongodb
-    - { proto: tcp, from_port: 27017, to_port: 27017, cidr_ip: "{{ subnet_prefix }}.18.32/27" } # mongodb
-    - { proto: tcp, from_port: 27017, to_port: 27017, cidr_ip: "{{ subnet_prefix }}.18.64/27" } # mongodb
-    - { proto: tcp, from_port: 27017, to_port: 27017, cidr_ip: "{{ subnet_prefix }}.18.96/27" } # mongodb
-    - { proto: tcp, from_port: 27017, to_port: 27017, cidr_ip: "{{ subnet_prefix }}.19.0/27" } # mongodb
-    - { proto: tcp, from_port: 27017, to_port: 27017, cidr_ip: "{{ subnet_prefix }}.19.32/27" } # mongodb
-    - { proto: tcp, from_port: 27017, to_port: 27017, cidr_ip: "{{ subnet_prefix }}.19.64/27" } # mongodb
-    - { proto: tcp, from_port: 27017, to_port: 27017, cidr_ip: "{{ subnet_prefix }}.19.96/27" } # mongodb
-    - { proto: tcp, from_port: 27017, to_port: 27017, cidr_ip: "{{ subnet_prefix }}.20.0/27" } # mongodb
-    - { proto: tcp, from_port: 27017, to_port: 27017, cidr_ip: "{{ subnet_prefix }}.20.32/27" } # mongodb
-    - { proto: tcp, from_port: 27017, to_port: 27017, cidr_ip: "{{ subnet_prefix }}.20.64/27" } # mongodb
-    - { proto: tcp, from_port: 27017, to_port: 27017, cidr_ip: "{{ subnet_prefix }}.20.96/27" } # mongodb
+    rules: "{{ database1_rules | make_rules('database1', open_to_internal_traffic_roles, 27017, 27017, '10.0.0.0/8', '', 'tcp') }}"
   database2:
     description: "Database2 Nodes"
-    rules:
-    - { proto: tcp, from_port: 3306,  to_port: 3306,  group_id: "{{ security_group_id['application']|default(-1) }}" } # mysql
-    - { proto: tcp, from_port: 5432,  to_port: 5432,  group_id: "{{ security_group_id['application']|default(-1) }}" } # postgres
-    - { proto: tcp, from_port: 6379,  to_port: 6379,  group_id: "{{ security_group_id['application']|default(-1) }}" } # redis
-    - { proto: tcp, from_port: 8083,  to_port: 8083,  group_id: "{{ security_group_id['application']|default(-1) }}" }
-    - { proto: tcp, from_port: 8086,  to_port: 8086,  group_id: "{{ security_group_id['application']|default(-1) }}" }
-    - { proto: tcp, from_port: 26379, to_port: 26379, group_id: "{{ security_group_id['application']|default(-1) }}" } # redis sentinel
-    - { proto: tcp, from_port: 27017, to_port: 27017, group_id: "{{ security_group_id['application']|default(-1) }}" } # mongodb
-    - { proto: tcp, from_port: 27017, to_port: 27017, cidr_ip: "{{ subnet_prefix }}.4.0/27" } # mongodb
-    - { proto: tcp, from_port: 27017, to_port: 27017, cidr_ip: "{{ subnet_prefix }}.4.32/27" } # mongodb
-    - { proto: tcp, from_port: 27017, to_port: 27017, cidr_ip: "{{ subnet_prefix }}.4.64/27" } # mongodb
-    - { proto: tcp, from_port: 27017, to_port: 27017, cidr_ip: "{{ subnet_prefix }}.4.96/27" } # mongodb
-    - { proto: tcp, from_port: 27017, to_port: 27017, cidr_ip: "{{ subnet_prefix }}.18.0/27" } # mongodb
-    - { proto: tcp, from_port: 27017, to_port: 27017, cidr_ip: "{{ subnet_prefix }}.18.32/27" } # mongodb
-    - { proto: tcp, from_port: 27017, to_port: 27017, cidr_ip: "{{ subnet_prefix }}.18.64/27" } # mongodb
-    - { proto: tcp, from_port: 27017, to_port: 27017, cidr_ip: "{{ subnet_prefix }}.18.96/27" } # mongodb
-    - { proto: tcp, from_port: 27017, to_port: 27017, cidr_ip: "{{ subnet_prefix }}.19.0/27" } # mongodb
-    - { proto: tcp, from_port: 27017, to_port: 27017, cidr_ip: "{{ subnet_prefix }}.19.32/27" } # mongodb
-    - { proto: tcp, from_port: 27017, to_port: 27017, cidr_ip: "{{ subnet_prefix }}.19.64/27" } # mongodb
-    - { proto: tcp, from_port: 27017, to_port: 27017, cidr_ip: "{{ subnet_prefix }}.19.96/27" } # mongodb
-    - { proto: tcp, from_port: 27017, to_port: 27017, cidr_ip: "{{ subnet_prefix }}.20.0/27" } # mongodb
-    - { proto: tcp, from_port: 27017, to_port: 27017, cidr_ip: "{{ subnet_prefix }}.20.32/27" } # mongodb
-    - { proto: tcp, from_port: 27017, to_port: 27017, cidr_ip: "{{ subnet_prefix }}.20.64/27" } # mongodb
-    - { proto: tcp, from_port: 27017, to_port: 27017, cidr_ip: "{{ subnet_prefix }}.20.96/27" } # mongodb
+    rules:  "{{ database2_rules  | make_rules('database2', open_to_internal_traffic_roles, 27017, 27017, '10.0.0.0/8', '', 'tcp') }}"
   database3:
     description: "Database3 Nodes"
-    rules:
-    - { proto: tcp, from_port: 3306,  to_port: 3306,  group_id: "{{ security_group_id['application']|default(-1) }}" } # mysql
-    - { proto: tcp, from_port: 5432,  to_port: 5432,  group_id: "{{ security_group_id['application']|default(-1) }}" } # postgres
-    - { proto: tcp, from_port: 6379,  to_port: 6379,  group_id: "{{ security_group_id['application']|default(-1) }}" } # redis
-    - { proto: tcp, from_port: 8083,  to_port: 8083,  group_id: "{{ security_group_id['application']|default(-1) }}" }
-    - { proto: tcp, from_port: 8086,  to_port: 8086,  group_id: "{{ security_group_id['application']|default(-1) }}" }
-    - { proto: tcp, from_port: 26379, to_port: 26379, group_id: "{{ security_group_id['application']|default(-1) }}" } # redis sentinel
-    - { proto: tcp, from_port: 27017, to_port: 27017, group_id: "{{ security_group_id['application']|default(-1) }}" } # mongodb
-    - { proto: tcp, from_port: 27017, to_port: 27017, cidr_ip: "{{ subnet_prefix }}.4.0/27" } # mongodb
-    - { proto: tcp, from_port: 27017, to_port: 27017, cidr_ip: "{{ subnet_prefix }}.4.32/27" } # mongodb
-    - { proto: tcp, from_port: 27017, to_port: 27017, cidr_ip: "{{ subnet_prefix }}.4.64/27" } # mongodb
-    - { proto: tcp, from_port: 27017, to_port: 27017, cidr_ip: "{{ subnet_prefix }}.4.96/27" } # mongodb
-    - { proto: tcp, from_port: 27017, to_port: 27017, cidr_ip: "{{ subnet_prefix }}.18.0/27" } # mongodb
-    - { proto: tcp, from_port: 27017, to_port: 27017, cidr_ip: "{{ subnet_prefix }}.18.32/27" } # mongodb
-    - { proto: tcp, from_port: 27017, to_port: 27017, cidr_ip: "{{ subnet_prefix }}.18.64/27" } # mongodb
-    - { proto: tcp, from_port: 27017, to_port: 27017, cidr_ip: "{{ subnet_prefix }}.18.96/27" } # mongodb
-    - { proto: tcp, from_port: 27017, to_port: 27017, cidr_ip: "{{ subnet_prefix }}.19.0/27" } # mongodb
-    - { proto: tcp, from_port: 27017, to_port: 27017, cidr_ip: "{{ subnet_prefix }}.19.32/27" } # mongodb
-    - { proto: tcp, from_port: 27017, to_port: 27017, cidr_ip: "{{ subnet_prefix }}.19.64/27" } # mongodb
-    - { proto: tcp, from_port: 27017, to_port: 27017, cidr_ip: "{{ subnet_prefix }}.19.96/27" } # mongodb
-    - { proto: tcp, from_port: 27017, to_port: 27017, cidr_ip: "{{ subnet_prefix }}.20.0/27" } # mongodb
-    - { proto: tcp, from_port: 27017, to_port: 27017, cidr_ip: "{{ subnet_prefix }}.20.32/27" } # mongodb
-    - { proto: tcp, from_port: 27017, to_port: 27017, cidr_ip: "{{ subnet_prefix }}.20.64/27" } # mongodb
-    - { proto: tcp, from_port: 27017, to_port: 27017, cidr_ip: "{{ subnet_prefix }}.20.96/27" } # mongodb
+    rules:  "{{ database3_rules  | make_rules('database3', open_to_internal_traffic_roles, 27017, 27017, '10.0.0.0/8', '', 'tcp') }}"
   outbound:
     description: "Outbound Proxy"
     rules:
@@ -242,3 +146,76 @@ security_group:
     - { proto: tcp, from_port: 80,    to_port: 80,    cidr_ip: 0.0.0.0/0 }
     - { proto: tcp, from_port: 443,   to_port: 443,   cidr_ip: 0.0.0.0/0 }
     - { proto: tcp, from_port: 10443, to_port: 10443, group_id: "{{ security_group_id['build']|default(-1) }}" }
+
+cache_rules:
+  - { proto: tcp, from_port: 6081,  to_port: 6081,  group_id: "{{ security_group_id['application']|default(-1) }}" }
+  - { proto: tcp, from_port: 6379,  to_port: 6379,  group_id: "{{ security_group_id['application']|default(-1) }}" } # redis
+  - { proto: tcp, from_port: 11211,  to_port: 11211,  group_id: "{{ security_group_id['application']|default(-1) }}" } # memcached
+  - { proto: tcp, from_port: 26379, to_port: 26379, group_id: "{{ security_group_id['application']|default(-1) }}" } # redis sentinel
+  # {% for 'cache' in open_to_internal_traffic_roles %}
+  #   - { proto: tcp, from_port: 6379, to_port: 6379, cidr_ip: "{{ subnet_prefix }}.0.0/8" } # redis
+  # {% endfor %}
+
+database_rules:
+  - { proto: tcp, from_port: 3306,  to_port: 3306,  group_id: "{{ security_group_id['application']|default(-1) }}" } # mysql
+  - { proto: tcp, from_port: 5432,  to_port: 5432,  group_id: "{{ security_group_id['application']|default(-1) }}" } # postgres
+  - { proto: tcp, from_port: 6379,  to_port: 6379,  group_id: "{{ security_group_id['application']|default(-1) }}" } # redis
+  - { proto: tcp, from_port: 8083,  to_port: 8083,  group_id: "{{ security_group_id['application']|default(-1) }}" }
+  - { proto: tcp, from_port: 8086,  to_port: 8086,  group_id: "{{ security_group_id['application']|default(-1) }}" }
+  - { proto: tcp, from_port: 26379, to_port: 26379, group_id: "{{ security_group_id['application']|default(-1) }}" } # redis sentinel
+  - { proto: tcp, from_port: 27017, to_port: 27017, group_id: "{{ security_group_id['application']|default(-1) }}" } # mongodb
+  - { proto: tcp, from_port: 27017, to_port: 27017, cidr_ip: "{{ subnet_prefix }}.4.0/24" } # mongodb
+  - { proto: tcp, from_port: 27017, to_port: 27017, cidr_ip: "{{ subnet_prefix }}.18.0/24" } # mongodb
+  - { proto: tcp, from_port: 27017, to_port: 27017, cidr_ip: "{{ subnet_prefix }}.19.0/24" } # mongodb
+  - { proto: tcp, from_port: 27017, to_port: 27017, cidr_ip: "{{ subnet_prefix }}.20.0/24" } # mongodb
+  # {% if 'database' in open_to_internal_traffic_roles %}
+  #   - { proto: tcp, from_port: 27017, to_port: 27017, cidr_ip: "{{ subnet_prefix }}.0.0/8" } # mongodb
+  # {% endif %}
+
+database1_rules:
+  - { proto: tcp, from_port: 3306,  to_port: 3306,  group_id: "{{ security_group_id['application']|default(-1) }}" } # mysql
+  - { proto: tcp, from_port: 5432,  to_port: 5432,  group_id: "{{ security_group_id['application']|default(-1) }}" } # postgres
+  - { proto: tcp, from_port: 6379,  to_port: 6379,  group_id: "{{ security_group_id['application']|default(-1) }}" } # redis
+  - { proto: tcp, from_port: 8083,  to_port: 8083,  group_id: "{{ security_group_id['application']|default(-1) }}" }
+  - { proto: tcp, from_port: 8086,  to_port: 8086,  group_id: "{{ security_group_id['application']|default(-1) }}" }
+  - { proto: tcp, from_port: 26379, to_port: 26379, group_id: "{{ security_group_id['application']|default(-1) }}" } # redis sentinel
+  - { proto: tcp, from_port: 27017, to_port: 27017, group_id: "{{ security_group_id['application']|default(-1) }}" } # mongodb
+  - { proto: tcp, from_port: 27017, to_port: 27017, cidr_ip: "{{ subnet_prefix }}.4.0/24" } # mongodb
+  - { proto: tcp, from_port: 27017, to_port: 27017, cidr_ip: "{{ subnet_prefix }}.18.0/24" } # mongodb
+  - { proto: tcp, from_port: 27017, to_port: 27017, cidr_ip: "{{ subnet_prefix }}.19.0/24" } # mongodb
+  - { proto: tcp, from_port: 27017, to_port: 27017, cidr_ip: "{{ subnet_prefix }}.20.0/24" } # mongodb
+  # {% if 'database1' in open_to_internal_traffic_roles %}
+  #   - { proto: tcp, from_port: 27017, to_port: 27017, cidr_ip: "{{ subnet_prefix }}.0.0/8" } # mongodb
+  # {% endif %}
+
+database2_rules:
+  - { proto: tcp, from_port: 3306,  to_port: 3306,  group_id: "{{ security_group_id['application']|default(-1) }}" } # mysql
+  - { proto: tcp, from_port: 5432,  to_port: 5432,  group_id: "{{ security_group_id['application']|default(-1) }}" } # postgres
+  - { proto: tcp, from_port: 6379,  to_port: 6379,  group_id: "{{ security_group_id['application']|default(-1) }}" } # redis
+  - { proto: tcp, from_port: 8083,  to_port: 8083,  group_id: "{{ security_group_id['application']|default(-1) }}" }
+  - { proto: tcp, from_port: 8086,  to_port: 8086,  group_id: "{{ security_group_id['application']|default(-1) }}" }
+  - { proto: tcp, from_port: 26379, to_port: 26379, group_id: "{{ security_group_id['application']|default(-1) }}" } # redis sentinel
+  - { proto: tcp, from_port: 27017, to_port: 27017, group_id: "{{ security_group_id['application']|default(-1) }}" } # mongodb
+  - { proto: tcp, from_port: 27017, to_port: 27017, cidr_ip: "{{ subnet_prefix }}.4.0/24" } # mongodb
+  - { proto: tcp, from_port: 27017, to_port: 27017, cidr_ip: "{{ subnet_prefix }}.18.0/24" } # mongodb
+  - { proto: tcp, from_port: 27017, to_port: 27017, cidr_ip: "{{ subnet_prefix }}.19.0/24" } # mongodb
+  - { proto: tcp, from_port: 27017, to_port: 27017, cidr_ip: "{{ subnet_prefix }}.20.0/24" } # mongodb
+  # {% if 'database2' in open_to_internal_traffic_roles %}
+  #   - { proto: tcp, from_port: 27017, to_port: 27017, cidr_ip: "{{ subnet_prefix }}.0.0/8" } # mongodb
+  # {% endif %}
+
+database3_rules:
+  - { proto: tcp, from_port: 3306,  to_port: 3306,  group_id: "{{ security_group_id['application']|default(-1) }}" } # mysql
+  - { proto: tcp, from_port: 5432,  to_port: 5432,  group_id: "{{ security_group_id['application']|default(-1) }}" } # postgres
+  - { proto: tcp, from_port: 6379,  to_port: 6379,  group_id: "{{ security_group_id['application']|default(-1) }}" } # redis
+  - { proto: tcp, from_port: 8083,  to_port: 8083,  group_id: "{{ security_group_id['application']|default(-1) }}" }
+  - { proto: tcp, from_port: 8086,  to_port: 8086,  group_id: "{{ security_group_id['application']|default(-1) }}" }
+  - { proto: tcp, from_port: 26379, to_port: 26379, group_id: "{{ security_group_id['application']|default(-1) }}" } # redis sentinel
+  - { proto: tcp, from_port: 27017, to_port: 27017, group_id: "{{ security_group_id['application']|default(-1) }}" } # mongodb
+  - { proto: tcp, from_port: 27017, to_port: 27017, cidr_ip: "{{ subnet_prefix }}.4.0/24" } # mongodb
+  - { proto: tcp, from_port: 27017, to_port: 27017, cidr_ip: "{{ subnet_prefix }}.18.0/24" } # mongodb
+  - { proto: tcp, from_port: 27017, to_port: 27017, cidr_ip: "{{ subnet_prefix }}.19.0/24" } # mongodb
+  - { proto: tcp, from_port: 27017, to_port: 27017, cidr_ip: "{{ subnet_prefix }}.20.0/24" } # mongodb
+  # {% if 'database3' in open_to_internal_traffic_roles %}
+  #   - { proto: tcp, from_port: 27017, to_port: 27017, cidr_ip: "{{ subnet_prefix }}.0.0/8" } # mongodb
+  # {% endif %}
